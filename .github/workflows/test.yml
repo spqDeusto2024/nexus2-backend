@@ -1,0 +1,26 @@
+name: CI - Integration Test
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: [main, develop]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
+
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v2
+      - name: Build Docker container
+        run: bash build.sh
+      - name: Start docker-compose 
+        run: docker-compose up -d
+      - name: Installation of dependencies for testing fastapi
+        run: pip install httpx
+      - run: pip install httpx[cli]
