@@ -20,7 +20,7 @@ jobs:
       - name: Build Docker container
         run: bash build.sh
       - name: Start docker-compose 
-        run: docker-compose up -d
+        run: docker compose up -d
       - name: Installation of dependencies for testing fastapi
         run: pip install httpx
       - run: pip install httpx[cli]
