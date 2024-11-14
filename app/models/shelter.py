@@ -14,7 +14,8 @@ class Shelter(BaseModel):
         phone (Optional[str]): Contact phone number for the shelter.
         email (Optional[str]): Contact email address for the shelter.
         maxPeople (int): Maximum number of people the shelter can accommodate.
-        energylevel (int): Energy level of the energy.
+        energyLevel (int): Energy level of the shelter.
+        waterLevel (int): Water level of the shelter.
     """
 
     idShelter: int
@@ -24,3 +25,4 @@ class Shelter(BaseModel):
     email: Optional[str]
     maxPeople: int
     energyLevel: int
+    waterLevel: int
