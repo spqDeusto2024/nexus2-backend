@@ -16,6 +16,7 @@ class Shelter(BaseModel):
         maxPeople (int): Maximum number of people the shelter can accommodate.
         energyLevel (int): Energy level of the shelter.
         waterLevel (int): Water level of the shelter.
+        radiationLevel (int): Water level of the shelter.
     """
 
     idShelter: int
@@ -26,3 +27,4 @@ class Shelter(BaseModel):
     maxPeople: int
     energyLevel: int
     waterLevel: int
+    radiationLevel: int

@@ -19,6 +19,7 @@ class Shelter(Base):
         maxPeople (int): The maximum number of people the shelter can accommodate.
         energyLevel (int): The energy leverl of the shelter. 
         waterLevel (int): The water level of the shelter. 
+        radiationLevel (int): The radiation level of the shelter.
     """
     
     __tablename__ = "shelter"
@@ -30,3 +31,4 @@ class Shelter(Base):
     maxPeople = Column(Integer)
     energyLevel = Column(Integer)
     waterLevel = Column(Integer)
+    radiationLevel = Column(Integer)
