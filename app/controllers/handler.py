@@ -40,6 +40,7 @@ class Controllers:
     return {"status": "ok"}
 
   def create_resident(self, body: resident.Resident):
+
     """
     Creates a new resident in the database.
     """
@@ -51,7 +52,8 @@ class Controllers:
         gender=body.gender,
         createdBy=body.createdBy,
         createDate=date.today(),
-        idFamily=body.idFamily
+        idFamily=body.idFamily,
+        idRoom=body.idRoom
     )
     
     db = DatabaseClient(gb.MYSQL_URL)

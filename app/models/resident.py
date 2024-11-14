@@ -18,6 +18,7 @@ class Resident(BaseModel):
         createDate (date): The date when the resident record was created.
         update (Optional[date]): The date when the resident record was last updated.
         idFamily (Optional[int]): Foreign key to the family the resident is associated with.
+        idRoom: Foreign key to the room the resident is.
     """
     
     idResident: int
@@ -29,3 +30,4 @@ class Resident(BaseModel):
     createDate: date
     update: Optional[date]
     idFamily: Optional[int]
+    idRoom: int

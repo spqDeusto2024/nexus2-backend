@@ -20,6 +20,7 @@ class Resident(Base):
         createDate (date): The date when the resident entry was created.
         update (date): The date when the resident entry was last updated.
         idFamily (int): Foreign key linking the resident to a specific family.
+        idRoom (int): Foreign key linking the resident to a specific room.
     """
 
     __tablename__ = "resident"
@@ -32,4 +33,5 @@ class Resident(Base):
     createDate = Column(Date)
     update = Column(Date)
     idFamily = Column(Integer, ForeignKey("family.idFamily"))
+    idRoom = Column(Integer, ForeignKey("room.idRoom"))
 
