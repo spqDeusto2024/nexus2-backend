@@ -9,6 +9,7 @@ import app.mysql.room as roomMysql
 import app.mysql.shelter as shelterMysql
 import app.mysql.resident as residentMysql
 from app.mysql.mysql import DatabaseClient
+from app.mysql.resident import Resident
 
 from datetime import date
 import app.utils.vars as gb
@@ -39,37 +40,38 @@ class Controllers:
   
     return {"status": "ok"}
 
-  def create_resident(self, body: resident.Resident):
-
+  
+  def create_resident(self, body: resident.Resident, session=None):
+  
     """
     Creates a new resident entry in the database.
 
-    Purpose:
-        This method is responsible for creating a new resident record 
-        in the database using the provided resident details.
-
     Parameters:
-        body (resident.Resident): 
-            An instance of the `Resident` model containing the resident's details:
             - `name` (str): First name of the resident.
             - `surname` (str): Last name of the resident.
-            - `birthDate` (datetime.date): Date of birth of the resident.
+            - `birthDate` (datetime.date): The resident's date of birth.
             - `gender` (str): Gender of the resident (e.g., "M" for male, "F" for female).
-            - `createdBy` (int): ID of the user or admin who is creating this entry.
-            - `idFamily` (int, optional): Foreign key linking the resident to a specific family.
-            - `idRoom` (int): Foreign key linking the resident to a specific room.
-
-    Process:
-        1. A `Resident` instance is transformed into a database-compatible object.
-        2. The `DatabaseClient` establishes a connection to the database.
-        3. The new resident is added to the database session.
-        4. The session is committed to save the changes.
-        5. The session is closed to free up resources.
+            - `createdBy` (int): ID of the admin or user creating the entry.
+            - `idFamily` (Optional[int]): Foreign key linking to the family, if applicable.
+            - `idRoom` (int): Foreign key linking to the resident's assigned room.
 
     Returns:
-        dict: A status dictionary indicating success, e.g., `{"status": "ok"}`.
+        dict:
+            A dictionary indicating the success of the operation:
+            - `{"status": "ok"}` if the resident was successfully created.
+
+    Process:
+        1. Convert the `Resident` object into a database-compatible format.
+        2. Use the provided session or create a new session.
+        3. Add the resident to the database.
+        4. Commit the transaction to save the changes.
+        5. Return a success status.
 
     """
+    
+    if session is None:
+        db = DatabaseClient(gb.MYSQL_URL)
+        session = Session(db.engine)
 
     body_row = residentMysql.Resident(
         name=body.name,
@@ -79,16 +81,52 @@ class Controllers:
         createdBy=body.createdBy,
         createDate=date.today(),
         idFamily=body.idFamily,
-        idRoom=body.idRoom
+        idRoom=body.idRoom,
     )
-    
-    db = DatabaseClient(gb.MYSQL_URL)
-    with Session(db.engine) as session:
-        session.add(body_row)
-        session.commit()
-        session.close()
-    
+
+    session.add(body_row)
+    session.commit()
     return {"status": "ok"}
+
+  
+  def delete_resident(self, idResident: int, session=None):
+  
+    """
+    Deletes a resident entry from the database.
+
+    Parameters:
+        idResident (int): 
+            The unique identifier of the resident to delete.
+
+    Returns:
+        dict:
+            A dictionary indicating the outcome of the operation:
+            - `{"status": "ok"}`: The resident was successfully deleted.
+            - `{"status": "not found"}`: No resident was found with the given ID.
+
+    Process:
+        1. Check if an existing database session is provided; if not, create a new session.
+        2. Query the database for a resident record matching the provided `idResident`.
+        3. If the resident exists:
+            a. Delete the resident record.
+            b. Commit the transaction to save changes.
+            c. Return a success status.
+        4. If the resident does not exist, return a "not found" status.
+    """
+
+    if session is None:
+        db = DatabaseClient(gb.MYSQL_URL)
+        session = Session(db.engine)
+
+    resident_to_delete = session.query(Resident).filter_by(idResident=idResident).first()
+    if resident_to_delete:
+        session.delete(resident_to_delete)
+        session.commit()
+        return {"status": "ok"}
+    else:
+        return {"status": "not found"}
+
+
   
   def get_all(self):
     """

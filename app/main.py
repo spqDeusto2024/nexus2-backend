@@ -48,3 +48,16 @@ async def update_user(body: models.UpdateRequest):
 async def create_resident(body: resident.Resident):
     return controllers.create_resident(body)
 
+@app.delete('/resident/delete')
+async def delete_resident(idResident: int):
+  
+    """
+    Endpoint to delete a resident by their ID.
+
+    Parameters:
+        idResident (int): The unique ID of the resident to delete.
+
+    Returns:
+        dict: A response indicating the success or failure of the deletion.
+    """
+    return controllers.delete_resident(idResident)
