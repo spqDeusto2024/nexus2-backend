@@ -3,71 +3,101 @@ from app.mysql.resident import Resident  # Importación global permitida
 
 from datetime import date
 
-def test_create_resident(setup_database, monkeypatch):
+def test_create_resident(setup_database):
 
     """
-    Test for the `create_resident` method in the `Controllers` class.
+    Unit test for the `create_resident` method in the Controllers class.
 
-    Purpose:
-        Validates that the `create_resident` method correctly creates a new 
-        resident entry in the database.
-
-    Steps:
-        1. Mock the `DatabaseClient` to use an in-memory SQLite database.
-        2. Apply a monkeypatch to replace the real `DatabaseClient` with the mock.
-        3. Initialize the `Controllers` class.
-        4. Create a mock `Resident` object with valid data.
-        5. Call the `create_resident` method using the mock resident data.
-        6. Verify the response from `create_resident`.
-        7. Query the database to ensure the resident was successfully created.
-        8. Assert that the resident's details in the database match the input data.
+    Test Steps:
+        1. Create an instance of the `Controllers` class.
+        2. Use the in-memory database session provided by `setup_database`.
+        3. Define a mock resident object with valid details.
+        4. Call the `create_resident` method with the mock resident and the test session.
+        5. Assert that the method returns a success response: `{"status": "ok"}`.
+        6. Query the database for the created resident using their name.
+        7. Verify that the resident exists in the database.
+        8. Assert that the resident's details (e.g., name, surname, room ID) match the expected values.
 
     Expected Outcome:
-        - The `create_resident` method returns a response indicating success.
-        - The resident is successfully added to the database with correct details.
-
-    Dependencies:
-        - `setup_database` fixture for providing an SQLite in-memory database.
-        - `monkeypatch` for replacing the `DatabaseClient`.
-
-    Assertions:
-        - Response from `create_resident` is `{"status": "ok"}`.
-        - The resident exists in the database with matching `name`, `surname`, and `idRoom`.
-
+        - The `create_resident` method should return `{"status": "ok"}`.
+        - The resident should be successfully added to the database with all details matching the mock input.
     """
-    def mock_database_client(url):
-        class MockDatabaseClient:
-            def __init__(self, url):
-                self.engine = setup_database.bind
-
-        return MockDatabaseClient(url)
-
-    monkeypatch.setattr("app.mysql.mysql.DatabaseClient", mock_database_client)
 
     from app.controllers.handler import Controllers
-    from app.mysql.resident import Resident
 
     controllers = Controllers()
+    db_session = setup_database
+
     mock_resident = Resident(
         idResident=1,
-        name="John",
-        surname="Doe",
-        birthDate=date(1990, 1, 1),  
-        gender="M",
+        name="Maria",
+        surname="Mutiloa",
+        birthDate=date(2001, 1, 1),
+        gender="F",
         createdBy=1,
-        createDate=date(2024, 11, 14),  
+        createDate=date(2024, 11, 14),
         update=None,
         idFamily=1,
         idRoom=101,
     )
 
-    response = controllers.create_resident(mock_resident)
-
+    response = controllers.create_resident(mock_resident, session=db_session)
     assert response == {"status": "ok"}
 
-    db_session = setup_database
-    created_resident = db_session.query(Resident).filter_by(name="John").first()
+    created_resident = db_session.query(Resident).filter_by(name="Maria").first()
     assert created_resident is not None
-    assert created_resident.name == "John"
-    assert created_resident.surname == "Doe"
+    assert created_resident.name == "Maria"
+    assert created_resident.surname == "Mutiloa"
+    assert created_resident.idFamily == 1
     assert created_resident.idRoom == 101
+
+def test_delete_resident(setup_database):
+
+    """
+    Unit test for the `delete_resident` method in the Controllers class.
+
+    Test Steps:
+        1. Create an instance of the `Controllers` class.
+        2. Use the in-memory database session provided by `setup_database`.
+        3. Insert a mock resident into the database with valid details.
+        4. Commit the mock resident to ensure they are added to the database.
+        5. Query the database to verify the resident was successfully added.
+        6. Call the `delete_resident` method with the resident's ID and the test session.
+        7. Use `expire_all` to refresh the session state.
+        8. Assert that the method returns a success response: `{"status": "ok"}`.
+        9. Query the database again to verify the resident's record has been deleted.
+        10. Assert that the resident is no longer present in the database.
+
+    Expected Outcome:
+        - The `delete_resident` method should return `{"status": "ok"}`.
+        - The resident's record should be successfully removed from the database.
+    """
+    from app.controllers.handler import Controllers
+
+    controllers = Controllers()
+    db_session = setup_database
+
+    test_resident = Resident(
+        idResident=1,
+        name="Maria",
+        surname="Mutiloa",
+        birthDate=date(2001, 1, 1),
+        gender="F",
+        createdBy=1,
+        createDate=date(2024, 11, 14),
+        update=None,
+        idFamily=1,
+        idRoom=101,
+    )
+    db_session.add(test_resident)
+    db_session.commit()
+
+    added_resident = db_session.query(Resident).filter_by(idResident=1).first()
+    assert added_resident is not None
+
+    response = controllers.delete_resident(1, session=db_session)
+
+    db_session.expire_all()
+    assert response == {"status": "ok"}
+    deleted_resident = db_session.query(Resident).filter_by(idResident=1).first()
+    assert deleted_resident is None
