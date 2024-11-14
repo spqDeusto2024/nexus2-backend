@@ -1,7 +1,16 @@
 import app.models.models as models
+import app.models.resident as resident
+import app.models.family as family
+import app.models.room as room
+import app.models.shelter as shelter
 import app.mysql.models as mysql_models
+import app.mysql.family as familyMysql
+import app.mysql.room as roomMysql
+import app.mysql.shelter as shelterMysql
+import app.mysql.resident as residentMysql
 from app.mysql.mysql import DatabaseClient
 
+from datetime import date
 import app.utils.vars as gb
 from sqlalchemy.orm import Session
 
@@ -28,6 +37,29 @@ class Controllers:
       session.commit()
       session.close()
   
+    return {"status": "ok"}
+
+  def create_resident(self, body: resident.Resident):
+    """
+    Creates a new resident in the database.
+    """
+
+    body_row = residentMysql.Resident(
+        name=body.name,
+        surname=body.surname,
+        birthDate=body.birthDate,
+        gender=body.gender,
+        createdBy=body.createdBy,
+        createDate=date.today(),
+        idFamily=body.idFamily
+    )
+    
+    db = DatabaseClient(gb.MYSQL_URL)
+    with Session(db.engine) as session:
+        session.add(body_row)
+        session.commit()
+        session.close()
+    
     return {"status": "ok"}
   
   def get_all(self):

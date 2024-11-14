@@ -5,6 +5,10 @@ from app.mysql.mysql import DatabaseClient
 
 import app.utils.vars as gb
 import app.models.models as models
+import app.models.resident as resident
+import app.models.family as family
+import app.models.room as room
+import app.models.shelter as shelter
 
 
 def initialize() -> None:
@@ -40,5 +44,7 @@ async def get_all_users():
 async def update_user(body: models.UpdateRequest):
   return controllers.update_user(body)
 
-# @app.post('/user/create')
-# def createUser():
+@app.post('/resident/create')
+async def create_resident(body: resident.Resident):
+    return controllers.create_resident(body)
+
