@@ -41,8 +41,34 @@ class Controllers:
 
   def create_resident(self, body: resident.Resident):
 
-    """
-    Creates a new resident in the database.
+      """
+    Creates a new resident entry in the database.
+
+    Purpose:
+        This method is responsible for creating a new resident record 
+        in the database using the provided resident details.
+
+    Parameters:
+        body (resident.Resident): 
+            An instance of the `Resident` model containing the resident's details:
+            - `name` (str): First name of the resident.
+            - `surname` (str): Last name of the resident.
+            - `birthDate` (datetime.date): Date of birth of the resident.
+            - `gender` (str): Gender of the resident (e.g., "M" for male, "F" for female).
+            - `createdBy` (int): ID of the user or admin who is creating this entry.
+            - `idFamily` (int, optional): Foreign key linking the resident to a specific family.
+            - `idRoom` (int): Foreign key linking the resident to a specific room.
+
+    Process:
+        1. A `Resident` instance is transformed into a database-compatible object.
+        2. The `DatabaseClient` establishes a connection to the database.
+        3. The new resident is added to the database session.
+        4. The session is committed to save the changes.
+        5. The session is closed to free up resources.
+
+    Returns:
+        dict: A status dictionary indicating success, e.g., `{"status": "ok"}`.
+
     """
 
     body_row = residentMysql.Resident(
