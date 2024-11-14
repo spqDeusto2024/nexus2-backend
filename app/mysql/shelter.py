@@ -17,6 +17,7 @@ class Shelter(Base):
         phone (str): Contact phone number for the shelter.
         email (str): Contact email for the shelter.
         maxPeople (int): The maximum number of people the shelter can accommodate.
+        energyLevel (int): The energy leverl of the shelter. 
     """
     
     __tablename__ = "shelter"
@@ -26,3 +27,4 @@ class Shelter(Base):
     phone = Column(String (20))
     email = Column(String (40))
     maxPeople = Column(Integer)
+    energyLevel = Column(Integer)
