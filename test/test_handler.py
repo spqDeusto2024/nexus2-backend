@@ -1,5 +1,6 @@
 import pytest
-from app.mysql.resident import Resident  # Importación global permitida
+from app.mysql.resident import Resident
+from app.controllers.handler import Controllers 
 
 from datetime import date
 
@@ -101,3 +102,54 @@ def test_delete_resident(setup_database):
     assert response == {"status": "ok"}
     deleted_resident = db_session.query(Resident).filter_by(idResident=1).first()
     assert deleted_resident is None
+
+def test_update_resident(setup_database):
+
+    """
+    Test for the `update_resident` method.
+
+    Purpose:
+        Verifies that an existing resident's details can be updated successfully.
+
+    Steps:
+        1. Creates a test resident entry in the in-memory SQLite database.
+        2. Ensures the resident was correctly added to the database.
+        3. Updates specific fields (`name` and `idRoom`) of the resident.
+        4. Verifies the response status from the update operation.
+        5. Confirms that the resident's details were updated in the database.
+        6. Ensures that unchanged fields remain intact.
+    """
+
+    controllers = Controllers()
+    db_session = setup_database
+
+    test_resident = Resident(
+        idResident=1,
+        name="Maria",
+        surname="Mutiloa",
+        birthDate=date(2001, 1, 1),
+        gender="M",
+        createdBy=1,
+        createDate=date(2024, 11, 14),
+        update=None,
+        idFamily=1,
+        idRoom=101,
+    )
+    db_session.add(test_resident)
+    db_session.commit()
+
+    added_resident = db_session.query(Resident).filter_by(idResident=1).first()
+    assert added_resident is not None
+    assert added_resident.name == "Maria"
+    assert added_resident.surname == "Mutiloa"
+
+    updated_fields = {"name": "Ana", "idRoom": 202}
+    response = controllers.update_resident(1, updated_fields, session=db_session)
+
+    assert response == {"status": "ok"}
+
+    updated_resident = db_session.query(Resident).filter_by(idResident=1).first()
+    assert updated_resident is not None
+    assert updated_resident.name == "Ana"
+    assert updated_resident.surname == "Mutiloa" 
+    assert updated_resident.idRoom == 202 
