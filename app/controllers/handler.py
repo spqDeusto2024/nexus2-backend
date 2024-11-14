@@ -126,7 +126,50 @@ class Controllers:
     else:
         return {"status": "not found"}
 
+  def update_resident(self, idResident: int, updates: dict, session=None):
 
+    """
+    Updates an existing resident's details in the database.
+
+    Parameters:
+        idResident (int): The unique identifier of the resident to update.
+        updates (dict): A dictionary containing the fields to update and their new values.
+            Example:
+                {
+                    "name": "Jane",
+                    "surname": "Smith",
+                    "idRoom": 102,
+                    "update": date(2024, 11, 14)
+                }
+
+    Returns:
+        dict: A status dictionary indicating the result of the update.
+            - `{"status": "ok"}` if the update was successful.
+            - `{"status": "not found"}` if no resident with the given ID was found.
+    """
+    if session is None:
+        db = DatabaseClient(gb.MYSQL_URL)
+        session = Session(db.engine)
+
+    try:
+        resident_to_update = session.query(Resident).filter_by(idResident=idResident).first()
+
+        if not resident_to_update:
+            return {"status": "not found"}
+
+        for field, value in updates.items():
+            if hasattr(resident_to_update, field):
+                setattr(resident_to_update, field, value)
+
+        session.commit()
+        
+        return {"status": "ok"}
+    except Exception as e:
+        session.rollback()
+        return {"status": "error", "message": str(e)}
+    finally:
+        if session is None:
+            session.close()
   
   def get_all(self):
     """

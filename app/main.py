@@ -61,3 +61,40 @@ async def delete_resident(idResident: int):
         dict: A response indicating the success or failure of the deletion.
     """
     return controllers.delete_resident(idResident)
+
+@app.post('/resident/update')
+async def update_resident(
+    idResident: int, 
+    name: str = None, 
+    surname: str = None, 
+    birthDate: date = None, 
+    gender: str = None, 
+    idFamily: int = None, 
+    idRoom: int = None
+):
+    """
+    Endpoint to update a resident's details by their ID.
+
+    Parameters:
+        idResident (int): The unique ID of the resident to update.
+        name (str, optional): Updated first name of the resident.
+        surname (str, optional): Updated last name of the resident.
+        birthDate (date, optional): Updated birth date of the resident.
+        gender (str, optional): Updated gender of the resident.
+        idFamily (int, optional): Updated family ID of the resident.
+        idRoom (int, optional): Updated room ID of the resident.
+
+    Returns:
+        dict: A response indicating the success or failure of the update.
+    """
+    updated_fields = {
+        "name": name,
+        "surname": surname,
+        "birthDate": birthDate,
+        "gender": gender,
+        "idFamily": idFamily,
+        "idRoom": idRoom,
+    }
+    updated_fields = {key: value for key, value in updated_fields.items() if value is not None}
+
+    return controllers.update_resident(idResident, **updated_fields)
