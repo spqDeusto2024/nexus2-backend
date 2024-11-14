@@ -1,7 +1,5 @@
 name: CI - Integration Test
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
 on:
   push:
     branches: [main, develop]
@@ -17,14 +15,28 @@ jobs:
     steps:
       - name: Git checkout
         uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
       - name: Build Docker container
         run: bash build.sh
-      - name: Start docker-compose 
+
+      - name: Start docker-compose
         run: docker compose up -d
-      - name: Installation of dependencies for testing fastapi
-        run: pip install httpx
-      - run: pip install httpx[cli]
-      - name: Install pytest-html
-        run: pip install pytest-html
+
       - name: Run tests and generate HTML report
         run: pytest --html=report.html
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: report.html
