@@ -24,3 +24,7 @@ jobs:
       - name: Installation of dependencies for testing fastapi
         run: pip install httpx
       - run: pip install httpx[cli]
+      - name: Install pytest-html
+        run: pip install pytest-html
+      - name: Run tests and generate HTML report
+        run: pytest --html=report.html
