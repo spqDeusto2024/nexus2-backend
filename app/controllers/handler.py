@@ -41,7 +41,7 @@ class Controllers:
 
   def create_resident(self, body: resident.Resident):
 
-      """
+    """
     Creates a new resident entry in the database.
 
     Purpose:
