@@ -1,9 +1,7 @@
-import app.models.models as models
 import app.models.resident as resident
 import app.models.family as family
 import app.models.room as room
 import app.models.shelter as shelter
-import app.mysql.models as mysql_models
 import app.mysql.family as familyMysql
 import app.mysql.room as roomMysql
 import app.mysql.shelter as shelterMysql
@@ -31,21 +29,7 @@ class Controllers:
     """
     return {"status": "ok"}
   
-  def create_user(self, body: models.UserRequest):
-    """
-    Creates new user in  the database
-    """
-    body_row = mysql_models.User(name=body.name, fullname=body.fullname, age=body.age)
-    
-    db = DatabaseClient(gb.MYSQL_URL)
-    with Session(db.engine) as session:
-      session.add(body_row)
-      session.commit()
-      session.close()
-  
-    return {"status": "ok"}
 
-  
   def create_resident(self, body: resident.Resident, session=None):
    
     """
@@ -378,46 +362,5 @@ class Controllers:
     else:
         return "Access denied. You are in the wrong room."
 
-
-  def get_all(self):
-    """
-    Gets all users
-    """
-    db = DatabaseClient(gb.MYSQL_URL)
-    response: list = []
-    with Session(db.engine) as session:
-      response = session.query(mysql_models.User).all()
-      session.close()
-      
-    return response
-  
-  def delete_user(self, id: int):
-    """
-    Deletes user by its UID
-    """
-    db = DatabaseClient(gb.MYSQL_URL)
-    with Session(db.engine) as session:
-      userToBeDeleted = session.query(mysql_models.User).get(id)
-      session.delete(userToBeDeleted)
-      session.commit()
-      session.close()
-      
-    return {"status": "ok"}
-  
-  def update_user(self, body: models.UpdateRequest):
-    """
-    Updates user by its ID
-    """
-    db = DatabaseClient(gb.MYSQL_URL)
-    with Session(db.engine) as session:
-      user: mysql_models.User = session.query(mysql_models.User).get(body.id)
-      user.name = body.update.name
-      user.fullname = body.update.fullname
-      user.age = body.update.age
-      session.dirty
-      session.commit()
-      session.close()
-      
-    return {"status": "ok"}
   
 

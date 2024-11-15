@@ -6,7 +6,6 @@ from datetime import date
 
 
 import app.utils.vars as gb
-import app.models.models as models
 import app.models.resident as resident
 import app.models.family as family
 import app.models.room as room
@@ -29,9 +28,9 @@ def initialize() -> None:
     - Running the database initialization logic (e.g., seeding initial data).
     """
     dbClient = DatabaseClient(gb.MYSQL_URL)
-    Base.metadata.create_all(dbClient.engine)  # Use the engine from dbClient
-    dbClient.init_database()  # Custom database initialization, if any
-    initialize_database()  # Seed the database with initial data
+    Base.metadata.create_all(dbClient.engine) 
+    dbClient.init_database()  
+    initialize_database()  
     return
 
 
