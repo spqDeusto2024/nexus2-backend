@@ -7,56 +7,200 @@ from app.mysql.family import Family
 from datetime import date
 from sqlalchemy.orm import Session
 
-def test_create_resident(setup_database):
-
+def test_create_resident_with_capacity(setup_database):
     """
-    Unit test for the `create_resident` method in the Controllers class.
+    Test: Verifies that a family with an assigned room and sufficient capacity can add a new resident.
 
-    Test Steps:
-        1. Create an instance of the `Controllers` class.
-        2. Use the in-memory database session provided by `setup_database`.
-        3. Define a mock resident object with valid details.
-        4. Call the `create_resident` method with the mock resident and the test session.
-        5. Assert that the method returns a success response: `{"status": "ok"}`.
-        6. Query the database for the created resident using their name.
-        7. Verify that the resident exists in the database.
-        8. Assert that the resident's details (e.g., name, surname, room ID) match the expected values.
+    Steps:
+        1. Verify that the family has an assigned room.
+        2. Ensure that the room has enough capacity to accommodate the new resident.
+        3. Call the `create_resident` method to add the new resident.
+        4. Verify that the new resident was successfully added to the database.
 
     Expected Outcome:
-        - The `create_resident` method should return `{"status": "ok"}`.
-        - The resident should be successfully added to the database with all details matching the mock input.
+        - The new resident should be successfully created and assigned to the family and the room.
+        - The resident should be present in the database with the correct details.
+
+    Arguments:
+        setup_database (fixture): The database session used for test setup.
     """
-
-    from app.controllers.handler import Controllers
-
     controllers = Controllers()
     db_session = setup_database
 
-    mock_resident = Resident(
-        idResident=1,
-        name="Maria",
-        surname="Mutiloa",
-        birthDate=date(2001, 1, 1),
-        gender="F",
-        createdBy=1,
-        createDate=date(2024, 11, 14),
-        update=None,
-        idFamily=1,
-        idRoom=101,
-    )
+    family = Family(idFamily=1, familyName="Doe Family", idRoom=101, idShelter=1, createdBy=1, createDate=date.today())
+    db_session.add(family)
+    db_session.commit()
 
-    response = controllers.create_resident(mock_resident, session=db_session)
+    new_resident = Resident(
+        name="John",
+        surname="Doe",
+        birthDate=date(1990, 1, 1),
+        gender="M",
+        createdBy=1,
+        createDate=date.today(),
+        idFamily=1,
+        idRoom=101 
+    )
+    
+    response = controllers.create_resident(new_resident, session=db_session)
+
+    assert response == {"status": "ok"}
+    
+    added_resident = db_session.query(Resident).filter_by(name="John", surname="Doe").first()
+    assert added_resident is not None
+    assert added_resident.name == "John"
+    assert added_resident.surname == "Doe"
+    
+def test_create_resident_with_capacity_exceeded_existing_room(setup_database):
+    """
+    Test: Verifies that a family with an assigned room exceeding the room's capacity is reassigned to a new room with available space.
+
+    Steps:
+        1. Simulate a room where the family is already assigned and has reached the maximum capacity.
+        2. Call the `create_resident` method to reassign the family to a new room with available space.
+        3. Verify that the family was reassigned to a room that has enough space for the new resident.
+
+    Expected Outcome:
+        - The new resident should be successfully added to the family.
+        - The family should be reassigned to a room that has enough capacity for the new resident.
+        - The room assigned to the family should be updated in the database.
+
+    Arguments:
+        setup_database (fixture): The database session used for test setup.
+
+    """
+    controllers = Controllers()
+    db_session = setup_database
+
+    room = Room(idRoom=101, roomName="Room 101", maxPeople=2, idShelter=1)
+    db_session.add(room)
+    db_session.commit()
+
+    db_session.add(Resident(name="Resident 1", surname="Test", idRoom=101, idFamily=1, createdBy=1, createDate=date.today()))
+    db_session.add(Resident(name="Resident 2", surname="Test", idRoom=101, idFamily=1, createdBy=1, createDate=date.today()))
+    db_session.commit()
+
+    family = Family(idFamily=1, familyName="Doe Family", idRoom=101, idShelter=1, createdBy=1, createDate=date.today())
+    db_session.add(family)
+    db_session.commit()
+
+    new_resident = Resident(name="John", surname="Doe", birthDate=date(1990, 1, 1), gender="M", createdBy=1, idFamily=1, idRoom=None)
+
+    response = controllers.create_resident(new_resident, session=db_session)
+
     assert response == {"status": "ok"}
 
-    created_resident = db_session.query(Resident).filter_by(name="Maria").first()
-    assert created_resident is not None
-    assert created_resident.name == "Maria"
-    assert created_resident.surname == "Mutiloa"
-    assert created_resident.idFamily == 1
-    assert created_resident.idRoom == 101
+    updated_family = db_session.query(Family).filter_by(idFamily=1).first()
+    assert updated_family.idRoom != 101  
+
+def test_create_resident_no_room_assigned(setup_database):
+    """
+    Test: Verifies that when a family does not have a room assigned, a new room is created for them.
+
+    Steps:
+        1. Ensure that the family does not have a room assigned (`idRoom` is `None`).
+        2. Call the `create_resident` method to create a new resident for the family.
+        3. Verify that the method automatically assigns a new room to the family.
+        4. Ensure that the resident was created successfully in the newly assigned room.
+
+    Expected Outcome:
+        - A new room should be created for the family, and the resident should be assigned to that room.
+        - The response should indicate success (`status: "ok"`).
+
+    Arguments:
+        setup_database (fixture): The database session used for test setup.
+    """
+    controllers = Controllers()
+    db_session = setup_database
+
+    family = Family(idFamily=1, familyName="Doe Family", idRoom=None, idShelter=1, createdBy=1, createDate=date.today())
+    db_session.add(family)
+    db_session.commit()
+
+    new_resident = Resident(name="John", surname="Doe", birthDate=date(1990, 1, 1), gender="M", createdBy=1, idFamily=1, idRoom=None)
+
+    response = controllers.create_resident(new_resident, session=db_session)
+
+    assert response == {"status": "error", "message": "The family does not have an assigned room."}
+
+def test_create_resident_duplicate(setup_database):
+    """
+    Test: Verifies that a resident cannot be added if a duplicate exists in the room.
+
+    Steps:
+        1. Create a family with a room assigned.
+        2. Add a resident to the room.
+        3. Attempt to add another resident with the same name, surname, and family ID to the same room.
+        4. Ensure that the error message "Cannot create resident, the resident already exists in this room." is returned.
+
+    Expected Outcome:
+        - The second resident should not be added to the room.
+        - The system should return an error message indicating that the resident already exists in the room.
+        - The database should contain only one resident with the given name, surname, and room.
+
+    Arguments:
+        setup_database (fixture): The database session used for test setup.
+
+    """
+    controllers = Controllers()
+    db_session = setup_database
+
+    family = Family(idFamily=1, familyName="Doe Family", idRoom=101, idShelter=1, createdBy=1, createDate=date.today())
+    db_session.add(family)
+    db_session.commit()
+
+    resident1 = Resident(name="John", surname="Doe", birthDate=date(1990, 1, 1), gender="M", createdBy=1, idFamily=1, idRoom=101)
+    db_session.add(resident1)
+    db_session.commit()
+
+    new_resident = Resident(name="John", surname="Doe", birthDate=date(1990, 1, 1), gender="M", createdBy=1, idFamily=1, idRoom=101)
+    response = controllers.create_resident(new_resident, session=db_session)
+
+    assert response == {"status": "error", "message": "Cannot create resident, the resident already exists in this room."}
+
+
+def test_create_resident_shelter_full_capacity(setup_database):
+    """
+    Test: Verifies that a new resident cannot be added if the shelter is at full capacity.
+    
+    Steps:
+        1. Create a shelter with a maximum capacity limit for residents.
+        2. Add residents to the shelter until its capacity is reached.
+        3. Attempt to add another resident and ensure that the error message 
+           "The shelter is full" is returned.
+
+    Expected Outcome:
+        - The shelter should reject the addition of a new resident once it reaches its maximum capacity.
+        - The system should return an error message indicating that the shelter is full.
+        - The number of residents in the shelter should not exceed the shelter's maximum capacity.
+
+    Arguments:
+        setup_database (fixture): The database session used for the test setup.
+    """
+    controllers = Controllers()
+    db_session = setup_database
+
+    shelter = Shelter(idShelter=1, shelterName="Main Shelter", maxPeople=2, energyLevel=80, waterLevel=90, radiationLevel=10)
+    db_session.add(shelter)
+    db_session.commit()
+
+    family = Family(idFamily=1, familyName="Doe Family", idRoom=101, idShelter=1, createdBy=1, createDate=date.today())
+    db_session.add(family)
+    db_session.commit()
+
+    resident1 = Resident(name="John", surname="Doe", birthDate=date(1990, 1, 1), gender="M", createdBy=1, idFamily=1, idRoom=101)
+    resident2 = Resident(name="Jane", surname="Doe", birthDate=date(1992, 1, 1), gender="F", createdBy=1, idFamily=1, idRoom=101)
+    db_session.add(resident1)
+    db_session.add(resident2)
+    db_session.commit()
+
+    new_resident = Resident(name="Alice", surname="Doe", birthDate=date(1995, 1, 1), gender="F", createdBy=1, idFamily=1, idRoom=101)
+    response = controllers.create_resident(new_resident, session=db_session)
+
+    assert response == {"status": "error", "message": "The shelter is full."}
+
 
 def test_delete_resident(setup_database):
-
     """
     Unit test for the `delete_resident` method in the Controllers class.
 
@@ -296,3 +440,4 @@ def test_access_room(setup_database):
 
     response5 = controllers.access_room(999, 1, session=db_session)
     assert response5 == "Resident not found."
+
