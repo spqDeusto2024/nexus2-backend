@@ -2,7 +2,9 @@ import pytest
 from app.mysql.resident import Resident
 from app.controllers.handler import Controllers 
 from app.mysql.room import Room 
+from app.mysql.shelter import Shelter 
 from datetime import date
+from sqlalchemy.orm import Session
 
 def test_create_resident(setup_database):
 
@@ -204,3 +206,43 @@ def test_list_rooms_with_resident_count(setup_database):
     assert result[1]["roomName"] == "Room B"
     assert result[1]["resident_count"] == 1
     
+def test_get_shelter_energy_level(setup_database):
+    """
+    Test for the `get_shelter_energy_level` method.
+
+    Test Steps:
+        1. Setup:
+            - Create a test instance of the `Shelter` model with predefined attributes,
+              including an `energyLevel` value.
+            - Add the test shelter to the in-memory SQLite database and commit the transaction.
+        2. Execution:
+            - Call the `get_shelter_energy_level` method via the `Controllers` class.
+        3. Verification:
+            - Ensure the method returns the expected energy level (`{"energyLevel": 80}`).
+
+    Expected Result:
+        The method should return a dictionary with the correct energy level of the shelter.
+
+    """
+    from app.controllers.handler import Controllers
+
+    controllers = Controllers()
+    db_session = setup_database
+
+    test_shelter = Shelter(
+        idShelter=1,
+        shelterName="Main Shelter",
+        address="123 Shelter Street",
+        phone="1234567890",
+        email="shelter@example.com",
+        maxPeople=100,
+        energyLevel=80,
+        waterLevel=90,
+        radiationLevel=10,
+    )
+    db_session.add(test_shelter)
+    db_session.commit()
+
+    response = controllers.get_shelter_energy_level(session=db_session)
+
+    assert response == {"energyLevel": 80}
