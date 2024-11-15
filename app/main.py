@@ -167,5 +167,21 @@ async def access_room(idResident: int, idRoom: int):
     except Exception as e:
         return {"error": str(e)}
 
+@app.get('/rooms/{idRoom}/residents')
+async def list_residents_in_room(idRoom: int):
+    """
+    Endpoint to list all residents in a specific room.
+
+    Args:
+        idRoom (int): The unique identifier of the room.
+
+    Returns:
+        list[dict]: A list of dictionaries containing details of the residents in the room.
+    """
+    try:
+        return controllers.list_residents_in_room(idRoom)
+    except Exception as e:
+        return {"error": str(e)}
+
 
 

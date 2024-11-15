@@ -362,5 +362,52 @@ class Controllers:
     else:
         return "Access denied. You are in the wrong room."
 
-  
+  def list_residents_in_room(self, idRoom, session=None):
+    
+    """
+    Retrieves a list of all residents assigned to a specific room.
+
+    Parameters:
+        idRoom (int): 
+            The unique identifier of the room for which residents should be listed.
+        session (Session, optional): 
+            An active SQLAlchemy database session. If not provided, the method 
+            initializes a new database session using the `DatabaseClient`.
+
+    Returns:
+        list[dict]: 
+            A list of dictionaries, where each dictionary represents a resident 
+            and contains the following keys:
+            - `idResident` (int): The unique identifier of the resident.
+            - `name` (str): The name of the resident.
+            - `surname` (str): The surname of the resident.
+            - `idFamily` (int): The family ID associated with the resident.
+            - `idRoom` (int): The room ID where the resident is assigned.
+
+    Process:
+        1. If no session is provided, a new session is created using the `DatabaseClient`.
+        2. Query the `Resident` table to retrieve all residents with the given `idRoom`.
+        3. Transform the query results into a list of dictionaries with relevant resident details.
+    """
+    if session is None:
+        db = DatabaseClient(gb.MYSQL_URL)
+        session = Session(db.engine)
+
+    residents = (
+        session.query(Resident)
+        .filter(Resident.idRoom == idRoom)
+        .all()
+    )
+
+    return [
+        {
+            "idResident": resident.idResident,
+            "name": resident.name,
+            "surname": resident.surname,
+            "idFamily": resident.idFamily,
+            "idRoom": resident.idRoom,
+        }
+        for resident in residents
+    ]
+
 
