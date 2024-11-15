@@ -1,7 +1,7 @@
 import pytest
 from app.mysql.resident import Resident
 from app.controllers.handler import Controllers 
-
+from app.mysql.room import Room 
 from datetime import date
 
 def test_create_resident(setup_database):
@@ -153,3 +153,54 @@ def test_update_resident(setup_database):
     assert updated_resident.name == "Ana"
     assert updated_resident.surname == "Mutiloa" 
     assert updated_resident.idRoom == 202 
+
+def test_list_rooms_with_resident_count(setup_database):
+
+    """
+    Test for the `list_rooms_with_resident_count` method in the controller.
+
+    This test ensures that the method correctly retrieves all rooms along with 
+    the count of residents assigned to each room.
+
+    Steps:
+        1. Create two room records (`room1` and `room2`) and add them to the database.
+        2. Create three resident records (`resident1`, `resident2`, `resident3`) and 
+           assign them to rooms:
+           - `resident1` and `resident2` belong to `room1`.
+           - `resident3` belongs to `room2`.
+        3. Commit these records to the test database.
+        4. Call the `list_rooms_with_resident_count` method from the controller to 
+           retrieve room details along with resident counts.
+        5. Validate that:
+           - Two rooms are returned in the result.
+           - The resident count for each room matches the expected values.
+           - Room details such as `idRoom` and `roomName` are correctly included.
+    """
+
+    from app.controllers.handler import Controllers
+
+    controllers = Controllers()
+    db_session = setup_database
+
+    room1 = Room(idRoom=1, roomName="Room A", maxPeople=4, createdBy=1, createDate=date(2024, 11, 14), idShelter=1)
+    room2 = Room(idRoom=2, roomName="Room B", maxPeople=3, createdBy=1, createDate=date(2024, 11, 14), idShelter=1)
+    db_session.add_all([room1, room2])
+    db_session.commit()
+
+    resident1 = Resident(idResident=1, name="John", surname="Doe", birthDate=date(1990, 1, 1), gender="M", createdBy=1, createDate=date(2024, 11, 14), idRoom=1)
+    resident2 = Resident(idResident=2, name="Jane", surname="Smith", birthDate=date(1985, 6, 15), gender="F", createdBy=1, createDate=date(2024, 11, 14), idRoom=1)
+    resident3 = Resident(idResident=3, name="Alice", surname="Brown", birthDate=date(1995, 8, 23), gender="F", createdBy=1, createDate=date(2024, 11, 14), idRoom=2)
+    db_session.add_all([resident1, resident2, resident3])
+    db_session.commit()
+
+    result = controllers.list_rooms_with_resident_count(session=db_session)
+
+    assert len(result) == 2
+    assert result[0]["idRoom"] == 1
+    assert result[0]["roomName"] == "Room A"
+    assert result[0]["resident_count"] == 2
+
+    assert result[1]["idRoom"] == 2
+    assert result[1]["roomName"] == "Room B"
+    assert result[1]["resident_count"] == 1
+    
