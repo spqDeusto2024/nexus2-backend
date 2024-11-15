@@ -45,24 +45,30 @@ initialize()
 async def healthz():
   return controllers.healthz()
 
-@app.post('/user/create')
-async def create_user(body: models.UserRequest):
-  return controllers.create_user(body)
-
-@app.post('/user/delete')
-async def delete_user(body: models.DeleteRequest):
-  return controllers.delete_user(body.id)
-  
-@app.get('/user/get_all')
-async def get_all_users():
-  return controllers.get_all()
-
-@app.post('/user/update')
-async def update_user(body: models.UpdateRequest):
-  return controllers.update_user(body)
-
 @app.post('/resident/create')
 async def create_resident(body: resident.Resident):
+    """
+    Creates a new resident in the system. This endpoint ensures that the resident is added to an existing family and room, 
+    or a new room is created if necessary. The function also checks that there are no duplicate residents, that the shelter's 
+    capacity is not exceeded, and that the family has an assigned room.
+
+    This endpoint expects the following data structure in the request body:
+    - `name`: The first name of the resident.
+    - `surname`: The last name of the resident.
+    - `birthDate`: The birthdate of the resident.
+    - `gender`: The gender of the resident.
+    - `idFamily`: The ID of the family to which the resident belongs.
+    - `idRoom`: The ID of the room the resident will be assigned to. If the family does not have a room assigned, a new room will be created.
+
+    Arguments:
+        body (resident.Resident): The resident data to be added to the database, which includes personal information and family details.
+
+    Returns:
+        dict: A response containing the status of the operation and a message.
+              - Success: `{"status": "ok"}`
+              - Error: `{"status": "error", "message": "Error message explaining the issue."}`
+
+    """
     return controllers.create_resident(body)
 
 @app.delete('/resident/delete')

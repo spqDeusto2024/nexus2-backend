@@ -47,37 +47,89 @@ class Controllers:
 
   
   def create_resident(self, body: resident.Resident, session=None):
-  
+   
     """
-    Creates a new resident entry in the database.
+    Creates a new resident entry in the database and ensures that the assigned room has enough capacity
+    to accommodate all family members. If the current room cannot accommodate the new resident, it checks
+    for an available room in the shelter, and if none is available, a new room is created. Additionally,
+    the method checks for the shelter's capacity, prevents duplication of residents in the same room, and
+    assigns the correct room to the family.
 
-    Parameters:
-            - `name` (str): First name of the resident.
-            - `surname` (str): Last name of the resident.
-            - `birthDate` (datetime.date): The resident's date of birth.
-            - `gender` (str): Gender of the resident (e.g., "M" for male, "F" for female).
-            - `createdBy` (int): ID of the admin or user creating the entry.
-            - `idFamily` (Optional[int]): Foreign key linking to the family, if applicable.
-            - `idRoom` (int): Foreign key linking to the resident's assigned room.
+    Steps:
+        1. Verifies if the family exists in the database.
+        2. Checks if the family has an assigned room.
+        3. Ensures no duplication of residents with the same name, surname, and family in the same room.
+        4. Verifies the shelter's capacity is not exceeded.
+        5. Checks if the room has enough capacity for the new resident. If not, attempts to reassign the family
+           to a different room or create a new room if necessary.
+        6. Adds the new resident to the database and associates them with the correct room.
+
+    Arguments:
+        body (resident.Resident): The resident data to be added to the database. This includes information such as
+                                   the resident's name, surname, birth date, gender, family ID, and room ID.
+        session (Session, optional): The database session to use for the transaction. If not provided, a new session
+                                     will be created.
 
     Returns:
-        dict:
-            A dictionary indicating the success of the operation:
-            - `{"status": "ok"}` if the resident was successfully created.
-
-    Process:
-        1. Convert the `Resident` object into a database-compatible format.
-        2. Use the provided session or create a new session.
-        3. Add the resident to the database.
-        4. Commit the transaction to save the changes.
-        5. Return a success status.
-
+        dict: A dictionary indicating the result of the operation.
+              - If successful: {"status": "ok"}
+              - If there is an error (e.g., family does not exist, no assigned room, shelter full, or resident already exists):
+                {"status": "error", "message": "Error message explaining the issue."}
     """
-    
     if session is None:
         db = DatabaseClient(gb.MYSQL_URL)
         session = Session(db.engine)
 
+    family = session.query(familyMysql.Family).filter(familyMysql.Family.idFamily == body.idFamily).first()
+    
+    if not family:
+        return {"status": "error", "message": "The family does not exist."}
+
+    if not family.idRoom:
+        return {"status": "error", "message": "The family does not have an assigned room."}
+
+    existing_resident = session.query(residentMysql.Resident).filter(
+        residentMysql.Resident.idFamily == body.idFamily,
+        residentMysql.Resident.idRoom == family.idRoom,
+        residentMysql.Resident.name == body.name,
+        residentMysql.Resident.surname == body.surname
+    ).first()
+
+    if existing_resident:
+        return {"status": "error", "message": "Cannot create resident, the resident already exists in this room."}
+
+    shelter_capacity = session.query(Shelter).filter(Shelter.idShelter == family.idShelter).first()
+    if shelter_capacity:
+        current_residents_in_shelter = session.query(residentMysql.Resident).filter(residentMysql.Resident.idFamily == body.idFamily).count()
+        if current_residents_in_shelter >= shelter_capacity.maxPeople:
+            return {"status": "error", "message": "The shelter is full."}
+
+    room = session.query(roomMysql.Room).filter(roomMysql.Room.idRoom == family.idRoom).first()
+
+    if room:
+        current_family_residents = session.query(residentMysql.Resident).filter(residentMysql.Resident.idFamily == body.idFamily, residentMysql.Resident.idRoom == family.idRoom).count()
+
+        if current_family_residents + 1 > room.maxPeople:
+            new_room = session.query(roomMysql.Room).filter(roomMysql.Room.maxPeople > current_family_residents, roomMysql.Room.idShelter == room.idShelter).first()
+            
+            if new_room:
+                family.idRoom = new_room.idRoom
+                session.query(familyMysql.Family).filter(familyMysql.Family.idFamily == body.idFamily).update({"idRoom": new_room.idRoom}, synchronize_session=False)
+                session.commit()
+                room = new_room
+            else:
+                new_room = roomMysql.Room(
+                    roomName="New Room",  
+                    idShelter=family.idShelter,
+                    maxPeople=current_family_residents + 1
+                )
+                session.add(new_room)
+                session.commit()
+                family.idRoom = new_room.idRoom
+                session.query(familyMysql.Family).filter(familyMysql.Family.idFamily == body.idFamily).update({"idRoom": new_room.idRoom}, synchronize_session=False)
+                session.commit()
+                room = new_room
+    
     body_row = residentMysql.Resident(
         name=body.name,
         surname=body.surname,
@@ -86,11 +138,12 @@ class Controllers:
         createdBy=body.createdBy,
         createDate=date.today(),
         idFamily=body.idFamily,
-        idRoom=body.idRoom,
+        idRoom=family.idRoom,
     )
 
     session.add(body_row)
     session.commit()
+    
     return {"status": "ok"}
 
   
@@ -367,3 +420,4 @@ class Controllers:
       
     return {"status": "ok"}
   
+
