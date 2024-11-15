@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from typing import Union
 from app.controllers.handler import Controllers
 from app.mysql.mysql import DatabaseClient
+from datetime import date
+
 
 import app.utils.vars as gb
 import app.models.models as models
@@ -99,14 +101,28 @@ async def update_resident(
 
     return controllers.update_resident(idResident, **updated_fields)
 
-    @app.get('/rooms/list_with_counts')
-    async def list_rooms_with_counts():
-      
-    """
-    Endpoint to list all rooms with the number of residents in each.
+@app.get('/rooms/list_with_counts')
+async def list_rooms_with_counts():
 
-    Returns:
-        list[dict]: A list of dictionaries containing room details and resident count.
-    """
-    return controllers.list_rooms_with_resident_count()
+  """
+  Endpoint to list all rooms with the number of residents in each.
+
+  Returns:
+      list[dict]: A list of dictionaries containing room details and resident count.
+  """
+  return controllers.list_rooms_with_resident_count()
+
+@app.get('/shelter/energy-level')
+async def get_shelter_energy_level():
+  """
+  Endpoint to retrieve the energy level of the shelter.
+
+  Returns:
+      dict: A response containing the energy level of the shelter, e.g., `{"energyLevel": 75}`.
+  """
+  try:
+      return controllers.get_shelter_energy_level()
+  except ValueError as e:
+      return {"error": str(e)}
+
 

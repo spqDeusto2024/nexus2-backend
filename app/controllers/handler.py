@@ -11,6 +11,7 @@ import app.mysql.resident as residentMysql
 from app.mysql.mysql import DatabaseClient
 from app.mysql.resident import Resident
 from app.mysql.room import Room
+from app.mysql.shelter import Shelter
 
 from datetime import date
 import app.utils.vars as gb
@@ -225,6 +226,48 @@ class Controllers:
         }
         for room, resident_count in result
     ]
+
+
+  def get_shelter_energy_level(self, session=None):
+
+    """
+    Retrieves the energy level of the shelter. This method fetches the energy level of the shelter from the database.
+    It assumes there is only one shelter entry in the database.
+
+    Parameters:
+        session (Session, optional): 
+            An active SQLAlchemy database session. 
+            If not provided, the method initializes a new session using the default database connection.
+
+    Returns:
+        dict: 
+            A dictionary containing the energy level of the shelter in the following format:
+            ```
+            {
+                "energyLevel": <int>  # Energy level as an integer (e.g., 75).
+            }
+            ```
+
+    Process:
+        1. If no active database session is provided, initialize a new session.
+        2. Query the database to retrieve the first (and only) shelter entry.
+        3. If a shelter is found:
+            - Extract its energy level.
+            - Return the energy level in a dictionary.
+        4. If no shelter is found:
+            - Raise a `ValueError` indicating the absence of shelter data.
+            
+    """
+    if session is None:
+        db = DatabaseClient(gb.MYSQL_URL)
+        session = Session(db.engine)
+
+    shelter = session.query(Shelter).first()
+
+    if shelter is None:
+        raise ValueError("No shelter found in the database.")
+
+    return {"energyLevel": shelter.energyLevel}
 
 
   def get_all(self):
