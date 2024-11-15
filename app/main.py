@@ -98,3 +98,15 @@ async def update_resident(
     updated_fields = {key: value for key, value in updated_fields.items() if value is not None}
 
     return controllers.update_resident(idResident, **updated_fields)
+
+    @app.get('/rooms/list_with_counts')
+    async def list_rooms_with_counts():
+      
+    """
+    Endpoint to list all rooms with the number of residents in each.
+
+    Returns:
+        list[dict]: A list of dictionaries containing room details and resident count.
+    """
+    return controllers.list_rooms_with_resident_count()
+

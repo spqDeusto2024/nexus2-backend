@@ -10,10 +10,13 @@ import app.mysql.shelter as shelterMysql
 import app.mysql.resident as residentMysql
 from app.mysql.mysql import DatabaseClient
 from app.mysql.resident import Resident
+from app.mysql.room import Room
 
 from datetime import date
 import app.utils.vars as gb
 from sqlalchemy.orm import Session
+from sqlalchemy import func
+
 
 
 class Controllers:
@@ -171,6 +174,59 @@ class Controllers:
         if session is None:
             session.close()
   
+  
+  def list_rooms_with_resident_count(self, session=None):
+  
+    """
+    Retrieves a list of all rooms along with the number of residents in each room.
+
+    Parameters:
+        session (Session, optional): 
+            An active SQLAlchemy database session. If not provided, the method 
+            initializes a new database session using the `DatabaseClient`.
+
+    Returns:
+        list[dict]: 
+            A list of dictionaries, where each dictionary represents a room 
+            and contains the following keys:
+            - `idRoom` (int): The unique identifier of the room.
+            - `roomName` (str): The name of the room.
+            - `maxPeople` (int): The maximum capacity of the room.
+            - `resident_count` (int): The number of residents currently assigned to the room.
+
+    Process:
+        1. If no session is provided, a new session is created using the `DatabaseClient`.
+        2. Perform an `outerjoin` between the `Room` and `Resident` tables on the `idRoom` field.
+        3. Use SQL aggregation to calculate the number of residents in each room.
+        4. Group the results by `Room.idRoom` to ensure one result per room.
+        5. Transform the query results into a list of dictionaries, including:
+            - Room details (`idRoom`, `roomName`, `maxPeople`).
+            - The calculated resident count (`resident_count`).
+
+    """
+
+    if session is None:
+        db = DatabaseClient(gb.MYSQL_URL)
+        session = Session(db.engine)
+
+    result = (
+        session.query(Room, func.count(Resident.idResident).label("resident_count"))
+        .outerjoin(Resident, Room.idRoom == Resident.idRoom)
+        .group_by(Room.idRoom)
+        .all()
+    )
+
+    return [
+        {
+            "idRoom": room.idRoom,
+            "roomName": room.roomName,
+            "maxPeople": room.maxPeople,
+            "resident_count": resident_count,
+        }
+        for room, resident_count in result
+    ]
+
+
   def get_all(self):
     """
     Gets all users
