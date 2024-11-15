@@ -12,12 +12,27 @@ import app.models.family as family
 import app.models.room as room
 import app.models.shelter as shelter
 
+from app.mysql.initializeData import initialize_database
+from app.mysql.base import Base
+from app.mysql.alarm import Alarm 
+from app.mysql.admin import Admin 
+from app.mysql.family import Family
+from app.mysql.machine import Machine 
+from app.mysql.resident import Resident
+from app.mysql.room import Room
+from app.mysql.shelter import Shelter    
 
 def initialize() -> None:
-  # initialize database
-  dbClient = DatabaseClient(gb.MYSQL_URL)
-  dbClient.init_database()
-  return
+    """
+    Initializes the database by:
+    - Creating the database schema from the SQLAlchemy models.
+    - Running the database initialization logic (e.g., seeding initial data).
+    """
+    dbClient = DatabaseClient(gb.MYSQL_URL)
+    Base.metadata.create_all(dbClient.engine)  # Use the engine from dbClient
+    dbClient.init_database()  # Custom database initialization, if any
+    initialize_database()  # Seed the database with initial data
+    return
 
 
 app = FastAPI()
@@ -110,7 +125,10 @@ async def list_rooms_with_counts():
   Returns:
       list[dict]: A list of dictionaries containing room details and resident count.
   """
-  return controllers.list_rooms_with_resident_count()
+  try:
+        return controllers.list_rooms_with_resident_count()
+  except Exception as e:
+        return {"error": str(e)}
 
 @app.get('/shelter/energy-level')
 async def get_shelter_energy_level():

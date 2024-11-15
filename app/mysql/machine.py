@@ -23,7 +23,7 @@ class Machine(Base):
     
     __tablename__ = "machine"
     idMachine = Column(Integer, primary_key=True)
-    machineName = Column(String, nullable=False)
+    machineName = Column(String (30), nullable=False)
     on = Column(Boolean)
     idRoom = Column(Integer, ForeignKey("room.idRoom"))
     createdBy = Column(Integer)

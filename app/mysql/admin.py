@@ -15,6 +15,6 @@ class Admin(Base):
     """
     __tablename__ = "admin"
     idAdmin = Column(Integer, primary_key=True)
-    email = Column(String, nullable=False)
-    name = Column(String, nullable=False)
-    password = Column(String, nullable=False)
+    email = Column(String (50), nullable=False)
+    name = Column(String (50), nullable=False)
+    password = Column(String (20), nullable=False)
