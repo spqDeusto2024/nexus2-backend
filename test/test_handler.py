@@ -3,6 +3,7 @@ from app.mysql.resident import Resident
 from app.controllers.handler import Controllers 
 from app.mysql.room import Room 
 from app.mysql.shelter import Shelter 
+from app.mysql.family import Family
 from datetime import date
 from sqlalchemy.orm import Session
 
@@ -246,3 +247,52 @@ def test_get_shelter_energy_level(setup_database):
     response = controllers.get_shelter_energy_level(session=db_session)
 
     assert response == {"energyLevel": 80}
+
+def test_access_room(setup_database):
+
+    """
+    Test for the `access_room` method in the controller.
+
+    This test validates the logic for determining access rights of residents to rooms, 
+    based on the following scenarios:
+    
+    Scenarios Tested:
+        1. Resident is granted access to their assigned family room.
+        2. Resident is denied access to a family room they are not part of.
+        3. Resident is granted access to a non-restricted room (not starting with "Room").
+        4. Resident attempts to access a room that does not exist.
+        5. A non-existent resident attempts to access a room.
+    """
+
+    controllers = Controllers()
+    db_session = setup_database
+
+    room1 = Room(idRoom=1, roomName="Room A", maxPeople=4, createdBy=1, createDate=date(2024, 11, 14), idShelter=1)
+    room2 = Room(idRoom=2, roomName="Meeting Room", maxPeople=3, createdBy=1, createDate=date(2024, 11, 14), idShelter=1)
+    room3 = Room(idRoom=3, roomName="RoomPrivate1", maxPeople=2, createdBy=1, createDate=date(2024, 11, 14), idShelter=1)
+    db_session.add_all([room1, room2, room3])
+
+    family1 = Family(idFamily=1, familyName="Doe Family", idRoom=1, idShelter=1, createdBy=1, createDate=date(2024, 11, 14))
+    db_session.add(family1)
+
+    resident1 = Resident(idResident=1, name="John", surname="Doe", birthDate=date(1990, 1, 1), gender="M",
+                          createdBy=1, createDate=date(2024, 11, 14), idRoom=1, idFamily=1)
+    resident2 = Resident(idResident=2, name="Jane", surname="Smith", birthDate=date(1985, 6, 15), gender="F",
+                          createdBy=1, createDate=date(2024, 11, 14), idRoom=1, idFamily=None)
+    db_session.add_all([resident1, resident2])
+    db_session.commit()
+
+    response1 = controllers.access_room(1, 1, session=db_session)
+    assert response1 == "Access granted. Welcome to the room."
+
+    response2 = controllers.access_room(2, 1, session=db_session)
+    assert response2 == "Access denied. You are in the wrong room."
+
+    response3 = controllers.access_room(2, 2, session=db_session) 
+    assert response3 == "Access granted. Welcome to the room."
+
+    response4 = controllers.access_room(1, 999, session=db_session)
+    assert response4 == "Room not found."
+
+    response5 = controllers.access_room(999, 1, session=db_session)
+    assert response5 == "Resident not found."
