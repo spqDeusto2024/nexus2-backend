@@ -125,4 +125,24 @@ async def get_shelter_energy_level():
   except ValueError as e:
       return {"error": str(e)}
 
+@app.post('/room/access')
+async def access_room(idResident: int, idRoom: int):
+    """
+    Endpoint to determine if a resident can access a specified room.
+
+    Parameters:
+        idResident (int): The unique ID of the resident attempting access.
+        idRoom (int): The unique ID of the room being accessed.
+
+    Returns:
+        dict: A dictionary containing the result of the access attempt:
+              - "message": A message indicating the access result.
+    """
+    try:
+        message = controllers.access_room(idResident, idRoom)
+        return {"message": message}
+    except Exception as e:
+        return {"error": str(e)}
+
+
 

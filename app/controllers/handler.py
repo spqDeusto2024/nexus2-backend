@@ -12,6 +12,7 @@ from app.mysql.mysql import DatabaseClient
 from app.mysql.resident import Resident
 from app.mysql.room import Room
 from app.mysql.shelter import Shelter
+from app.mysql.family import Family
 
 from datetime import date
 import app.utils.vars as gb
@@ -256,7 +257,7 @@ class Controllers:
             - Return the energy level in a dictionary.
         4. If no shelter is found:
             - Raise a `ValueError` indicating the absence of shelter data.
-            
+
     """
     if session is None:
         db = DatabaseClient(gb.MYSQL_URL)
@@ -268,6 +269,61 @@ class Controllers:
         raise ValueError("No shelter found in the database.")
 
     return {"energyLevel": shelter.energyLevel}
+
+
+  def access_room(self, idResident: int, idRoom: int, session=None):
+
+    """
+    Determines whether a resident is allowed to access a specified room.
+
+    Steps:
+        1. If the room name does **not** start with "Room" (e.g., a public or common room), 
+           the resident is granted access regardless of family association.
+        2. If the room name **does** start with "Room" (e.g., a private or restricted room), 
+           access is granted only if:
+           - The resident is part of a family.
+           - The room is assigned to the resident's family.
+        3. Returns appropriate error messages if the resident or room does not exist.
+
+    Parameters:
+        idResident (int): 
+            The unique identifier of the resident attempting to access the room.
+        idRoom (int): 
+            The unique identifier of the room the resident is trying to access.
+        session (Session, optional): 
+            An active SQLAlchemy database session. If not provided, the method will 
+            create a new session using the application's database configuration.
+
+    Returns:
+        str: 
+            A message indicating the outcome of the access attempt:
+            - `"Access granted. Welcome to the room."`: Resident has permission to access the room.
+            - `"Access denied. You are in the wrong room."`: Resident does not have permission.
+            - `"Resident not found."`: The specified resident does not exist in the database.
+            - `"Room not found."`: The specified room does not exist in the database.
+    """
+
+    if session is None:
+        db = DatabaseClient(gb.MYSQL_URL)
+        session = Session(db.engine)
+
+    resident = session.query(Resident).filter_by(idResident=idResident).first()
+    room = session.query(Room).filter_by(idRoom=idRoom).first()
+
+    if resident is None:
+        return "Resident not found."
+
+    if room is None:
+        return "Room not found."
+
+    if not room.roomName.startswith("Room"):
+        return "Access granted. Welcome to the room."
+
+    family = session.query(Family).filter_by(idRoom=room.idRoom).first()
+    if family and resident.idFamily == family.idFamily:
+        return "Access granted. Welcome to the room."
+    else:
+        return "Access denied. You are in the wrong room."
 
 
   def get_all(self):
