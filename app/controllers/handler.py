@@ -374,7 +374,7 @@ class Controllers:
   
   
   def get_shelter_water_level(self, session=None):
-    
+
     """
     Retrieves the water level of the shelter. This method fetches the water level of the shelter from the database.
     It assumes there is only one shelter entry in the database.
@@ -414,6 +414,47 @@ class Controllers:
 
     return {"waterLevel": shelter.waterLevel}   
 
+
+  def get_shelter_radiation_level(self, session=None):
+    
+    """
+    Retrieves the radiation level of the shelter. This method fetches the radiation level of the shelter from the database.
+    It assumes there is only one shelter entry in the database.
+
+    Parameters:
+        session (Session, optional): 
+            An active SQLAlchemy database session. 
+            If not provided, the method initializes a new session using the default database connection.
+
+    Returns:
+        dict: 
+            A dictionary containing the radiation level of the shelter in the following format:
+            ```
+            {
+                "radiationLevel": <int>  # Radiation level as an integer (e.g., 10).
+            }
+            ```
+
+    Process:
+        1. If no active database session is provided, initialize a new session.
+        2. Query the database to retrieve the first (and only) shelter entry.
+        3. If a shelter is found:
+            - Extract its radiation level.
+            - Return the radiation level in a dictionary.
+        4. If no shelter is found:
+            - Raise a `ValueError` indicating the absence of shelter data.
+
+    """
+    if session is None:
+        db = DatabaseClient(gb.MYSQL_URL)
+        session = Session(db.engine)
+
+    shelter = session.query(Shelter).first()
+
+    if shelter is None:
+        raise ValueError("No shelter found in the database.")
+
+    return {"radiationLevel": shelter.radiationLevel}
 
   def access_room(self, idResident: int, idRoom: int, session=None):
 

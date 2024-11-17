@@ -186,6 +186,20 @@ async def get_shelter_water_level():
     except ValueError as e:
         return {"error": str(e)}
 
+@app.get('/shelter/radiation-level')
+async def get_shelter_radiation_level():
+    
+    """
+    Endpoint to retrieve the radiation level of the shelter.
+
+    Returns:
+        dict: A response containing the radiation level of the shelter, e.g., `{"radiationLevel": 15}`.
+    """
+    try:
+        return controllers.get_shelter_radiation_level()
+    except ValueError as e:
+        return {"error": str(e)}
+
 @app.post('/room/access')
 async def access_room(idResident: int, idRoom: int):
     """
