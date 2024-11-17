@@ -1,3 +1,4 @@
+import hashlib
 import app.models.resident as resident
 import app.models.family as family
 import app.models.room as room
