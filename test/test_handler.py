@@ -318,9 +318,12 @@ def test_create_room(setup_database):
     controllers = Controllers()
     db_session = setup_database
 
-    room = Room(idRoom=1, roomName="Canteen", createdBy=1, createDate=date.today(), idShelter=1, maxPeople=20)
-    db_session.add(room)
+    admin = AdminModel(idAdmin=1, email="admin1@gmail.com", name="Maria", password="Maria1")
+    db_session.add(admin)
     db_session.commit()
+
+    room = Room(idRoom=1, roomName="Canteen", createdBy=1, createDate=date.today(), idShelter=1, maxPeople=20)
+
 
     response = controllers.create_room(room, session=db_session)
 
