@@ -6,6 +6,8 @@ from app.mysql.shelter import Shelter
 from app.mysql.family import Family
 from datetime import date
 from sqlalchemy.orm import Session
+from app.mysql.admin import Admin as AdminModel
+from app.models.admin import Admin as AdminSchema
 
 def test_create_resident_with_capacity(setup_database):
     """
@@ -612,4 +614,123 @@ def test_list_residents_in_room(setup_database):
     assert result[0]["surname"] == "Brown"
     assert result[0]["idRoom"] == 2
 
+def test_create_admin_success(setup_database):
+    
+    """
+    Test the successful creation of an admin.
+
+    This test ensures that:
+        1. The `create_admin` function creates a new admin successfully when provided with valid data.
+        2. The response from the function indicates success with the correct message.
+        3. The admin record is correctly added to the database with:
+           - The expected email and name.
+           - The password hashed using SHA-256.
+
+    Steps:
+        1. Create a mock admin object with valid details.
+        2. Call the `create_admin` method to add the admin to the database.
+        3. Verify that the response status is "ok" and the message indicates success.
+        4. Query the database to confirm the admin's details were saved correctly.
+        5. Check that the password is stored as a SHA-256 hash.
+    """
+
+    db_session: Session = setup_database
+    controllers = Controllers()
+
+    admin_data = AdminSchema(
+        idAdmin=1,
+        email="admin@example.com",
+        name="Admin Name",
+        password="securepassword"
+    )
+
+    response = controllers.create_admin(admin_data, session=db_session)
+
+    assert response["status"] == "ok"
+    assert response["message"] == "Admin created successfully."
+
+    admin_from_db = db_session.query(AdminModel).filter_by(email=admin_data.email).first()
+    assert admin_from_db is not None
+    assert admin_from_db.email == admin_data.email
+    assert admin_from_db.name == admin_data.name
+
+    hashed_password = hashlib.sha256(admin_data.password.encode()).hexdigest()
+    assert admin_from_db.password == hashed_password
+
+def test_create_admin_duplicate_email(setup_database):
+    
+    """
+    Test the creation of an admin with an email that already exists.
+
+    This test ensures that:
+        1. The `create_admin` function prevents the creation of a new admin 
+           when an admin with the same email already exists in the database.
+        2. The response from the function indicates failure with an appropriate error message.
+
+    Steps:
+        1. Insert an existing admin into the database with a specific email.
+        2. Attempt to create a new admin with the same email.
+        3. Verify that the response status is "error" and the message indicates the duplication issue.
+        4. Ensure that no new admin is added to the database for the duplicate email.
+    """
+
+    db_session: Session = setup_database
+    controllers = Controllers()
+
+    existing_admin = AdminModel(
+        idAdmin=1,
+        email="admin@example.com",
+        name="Existing Admin",
+        password=hashlib.sha256("securepassword".encode()).hexdigest()
+    )
+    db_session.add(existing_admin)
+    db_session.commit()
+
+    admin_data = AdminSchema(
+        idAdmin=2,
+        email="admin@example.com",
+        name="New Admin",
+        password="newpassword"
+    )
+
+    response = controllers.create_admin(admin_data, session=db_session)
+
+    assert response["status"] == "error"
+    assert response["message"] == "An admin with this email already exists."
+
+def test_create_admin_password_hashing(setup_database):
+    
+    """
+    Test that the password is hashed correctly when creating an admin.
+
+    This test ensures that:
+        1. The `create_admin` function hashes the password using the SHA-256 algorithm before storing it.
+        2. The hashed password in the database matches the expected hash for the provided password.
+
+    Steps:
+        1. Create a mock admin object with a valid password.
+        2. Call the `create_admin` method to add the admin to the database.
+        3. Query the database to retrieve the saved admin record.
+        4. Compute the SHA-256 hash of the provided password locally.
+        5. Verify that the hash stored in the database matches the computed hash.
+    """
+
+    db_session: Session = setup_database
+    controllers = Controllers()
+
+    admin_data = AdminSchema(
+        idAdmin=1,
+        email="admin@example.com",
+        name="Admin Name",
+        password="securepassword"
+    )
+
+    response = controllers.create_admin(admin_data, session=db_session)
+
+    assert response["status"] == "ok"
+
+    admin_from_db = db_session.query(AdminModel).filter_by(email=admin_data.email).first()
+    assert admin_from_db is not None
+    hashed_password = hashlib.sha256(admin_data.password.encode()).hexdigest()
+    assert admin_from_db.password == hashed_password
 

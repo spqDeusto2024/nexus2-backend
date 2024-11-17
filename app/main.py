@@ -20,6 +20,7 @@ from app.mysql.machine import Machine
 from app.mysql.resident import Resident
 from app.mysql.room import Room
 from app.mysql.shelter import Shelter    
+from app.mysql.admin import Admin as AdminModel
 
 def initialize() -> None:
     """
@@ -232,6 +233,26 @@ async def list_residents_in_room(idRoom: int):
     """
     try:
         return controllers.list_residents_in_room(idRoom)
+    except Exception as e:
+        return {"error": str(e)}
+    
+@app.post('/admin/create')
+async def create_admin(admin: AdminSchema):
+    """
+    Endpoint to create a new admin.
+
+    Parameters:
+        admin (AdminSchema): The admin details provided for creating the admin.
+
+    Returns:
+        dict: A dictionary indicating the result of the admin creation:
+              - "status": "ok" or "error".
+              - "message": Success or error message.
+    """
+    try:
+        controllers = Controllers()
+        response = controllers.create_admin(admin, session=Depends(get_db))
+        return response
     except Exception as e:
         return {"error": str(e)}
 
