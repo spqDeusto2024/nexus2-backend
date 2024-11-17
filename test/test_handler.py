@@ -1,3 +1,4 @@
+import hashlib
 import pytest
 from app.mysql.resident import Resident
 from app.controllers.handler import Controllers 
