@@ -323,6 +323,10 @@ def test_create_room(setup_database):
     db_session.add(admin)
     db_session.commit()
 
+    shelter = Shelter(idShelter=1, shelterName="shelter1", address="address1", phone="phone1", email="shelter1@gmail.com", maxPeople=500, energyLevel=80, waterLevel=80, radiationLevel=80)
+    db_session.add(shelter)
+    db_session.commit()
+
     room = Room(idRoom=1, roomName="Canteen", createdBy=1, createDate=date.today(), idShelter=1, maxPeople=20)
 
 
