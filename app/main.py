@@ -121,6 +121,31 @@ async def update_resident(
 
     return controllers.update_resident(idResident, **updated_fields)
 
+@app.post('/rooms/create_room')
+async def create_room(body: room.Room):
+    """
+    Creates a new room in the system. The function also checks that there are no duplicate rooms.
+
+    This endpoint expects the following data structure in the request body:
+    - `idRoom`: The ID of the room.
+    - `roomName`: The name of the room.
+    - `createdBy`: The creator of the room.
+    - `createDate`: The date of the creation of the room.
+    - `idShelter`: The ID of the shelter to which the room belongs.
+    - `maxPeople`: The maximum capacity of the room.
+
+    Arguments:
+        body (room.Room): The room data to be added to the database.
+
+    Returns:
+        dict: A response containing the status of the operation and a message.
+              - Success: `{"status": "ok"}`
+              - Error: `{"status": "error", "message": "Error message explaining the issue."}`
+
+    """
+    return controllers.create_room(body)
+
+
 @app.get('/rooms/list_with_counts')
 async def list_rooms_with_counts():
 

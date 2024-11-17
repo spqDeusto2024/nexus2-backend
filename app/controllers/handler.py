@@ -6,11 +6,13 @@ import app.mysql.family as familyMysql
 import app.mysql.room as roomMysql
 import app.mysql.shelter as shelterMysql
 import app.mysql.resident as residentMysql
+import app.mysql.admin as adminMysql
 from app.mysql.mysql import DatabaseClient
 from app.mysql.resident import Resident
 from app.mysql.room import Room
 from app.mysql.shelter import Shelter
 from app.mysql.family import Family
+from app.mysql.admin import Admin
 
 from datetime import date
 import app.utils.vars as gb
@@ -213,6 +215,69 @@ class Controllers:
         if session is None:
             session.close()
   
+  def create_room(self, body: room.Room, session=None):
+
+    """
+
+    Creates a new room entry in the database and ensures that the room does not exist.
+
+    Arguments:
+        body (room.Room): The room data to be added to the database. This includes information such as
+                                   the room's id, name, creation date, who created it, shelter id and max people in it.
+        session (Session, optional): The database session to use for the transaction. If not provided, a new session
+                                     will be created.
+
+    Returns:
+        dict: A dictionary indicating the result of the operation.
+              - If successful: {"status": "ok"}
+              - If there is an error (e.g., room already exists):
+                {"status": "error", "message": "Error message explaining the issue."}
+    
+
+    """
+
+    if session is None:
+        db = DatabaseClient(gb.MYSQL_URL)
+        session = Session(db.engine)
+     
+    admin = session.query(adminMysql.Admin).filter(adminMysql.Admin.idAdmin == body.createdBy).first()
+
+    if not admin:
+       return{"status": "error", "message": "The admin does not exist."}
+
+    shelter = session.query(Shelter).filter(Shelter.idShelter == body.idShelter).first()
+
+    if shelter is None:
+       return{"status": "error", "message": "The Shelter does not exist."}
+
+    existing_room = session.query(Room).filter(
+       Room.roomName == body.roomName,
+       Room.idShelter == body.idShelter
+    ).first()
+
+    if existing_room:
+       return {"status": "error", "message": "Cannot create room, the room already exists."}
+    
+    body_row = roomMysql.Room(
+       idRoom=body.idRoom,
+       roomName=body.roomName,
+       createdBy=body.createdBy,
+       createDate=body.createDate,
+       idShelter=body.idShelter,
+       maxPeople=body.maxPeople
+    )
+
+    try:
+        session.add(body_row)
+        session.commit()
+        return {"status": "ok"}
+    except Exception as e:
+        session.rollback()
+        return {"status": "error", "message": str(e)}
+    finally:
+        session.close()
+
+
   
   def list_rooms_with_resident_count(self, session=None):
   
@@ -410,4 +475,4 @@ class Controllers:
         for resident in residents
     ]
 
-
+    

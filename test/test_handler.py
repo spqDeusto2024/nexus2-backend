@@ -301,6 +301,34 @@ def test_update_resident(setup_database):
     assert updated_resident.surname == "Mutiloa" 
     assert updated_resident.idRoom == 202 
 
+def test_create_room(setup_database):
+    
+    """
+    Test: Verifies that a room is created.
+
+    Expected Outcome:
+        - The new room should be successfully created.
+        - The room should be present in the database with the correct details.
+
+    Arguments:
+        setup_database (fixture): The database session used for test setup.
+    """
+    controllers = Controllers()
+    db_session = setup_database
+
+    room = Room(idRoom=1, roomName="Canteen", createdBy=1, createDate=date.today(), idShelter=1, maxPeople=20)
+    db_session.add(room)
+    db_session.commit()
+
+    response = controllers.create_room(room, session=db_session)
+
+    assert response == {"status": "ok"}
+
+    added_room = db_session.query(Room).filter_by(roomName="Canteen").first()
+    assert added_room is not None
+    assert added_room.roomName == "Canteen"
+    
+
 def test_list_rooms_with_resident_count(setup_database):
 
     """
