@@ -625,6 +625,60 @@ def test_list_residents_in_room(setup_database):
     assert result[0]["surname"] == "Brown"
     assert result[0]["idRoom"] == 2
 
+def test_list_residents(setup_database):
+    """
+    Test for the `list_residents` method in the controller.
+
+    This test ensures that the method correctly retrieves all residents 
+    stored in the database.
+
+    Steps:
+        1. Create three resident records (`resident1`, `resident2`, `resident3`) 
+           and add them to the database.
+        2. Commit these records to the test database.
+        3. Call the `list_residents` method from the controller and validate that:
+           - Three residents are returned in the result.
+           - Each resident's details are correct and match the input data.
+    """
+
+    from app.controllers.handler import Controllers
+
+    controllers = Controllers()
+    db_session = setup_database
+
+    # Crear residentes
+    resident1 = Resident(
+        idResident=1, name="John", surname="Doe", birthDate=date(1990, 1, 1),
+        gender="M", createdBy=1, createDate=date(2024, 11, 14)
+    )
+    resident2 = Resident(
+        idResident=2, name="Jane", surname="Smith", birthDate=date(1985, 6, 15),
+        gender="F", createdBy=1, createDate=date(2024, 11, 14)
+    )
+    resident3 = Resident(
+        idResident=3, name="Alice", surname="Brown", birthDate=date(1995, 8, 23),
+        gender="F", createdBy=1, createDate=date(2024, 11, 14)
+    )
+    db_session.add_all([resident1, resident2, resident3])
+    db_session.commit()
+
+    result = controllers.list_residents(session=db_session)
+
+    assert len(result) == 3
+
+    assert result[0]["idResident"] == 1
+    assert result[0]["name"] == "John"
+    assert result[0]["surname"] == "Doe"
+
+    assert result[1]["idResident"] == 2
+    assert result[1]["name"] == "Jane"
+    assert result[1]["surname"] == "Smith"
+
+    assert result[2]["idResident"] == 3
+    assert result[2]["name"] == "Alice"
+    assert result[2]["surname"] == "Brown"
+
+
 def test_create_machine_RoomAdmin_exist(setup_database):
     """
     Test: Verifies that a machine is created with an assigned room.

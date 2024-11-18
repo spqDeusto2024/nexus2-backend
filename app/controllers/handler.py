@@ -562,6 +562,48 @@ class Controllers:
         for resident in residents
     ]
 
+
+  def list_residents(self, session=None):
+    """
+    Retrieves a list of all residents.
+
+    Parameters:
+        session (Session, optional): 
+            An active SQLAlchemy database session. If not provided, the method 
+            initializes a new database session using the `DatabaseClient`.
+
+    Returns:
+        list[dict]: 
+            A list of dictionaries, where each dictionary represents a resident 
+            and contains the following keys:
+            - `idResident` (int): The unique identifier of the resident.
+            - `name` (str): The name of the resident.
+            - `surname` (str): The surname of the resident.
+            - `idFamily` (int): The family ID associated with the resident.
+
+    Process:
+        1. If no session is provided, a new session is created using the `DatabaseClient`.
+        2. Query the `Resident` table to retrieve all residents.
+        3. Transform the query results into a list of dictionaries with relevant resident details.
+    """    
+    if session is None:
+        db = DatabaseClient(gb.MYSQL_URL)
+        session = Session(db.engine)
+
+    residents = (
+        session.query(Resident).all()
+    )
+
+    return [
+        {
+            "idResident": resident.idResident,
+            "name": resident.name,
+            "surname": resident.surname,
+            "idFamily": resident.idFamily,
+        }
+        for resident in residents
+    ]
+
   def create_machine(self, body: machine.Machine, session=None):
     """
     Creates a new machine entry in the database. The method ensures that the machine is assigned to an 

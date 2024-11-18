@@ -237,6 +237,19 @@ async def list_residents_in_room(idRoom: int):
         return controllers.list_residents_in_room(idRoom)
     except Exception as e:
         return {"error": str(e)}
+    
+@app.get('/residents')
+async def list_residents():
+    """
+    Endpoint to list all residents.
+
+    Returns:
+        list[dict]: A list of dictionaries containing details of the residents in the room.
+    """    
+    try:
+        return controllers.list_residents()
+    except Exception as e:
+        return {"error": str(e)}    
 
 @app.post('/machine/create_machine')
 async def create_machine(body: machine.Machine):
