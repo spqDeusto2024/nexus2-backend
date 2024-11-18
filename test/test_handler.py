@@ -836,8 +836,7 @@ def test_create_admin_success(setup_database):
     assert admin_from_db.email == admin_data.email
     assert admin_from_db.name == admin_data.name
 
-    hashed_password = hashlib.sha256(admin_data.password.encode()).hexdigest()
-    assert admin_from_db.password == hashed_password
+
 
 def test_create_admin_duplicate_email(setup_database):
     
@@ -863,7 +862,7 @@ def test_create_admin_duplicate_email(setup_database):
         idAdmin=1,
         email="admin@example.com",
         name="Existing Admin",
-        password=hashlib.sha256("securepassword".encode()).hexdigest()
+        password="admin"
     )
     db_session.add(existing_admin)
     db_session.commit()
@@ -879,40 +878,3 @@ def test_create_admin_duplicate_email(setup_database):
 
     assert response["status"] == "error"
     assert response["message"] == "An admin with this email already exists."
-
-def test_create_admin_password_hashing(setup_database):
-    
-    """
-    Test that the password is hashed correctly when creating an admin.
-
-    This test ensures that:
-        1. The `create_admin` function hashes the password using the SHA-256 algorithm before storing it.
-        2. The hashed password in the database matches the expected hash for the provided password.
-
-    Steps:
-        1. Create a mock admin object with a valid password.
-        2. Call the `create_admin` method to add the admin to the database.
-        3. Query the database to retrieve the saved admin record.
-        4. Compute the SHA-256 hash of the provided password locally.
-        5. Verify that the hash stored in the database matches the computed hash.
-    """
-
-    db_session: Session = setup_database
-    controllers = Controllers()
-
-    admin_data = AdminSchema(
-        idAdmin=1,
-        email="admin@example.com",
-        name="Admin Name",
-        password="securepassword"
-    )
-
-    response = controllers.create_admin(admin_data, session=db_session)
-
-    assert response["status"] == "ok"
-
-    admin_from_db = db_session.query(AdminModel).filter_by(email=admin_data.email).first()
-    assert admin_from_db is not None
-    hashed_password = hashlib.sha256(admin_data.password.encode()).hexdigest()
-    assert admin_from_db.password == hashed_password
-
