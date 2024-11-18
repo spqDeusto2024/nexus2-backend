@@ -600,7 +600,7 @@ class Controllers:
        return{"status": "error", "message": "The admin does not exist."}
 
     existing_machine = session.query(machineMysql.Machine).filter(
-       machineMysql.Machine.idMachine == body.idMachine,
+       
        machineMysql.Machine.machineName == body.machineName,
        machineMysql.Machine.idRoom == body.idRoom
     ).first()

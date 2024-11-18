@@ -5,6 +5,7 @@ from app.controllers.handler import Controllers
 from app.mysql.room import Room 
 from app.mysql.shelter import Shelter
 from app.mysql.family import Family
+from app.mysql.machine import Machine
 from datetime import date
 from sqlalchemy.orm import Session
 from app.mysql.admin import Admin as AdminModel
@@ -621,6 +622,179 @@ def test_list_residents_in_room(setup_database):
     assert result[0]["name"] == "Alice"
     assert result[0]["surname"] == "Brown"
     assert result[0]["idRoom"] == 2
+
+def test_create_machine_RoomAdmin_exist(setup_database):
+    """
+    Test: Verifies that a machine is created with an assigned room.
+
+    Steps:
+        
+        1. Call the `create_machine` method to add the new machine.
+        2. Verify that the new machine was successfully added to the database.
+        3. Verify that the machine has an assigned room.
+        4. Ensure that there are not duplicated machines in an specific room.
+    Expected Outcome:
+        - The new machine should be successfully created and assigned to the room.
+        - The machine should be present in the database with the correct details.
+
+    Arguments:
+        setup_database (fixture): The database session used for test setup.
+    """
+    controllers = Controllers()
+    db_session = setup_database
+
+    admin = AdminModel(idAdmin=1, email="admin1@gmail.com", name="Maria", password="Maria1")
+    db_session.add(admin)
+    db_session.commit()
+
+    shelter = Shelter(idShelter=1, shelterName="shelter1", address="address1", phone="phone1", email="shelter1@gmail.com", maxPeople=500, energyLevel=80, waterLevel=80, radiationLevel=80)
+    db_session.add(shelter)
+    db_session.commit()
+
+    room = Room(idRoom=1, roomName="Canteen", createdBy=1, createDate=date.today(), idShelter=1, maxPeople=20)
+    db_session.add(room)
+    db_session.commit()
+
+    machine = Machine(idMachine=1, machineName="machine1", on=True, idRoom=1, createdBy=1, createDate=date(2024, 11, 14), update=date(2024, 11, 14))
+
+    result = controllers.create_machine(machine, session=db_session)
+
+    assert result == {"status": "ok"}
+
+    added_machine = db_session.query(Machine).filter_by(idRoom=1).first()
+    added_machine = db_session.query(Machine).filter_by(createdBy=1).first()
+    assert added_machine is not None
+    assert added_machine.idRoom == 1
+    assert added_machine.createdBy == 1
+
+
+def test_create_machine_admin_not_exist(setup_database):
+    """
+    Test: Verifies that a machine is not created by an admin.
+
+
+    Expected Outcome:
+        - The new machine should be wrongly created due to the admin lack.
+        - The machine shouldnt be present in the database.
+
+    Arguments:
+        setup_database (fixture): The database session used for test setup.
+    """
+    controllers = Controllers()
+    db_session = setup_database
+
+    shelter = Shelter(idShelter=1, shelterName="shelter1", address="address1", phone="phone1", email="shelter1@gmail.com", maxPeople=500, energyLevel=80, waterLevel=80, radiationLevel=80)
+    db_session.add(shelter)
+    db_session.commit()
+
+    room = Room(idRoom=1, roomName="Canteen", createdBy=1, createDate=date.today(), idShelter=1, maxPeople=20)
+    db_session.add(room)
+    db_session.commit()
+
+    machine = Machine(idMachine=1, machineName="machine1", on=True, idRoom=1, createdBy=1, createDate=date(2024, 11, 14), update=date(2024, 11, 14))
+
+    response = controllers.create_machine(machine, session=db_session)
+
+    assert response["status"] == "error"
+    assert response["message"] == "The admin does not exist."
+
+def test_create_machine_room_not_exist(setup_database):
+    """
+    Test: Verifies that a machine is not created in a room.
+
+
+    Expected Outcome:
+        - The new machine should be wrongly created due to the room lack.
+        - The machine shouldnt be present in the database.
+
+    Arguments:
+        setup_database (fixture): The database session used for test setup.
+    """
+    controllers = Controllers()
+    db_session = setup_database
+
+    shelter = Shelter(idShelter=1, shelterName="shelter1", address="address1", phone="phone1", email="shelter1@gmail.com", maxPeople=500, energyLevel=80, waterLevel=80, radiationLevel=80)
+    db_session.add(shelter)
+    db_session.commit()
+
+    admin = AdminModel(idAdmin=1, email="admin1@gmail.com", name="Maria", password="Maria1")
+    db_session.add(admin)
+    db_session.commit()
+
+    machine = Machine(idMachine=1, machineName="machine1", on=True, idRoom=1, createdBy=1, createDate=date(2024, 11, 14), update=date(2024, 11, 14))
+
+    response = controllers.create_machine(machine, session=db_session)
+
+    assert response["status"] == "error"
+    assert response["message"] == "The room does not exist."
+
+def test_create_machine_RoomAdmin_not_exist(setup_database):
+    """
+    Test: Verifies that a machine is not created in a room neither by an admin.
+
+
+    Expected Outcome:
+        - The new machine should be wrongly created due to the room and admin lack.
+        - The machine shouldnt be present in the database.
+
+    Arguments:
+        setup_database (fixture): The database session used for test setup.
+    """
+    controllers = Controllers()
+    db_session = setup_database
+
+    shelter = Shelter(idShelter=1, shelterName="shelter1", address="address1", phone="phone1", email="shelter1@gmail.com", maxPeople=500, energyLevel=80, waterLevel=80, radiationLevel=80)
+    db_session.add(shelter)
+    db_session.commit()
+
+
+    machine = Machine(idMachine=1, machineName="machine1", on=True, idRoom=1, createdBy=1, createDate=date(2024, 11, 14), update=date(2024, 11, 14))
+
+    response = controllers.create_machine(machine, session=db_session)
+
+    assert response["status"] == "error"
+    assert response["message"] == "The room does not exist."
+
+def test_create_duplicated_machine(setup_database):
+    """
+    Test: Verifies that a machine is not duplicated in a room.
+
+
+    Expected Outcome:
+        - The new machine should be wrongly created as its duplicated.
+        - The machine shouldnt be present in the database.
+
+    Arguments:
+        setup_database (fixture): The database session used for test setup.
+    """
+    controllers = Controllers()
+    db_session = setup_database
+
+    shelter = Shelter(idShelter=1, shelterName="shelter1", address="address1", phone="phone1", email="shelter1@gmail.com", maxPeople=500, energyLevel=80, waterLevel=80, radiationLevel=80)
+    db_session.add(shelter)
+    db_session.commit()
+
+    admin = AdminModel(idAdmin=1, email="admin1@gmail.com", name="Maria", password="Maria1")
+    db_session.add(admin)
+    db_session.commit()
+
+    room = Room(idRoom=1, roomName="Canteen", createdBy=1, createDate=date.today(), idShelter=1, maxPeople=20)
+    db_session.add(room)
+    db_session.commit()
+
+
+    machine = Machine(idMachine=1, machineName="machine1", on=True, idRoom=1, createdBy=1, createDate=date(2024, 11, 14), update=date(2024, 11, 14))
+    db_session.add(machine)
+    db_session.commit()
+
+    machine2 = Machine(idMachine=2, machineName="machine1", on=True, idRoom=1, createdBy=1, createDate=date(2024, 11, 14), update=date(2024, 11, 14))
+
+    response = controllers.create_machine(machine2, session=db_session)
+
+    assert response["status"] == "error"
+    assert response["message"] == "Cannot create machine, the machine already exists in this room."
+
+
 
 def test_create_admin_success(setup_database):
     
