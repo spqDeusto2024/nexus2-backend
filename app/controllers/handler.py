@@ -1,4 +1,4 @@
-import hashlib
+
 import app.models.resident as resident
 import app.models.family as family
 import app.models.room as room
@@ -624,29 +624,31 @@ class Controllers:
 
 
 
-  def create_admin(self, admin_data: adminMysql.Admin, session: Session):
+  def create_admin(self, admin_data: adminMysql.Admin, session=None):
 
     """
-    Creates a new admin record in the database using hashlib for password hashing.
+    Creates a new admin record in the database.
 
     Args:
-        admin_data (AdminSchema): The admin details to be saved.
+        admin_data (adminMysql.Admin): The admin details to be saved.
         session (Session): The SQLAlchemy database session.
 
     Returns:
         dict: A response indicating success or failure.
     """
+    if session is None:
+        db = DatabaseClient(gb.MYSQL_URL)
+        session = Session(db.engine)
 
     existing_admin = session.query(Admin).filter_by(email=admin_data.email).first()
     if existing_admin:
         return {"status": "error", "message": "An admin with this email already exists."}
-
-    hashed_password = hashlib.sha256(admin_data.password.encode()).hexdigest()
+    
 
     new_admin = Admin(
         email=admin_data.email,
         name=admin_data.name,
-        password=hashed_password
+        password=admin_data.password
     )
 
     session.add(new_admin)

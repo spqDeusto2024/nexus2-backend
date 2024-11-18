@@ -11,6 +11,7 @@ import app.models.family as family
 import app.models.room as room
 import app.models.shelter as shelter
 import app.models.machine as machine
+import app.models.admin as admin
 
 from app.mysql.initializeData import initialize_database
 from app.mysql.base import Base
@@ -21,7 +22,7 @@ from app.mysql.machine import Machine
 from app.mysql.resident import Resident
 from app.mysql.room import Room
 from app.mysql.shelter import Shelter    
-from app.mysql.admin import Admin as AdminSchema
+from app.mysql.admin import Admin
 
 def initialize() -> None:
     """
@@ -263,26 +264,25 @@ async def create_machine(body: machine.Machine):
     """
     return controllers.create_machine(body)
 
-"""
+
 @app.post('/admin/create')
-async def create_admin(admin: AdminSchema, setup_database):
-    
+async def create_admin(body: admin.Admin):
+    """
     Endpoint to create a new admin.
 
     Parameters:
-        admin (AdminSchema): The admin details provided for creating the admin.
+        body (admin.Admin): The admin details provided for creating the admin.
 
     Returns:
         dict: A dictionary indicating the result of the admin creation:
               - "status": "ok" or "error".
               - "message": Success or error message.
-    
+    """
     try:
-        controllers = Controllers()
-        db_session = setup_database
-        response = controllers.create_admin(admin, session=db_session)
-        return response
+        return controllers.create_admin(body)
     except Exception as e:
         return {"error": str(e)}
+    
 
-"""
+
+
