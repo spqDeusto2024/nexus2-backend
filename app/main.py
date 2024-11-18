@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from typing import Union
 from app.controllers.handler import Controllers
 from app.mysql.mysql import DatabaseClient
@@ -12,6 +12,7 @@ import app.models.room as room
 import app.models.shelter as shelter
 import app.models.machine as machine
 import app.models.admin as admin
+import app.models.alarm as alarm
 
 from app.mysql.initializeData import initialize_database
 from app.mysql.base import Base
@@ -264,6 +265,24 @@ async def create_machine(body: machine.Machine):
     """
     return controllers.create_machine(body)
 
+
+@app.post('/alarm/create_alarm')
+async def create_admin(body: alarm.Alarm):
+    """
+    Endpoint to create a new alarm.
+
+    Parameters:
+        body (alarm.Alarm): The alarm details provided for creating the admin.
+
+    Returns:
+        dict: A dictionary indicating the result of the admin creation:
+              - "status": "ok" or "error".
+              - "message": Success or error message.
+    """
+    try:
+        return controllers.create_alarm(body)
+    except Exception as e:
+        return {"error": str(e)}
 
 @app.post('/admin/create')
 async def create_admin(body: admin.Admin):

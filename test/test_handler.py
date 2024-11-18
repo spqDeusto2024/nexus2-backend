@@ -6,6 +6,7 @@ from app.mysql.room import Room
 from app.mysql.shelter import Shelter
 from app.mysql.family import Family
 from app.mysql.machine import Machine
+from app.mysql.alarm import Alarm
 from datetime import date
 from sqlalchemy.orm import Session
 from app.mysql.admin import Admin as AdminModel
@@ -796,7 +797,140 @@ def test_create_duplicated_machine(setup_database):
     assert response["status"] == "error"
     assert response["message"] == "Cannot create machine, the machine already exists in this room."
 
+def test_create_alarm_RoomAdminResident_exist(setup_database):
+    """
+    Test: Verifies that an alarm is created with an assigned room.
 
+    Steps:
+        
+        1. Call the `create_alarm` method to add the new alarm.
+        2. Verify that the new alarm was successfully added to the database.
+        3. Verify that the alarm has an assigned room, resident and admin.
+        4. Ensure that there are not duplicated alarms in an specific room.
+    Expected Outcome:
+        - The new alarm should be successfully created and assigned to the room.
+        - The alarm should be present in the database with the correct details.
+
+    Arguments:
+        setup_database (fixture): The database session used for test setup.
+    """
+    controllers = Controllers()
+    db_session = setup_database
+
+    admin = AdminModel(idAdmin=1, email="admin1@gmail.com", name="Maria", password="Maria1")
+    db_session.add(admin)
+    db_session.commit()
+
+    resident = Resident(idResident=1, name="Juan", surname="Ortega", birthDate=date(1990, 1, 1), gender="male", createdBy=1, update=date.today(), idFamily=1, idRoom=1)
+    db_session.add(resident)
+    db_session.commit()
+
+    room = Room(idRoom=1, roomName="Canteen", createdBy=1, createDate=date.today(), idShelter=1, maxPeople=20)
+    db_session.add(room)
+    db_session.commit()
+
+    alarm = Alarm(idAlarm=1, start=date.today(), end=date.today(), idRoom=1, idResident=1, idAdmin=1, createDate=date.today())
+
+    result = controllers.create_alarm(alarm, session=db_session)
+
+    assert result == {"status": "ok"}
+
+    added_alarm = db_session.query(Alarm).filter_by(idRoom=1).first()
+    added_alarm = db_session.query(Alarm).filter_by(idAdmin=1).first()
+    added_alarm = db_session.query(Alarm).filter_by(idResident=1).first()
+
+    assert added_alarm is not None
+    assert added_alarm.idRoom == 1
+    assert added_alarm.idAdmin == 1
+    assert added_alarm.idResident == 1
+
+def test_create_alarm_Room_not_exist(setup_database):
+    """
+    Test: Verifies that an alarm is not created as there is no existing room.
+
+    
+    Expected Outcome:
+        - The new alarm shouldnt be successfully created and assigned to the room.
+        - The alarm shouldnt be present in the database with the correct details.
+
+    Arguments:
+        setup_database (fixture): The database session used for test setup.
+    """
+    controllers = Controllers()
+    db_session = setup_database
+
+    admin = AdminModel(idAdmin=1, email="admin1@gmail.com", name="Maria", password="Maria1")
+    db_session.add(admin)
+    db_session.commit()
+
+    resident = Resident(idResident=1, name="Juan", surname="Ortega", birthDate=date(1990, 1, 1), gender="male", createdBy=1, update=date.today(), idFamily=1, idRoom=1)
+    db_session.add(resident)
+    db_session.commit()
+
+    alarm = Alarm(idAlarm=1, start=date.today(), end=date.today(), idRoom=1, idResident=1, idAdmin=1, createDate=date.today())
+
+    response = controllers.create_alarm(alarm, session=db_session)
+
+    assert response["status"] == "error"
+    assert response["message"] == "The room does not exist."
+
+def test_create_alarm_Admin_not_exist(setup_database):
+    """
+    Test: Verifies that an alarm is not created as there is no admin.
+
+    Expected Outcome:
+        - The new alarm shouldnt be successfully created and assigned to the room.
+        - The alarm shouldnt be present in the database with the correct details.
+
+    Arguments:
+        setup_database (fixture): The database session used for test setup.
+    """
+    controllers = Controllers()
+    db_session = setup_database
+
+    resident = Resident(idResident=1, name="Juan", surname="Ortega", birthDate=date(1990, 1, 1), gender="male", createdBy=1, update=date.today(), idFamily=1, idRoom=1)
+    db_session.add(resident)
+    db_session.commit()
+
+    room = Room(idRoom=1, roomName="Canteen", createdBy=1, createDate=date.today(), idShelter=1, maxPeople=20)
+    db_session.add(room)
+    db_session.commit()
+
+    alarm = Alarm(idAlarm=1, start=date.today(), end=date.today(), idRoom=1, idResident=1, idAdmin=1, createDate=date.today())
+
+    response = controllers.create_alarm(alarm, session=db_session)
+
+    assert response["status"] == "error"
+    assert response["message"] == "The admin does not exist."
+
+def test_create_alarm_Resident_not_exist(setup_database):
+    """
+    Test: Verifies that an alarm is not created as there is no resident.
+
+    Expected Outcome:
+        - The new alarm shouldnt be successfully created and assigned to the room.
+        - The alarm shouldnt be present in the database with the correct details.
+
+    Arguments:
+        setup_database (fixture): The database session used for test setup.
+    """
+    controllers = Controllers()
+    db_session = setup_database
+
+    admin = AdminModel(idAdmin=1, email="admin1@gmail.com", name="Maria", password="Maria1")
+    db_session.add(admin)
+    db_session.commit()
+
+    room = Room(idRoom=1, roomName="Canteen", createdBy=1, createDate=date.today(), idShelter=1, maxPeople=20)
+    db_session.add(room)
+    db_session.commit()
+
+    alarm = Alarm(idAlarm=1, start=date.today(), end=date.today(), idRoom=1, idResident=1, idAdmin=1, createDate=date.today())
+
+    response = controllers.create_alarm(alarm, session=db_session)
+
+    assert response["status"] == "error"
+    assert response["message"] == "The resident does not exist."
 
 def test_create_admin_success(setup_database):
     
