@@ -3,11 +3,13 @@ import app.models.resident as resident
 import app.models.family as family
 import app.models.room as room
 import app.models.shelter as shelter
+import app.models.machine as machine
 import app.mysql.family as familyMysql
 import app.mysql.room as roomMysql
 import app.mysql.shelter as shelterMysql
 import app.mysql.resident as residentMysql
 import app.mysql.admin as adminMysql
+import app.mysql.machine as machineMysql
 from app.mysql.mysql import DatabaseClient
 from app.mysql.resident import Resident
 from app.mysql.room import Room
@@ -560,7 +562,69 @@ class Controllers:
         }
         for resident in residents
     ]
-  
+
+  def create_machine(self, body: machine.Machine, session=None):
+    """
+    Creates a new machine entry in the database. The method ensures that the machine is assigned to an 
+    existing room and that there is no other machine with the same id and name in the same room. 
+    It also prevents duplication of machines in the same room
+
+    Steps:
+        1. Verifies if the room exists in the database.
+        2. Ensures no duplication of machines with the same id and name in a specific room.
+        3. Adds the new machine to the database and associates it with the correct room.
+
+    Arguments:
+        body (machine.Machine): The machine data to be added to the database. This includes information such as
+                                   the machine's id, name, on/off, idRoom, createdBy, createDate and update date (Optional).
+        session (Session, optional): The database session to use for the transaction. If not provided, a new session
+                                     will be created.
+    Returns:
+        dict: A dictionary indicating the result of the operation.
+              - If successful: {"status": "ok"}
+              - If there is an error (e.g., room does not exist, no assigned room, the admin who create it doesnt exist...):
+                {"status": "error", "message": "Error message explaining the issue."}
+    """
+    if session is None:
+        db = DatabaseClient(gb.MYSQL_URL)
+        session = Session(db.engine)
+
+    room = session.query(roomMysql.Room).filter(roomMysql.Room.idRoom == body.idRoom).first()
+
+    if not room:
+        return{"status": "error", "message": "The room does not exist."}
+    
+    admin = session.query(adminMysql.Admin).filter(adminMysql.Admin.idAdmin == body.createdBy).first()
+
+    if not admin:
+       return{"status": "error", "message": "The admin does not exist."}
+
+    existing_machine = session.query(machineMysql.Machine).filter(
+       machineMysql.Machine.idMachine == body.idMachine,
+       machineMysql.Machine.machineName == body.machineName,
+       machineMysql.Machine.idRoom == body.idRoom
+    ).first()
+
+    if existing_machine:
+       return {"status": "error", "message": "Cannot create machine, the machine already exists in this room."}
+
+    body_row = machineMysql.Machine(
+        idMachine=body.idMachine,
+        machineName=body.machineName,
+        on=body.on,
+        idRoom=body.idRoom,
+        createdBy=body.createdBy,
+        createDate=body.createDate,
+        update=body.update
+    )
+
+    session.add(body_row)
+    session.commit()
+    
+    return {"status": "ok"}
+
+
+
   def create_admin(self, admin_data: AdminSchema, session: Session):
 
     """
@@ -591,4 +655,4 @@ class Controllers:
 
     return {"status": "ok", "message": "Admin created successfully."}  
 
-    
+

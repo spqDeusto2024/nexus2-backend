@@ -10,17 +10,18 @@ import app.models.resident as resident
 import app.models.family as family
 import app.models.room as room
 import app.models.shelter as shelter
+import app.models.machine as machine
 
 from app.mysql.initializeData import initialize_database
 from app.mysql.base import Base
 from app.mysql.alarm import Alarm 
-from app.mysql.admin import Admin 
+from app.mysql.admin import Admin
 from app.mysql.family import Family
 from app.mysql.machine import Machine 
 from app.mysql.resident import Resident
 from app.mysql.room import Room
 from app.mysql.shelter import Shelter    
-from app.mysql.admin import Admin as AdminModel
+from app.mysql.admin import Admin as AdminSchema
 
 def initialize() -> None:
     """
@@ -235,10 +236,37 @@ async def list_residents_in_room(idRoom: int):
         return controllers.list_residents_in_room(idRoom)
     except Exception as e:
         return {"error": str(e)}
-    
+
+@app.post('/machine/create_machine')
+async def create_machine(body: machine.Machine):
+    """
+    Creates a new machine in the system. The function also checks that there are no duplicate machines
+    in the same room and that the machine is assigned to an existing room.
+
+    This endpoint expects the following data structure in the request body:
+    - `idMachine`: Unique identifier for the machine.
+    - `machineName`: Name or identifier of the machine.
+    - `on`: Operational status of the machine (True if on, False if off).
+    - `idRoom`: Foreign key to the room where the machine is located.
+    - `createdBy`: ID of the admin who created this machine record.
+    - `createDate`: The date when the machine record was created.
+    - `update`: The date when the machine record was last updated.
+
+    Arguments:
+        body (machine.Machine): The room data to be added to the database.
+
+    Returns:
+        dict: A response containing the status of the operation and a message.
+              - Success: `{"status": "ok"}`
+              - Error: `{"status": "error", "message": "Error message explaining the issue."}`
+
+    """
+    return controllers.create_machine(body)
+
+"""
 @app.post('/admin/create')
 async def create_admin(admin: AdminSchema):
-    """
+    
     Endpoint to create a new admin.
 
     Parameters:
@@ -248,7 +276,7 @@ async def create_admin(admin: AdminSchema):
         dict: A dictionary indicating the result of the admin creation:
               - "status": "ok" or "error".
               - "message": Success or error message.
-    """
+    
     try:
         controllers = Controllers()
         response = controllers.create_admin(admin, session=Depends(get_db))
@@ -256,5 +284,5 @@ async def create_admin(admin: AdminSchema):
     except Exception as e:
         return {"error": str(e)}
 
-
+"""
 
