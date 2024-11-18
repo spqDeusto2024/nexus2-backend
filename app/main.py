@@ -239,7 +239,7 @@ async def list_residents_in_room(idRoom: int):
     except Exception as e:
         return {"error": str(e)}
     
-@app.get('/residents')
+@app.get('/residents/list residents')
 async def list_residents():
     """
     Endpoint to list all residents.
