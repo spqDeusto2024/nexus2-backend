@@ -4,12 +4,14 @@ import app.models.family as family
 import app.models.room as room
 import app.models.shelter as shelter
 import app.models.machine as machine
+import app.models.alarm as alarm
 import app.mysql.family as familyMysql
 import app.mysql.room as roomMysql
 import app.mysql.shelter as shelterMysql
 import app.mysql.resident as residentMysql
 import app.mysql.admin as adminMysql
 import app.mysql.machine as machineMysql
+import app.mysql.alarm as alarmMysql
 from app.mysql.mysql import DatabaseClient
 from app.mysql.resident import Resident
 from app.mysql.room import Room
@@ -664,7 +666,67 @@ class Controllers:
     
     return {"status": "ok"}
 
+  def create_alarm(self, body: alarm.Alarm, session=None):
+    """
+    Creates a new alarm entry in the database. The method ensures that the alarm is assigned to an 
+    existing room and that there is no other alarm with the same id in the same room. 
 
+    Steps:
+        1. Verifies if the alarm exists in the database.
+        2. Ensures no duplication of alarm with the same id in a specific room.
+        3. Adds the new alarm to the database and associates it with the correct room.
+
+    Arguments:
+        body (alarm.Alarm): The alarm data to be added to the database. 
+        session (Session, optional): The database session to use for the transaction. If not provided, a new session
+                                     will be created.
+    Returns:
+        dict: A dictionary indicating the result of the operation.
+              - If successful: {"status": "ok"}
+              - If there is an error (e.g., alarm does not exist, no assigned room, the admin who created it doesnt exist...):
+                {"status": "error", "message": "Error message explaining the issue."}
+    """
+    if session is None:
+       db = DatabaseClient(gb.MYSQL_URL)
+       session = Session(db.engine)
+    
+    room = session.query(roomMysql.Room).filter(roomMysql.Room.idRoom == body.idRoom).first()
+
+    if not room:
+       return{"status": "error", "message": "The room does not exist."}
+    
+    admin = session.query(adminMysql.Admin).filter(adminMysql.Admin.idAdmin == body.idAdmin).first()
+
+    if not admin:
+       return{"status": "error", "message": "The admin does not exist."}
+
+    resident = session.query(residentMysql.Resident).filter(residentMysql.Resident.idResident == body.idResident).first()
+
+    if not resident:
+       return{"status": "error", "message": "The resident does not exist."}
+
+    existing_alarm = session.query(alarmMysql.Alarm).filter(
+       alarmMysql.Alarm.idAlarm == body.idAlarm,
+       alarmMysql.Alarm.idRoom == body.idRoom
+    ).first()
+
+    if existing_alarm:
+       return {"status": "error", "message": "Cannot create alarm, the alarm already exists in this room."}
+
+    body_row = alarmMysql.Alarm(
+       idAlarm=body.idAlarm,
+       start=body.start,
+       end=body.end,
+       idRoom=body.idRoom,
+       idResident=body.idResident,
+       idAdmin=body.idAdmin,
+       createDate=body.createDate
+    )
+
+    session.add(body_row)
+    session.commit()
+
+    return {"status": "ok"}
 
   def create_admin(self, admin_data: adminMysql.Admin, session=None):
 
