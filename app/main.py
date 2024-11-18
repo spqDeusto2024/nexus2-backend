@@ -283,6 +283,39 @@ async def create_admin(body: admin.Admin):
     except Exception as e:
         return {"error": str(e)}
     
+@app.post('/family/create')
+async def create_family(body: family.Family):
+    """
+    Creates a new family in the system. Ensures the family is assigned to an 
+    existing room and shelter, and that the admin who created the family exists. 
+    Prevents duplicate families in the same room.
 
+    This endpoint expects the following data structure in the request body:
+    - `idFamily`: The unique identifier for the family.
+    - `familyName`: The name or identifier of the family.
+    - `idRoom`: The ID of the room the family will be assigned to.
+    - `idShelter`: The ID of the shelter where the family resides.
+    - `createdBy`: The ID of the admin who created the family record.
+    - `createDate`: The date when the family record was created.
+
+    Arguments:
+        body (family.Family): The family data to be added to the database.
+
+    Returns:
+        dict: A response containing the status of the operation and a message.
+              - Success: `{"status": "ok"}`
+              - Error: `{"status": "error", "message": "Error message explaining the issue."}`
+    """
+    db_client = DatabaseClient(gb.MYSQL_URL)
+    session = db_client.get_session()
+    try:
+        response = Controllers.create_family(body, session=session)
+        if response["status"] == "error":
+            raise HTTPException(status_code=400, detail=response["message"])
+        return response
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        session.close()
 
 

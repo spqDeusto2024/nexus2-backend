@@ -657,3 +657,64 @@ class Controllers:
     return {"status": "ok", "message": "Admin created successfully."}  
 
 
+  def create_family(self, body: family.Family, session=None):
+    """
+    Creates a new family entry in the database. Ensures the family is assigned to an 
+    existing room and shelter, the admin who created the family exists, and prevents 
+    duplicate family entries in the same room.
+
+    Steps:
+        1. Verifies if the room exists in the database.
+        2. Verifies if the shelter exists in the database.
+        3. Verifies if the admin exists in the database.
+        4. Ensures no duplication of families with the same name in a specific room.
+        5. Adds the new family to the database and associates it with the correct room and shelter.
+
+    Arguments:
+        body (family.Family): The family data to be added to the database.
+                              Includes idFamily, familyName, idRoom, idShelter, createdBy, createDate.
+        session (Session, optional): The database session to use for the transaction. 
+                                     If not provided, a new session is created.
+
+    Returns:
+        dict: A dictionary indicating the result of the operation.
+              - If successful: {"status": "ok"}
+              - If there is an error (e.g., room does not exist, family already exists):
+                {"status": "error", "message": "Error message explaining the issue."}
+    """
+    if session is None:
+        db = DatabaseClient(gb.MYSQL_URL)
+        session = Session(db.engine)
+
+    room = session.query(roomMysql.Room).filter(roomMysql.Room.idRoom == body.idRoom).first()
+    if not room:
+        return {"status": "error", "message": "The room does not exist."}
+
+    shelter = session.query(shelterMysql.Shelter).filter(shelterMysql.Shelter.idShelter == body.idShelter).first()
+    if not shelter:
+        return {"status": "error", "message": "The shelter does not exist."}
+
+    admin = session.query(adminMysql.Admin).filter(adminMysql.Admin.idAdmin == body.createdBy).first()
+    if not admin:
+        return {"status": "error", "message": "The admin does not exist."}
+
+    existing_family = session.query(familyMysql.Family).filter(
+        familyMysql.Family.familyName == body.familyName,
+        familyMysql.Family.idRoom == body.idRoom
+    ).first()
+    if existing_family:
+        return {"status": "error", "message": "A family with the same name already exists in this room."}
+
+    family_row = familyMysql.Family(
+        idFamily=body.idFamily,
+        familyName=body.familyName,
+        idRoom=body.idRoom,
+        idShelter=body.idShelter,
+        createdBy=body.createdBy,
+        createDate=body.createDate
+    )
+    
+    session.add(family_row)
+    session.commit()
+
+    return {"status": "ok"}
