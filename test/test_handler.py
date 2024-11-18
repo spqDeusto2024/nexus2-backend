@@ -10,6 +10,8 @@ from datetime import date
 from sqlalchemy.orm import Session
 from app.mysql.admin import Admin as AdminModel
 from app.models.admin import Admin as AdminSchema
+from app.mysql.family import Family as FamilyModel
+from app.models.family import Family as FamilySchema
 
 def test_create_resident_with_capacity(setup_database):
     """
@@ -878,3 +880,256 @@ def test_create_admin_duplicate_email(setup_database):
 
     assert response["status"] == "error"
     assert response["message"] == "An admin with this email already exists."
+
+def test_create_family_success(setup_database):
+
+    """
+    Test: Verifies the successful creation of a family in the system.
+
+    This test checks that a new family record is correctly added to the database with 
+    the provided details. It ensures that the family is associated with an existing 
+    room and shelter, and that the family details are correctly stored.
+
+    Steps:
+        1. Sets up the necessary dependencies for the family (admin, shelter, and room).
+        2. Creates a family object with valid data, including the assigned room and shelter.
+        3. Calls the `create_family` method from the controller to add the family to the database.
+        4. Verifies that the response from the `create_family` method is `{"status": "ok"}`.
+        5. Checks that the family is successfully added to the database by querying the family table.
+        6. Confirms that the newly created family has the correct attributes (name, room, shelter).
+
+    Expected Outcome:
+        - The family should be successfully created and stored in the database.
+        - The response from the controller should indicate a successful operation: `{"status": "ok"}`.
+        - The family should have the correct details (familyName, idRoom, idShelter) as provided.
+    """
+
+    controllers = Controllers()
+    db_session = setup_database
+
+    admin = AdminModel(idAdmin=1, email="admin1@gmail.com", name="Admin User", password="password")
+    db_session.add(admin)
+
+    shelter = Shelter(idShelter=1, shelterName="Shelter A", address="123 Main St", phone="1234567890", email="shelterA@gmail.com", maxPeople=100, energyLevel=80, waterLevel=90, radiationLevel=20)
+    db_session.add(shelter)
+
+    room = Room(idRoom=1, roomName="Room A", createdBy=1, createDate=date.today(), idShelter=1, maxPeople=10)
+    db_session.add(room)
+
+    db_session.commit()
+
+    family = FamilySchema(
+        idFamily=1,
+        familyName="Smith Family",
+        idRoom=1,
+        idShelter=1,
+        createdBy=1,
+        createDate=date.today()
+    )
+
+    response = controllers.create_family(family, session=db_session)
+
+    assert response == {"status": "ok"}
+
+    added_family = db_session.query(FamilyModel).filter_by(familyName="Smith Family").first()
+    assert added_family is not None
+    assert added_family.familyName == "Smith Family"
+    assert added_family.idRoom == 1
+    assert added_family.idShelter == 1
+
+
+def test_create_family_room_does_not_exist(setup_database):
+    """
+    Test: Verifies that creating a family fails if the specified room does not exist in the database.
+
+    This test ensures that when a family is created with a room ID that does not exist, 
+    the system correctly returns an error indicating that the room cannot be found. 
+    It checks that the family creation process is blocked if the assigned room is invalid.
+
+    Steps:
+        1. Sets up the necessary dependencies, including an admin account.
+        2. Creates a family object with a non-existent room ID (idRoom=999).
+        3. Calls the `create_family` method from the controller to try and create the family.
+        4. Verifies that the response returned by the `create_family` method is an error, 
+           specifically indicating that the room does not exist.
+        5. Ensures that the error message is `"The room does not exist."`.
+
+    Expected Outcome:
+        - An error response is returned with a message indicating that the room does not exist.
+        - The family should not be created in the database because the room is invalid.
+
+    """
+    controllers = Controllers()
+    db_session = setup_database
+
+    admin = AdminModel(idAdmin=1, email="admin1@gmail.com", name="Admin User", password="password")
+    db_session.add(admin)
+    db_session.commit()
+
+    family = FamilySchema(
+        idFamily=1,
+        familyName="Smith Family",
+        idRoom=999,  
+        idShelter=1,
+        createdBy=1,
+        createDate=date.today()
+    )
+
+    response = controllers.create_family(family, session=db_session)
+
+    assert response == {"status": "error", "message": "The room does not exist."}
+
+
+def test_create_family_shelter_does_not_exist(setup_database):
+
+    """
+    Test: Verifies that creating a family fails if the specified shelter does not exist in the database.
+
+    This test ensures that when a family is created with a shelter ID that does not exist, 
+    the system correctly returns an error indicating that the shelter cannot be found. 
+    It checks that the family creation process is blocked if the assigned shelter is invalid.
+
+    Steps:
+        1. Sets up the necessary dependencies, including an admin account and a room associated with a shelter.
+        2. Creates a family object with a non-existent shelter ID (idShelter=999).
+        3. Calls the `create_family` method from the controller to try and create the family.
+        4. Verifies that the response returned by the `create_family` method is an error, 
+           specifically indicating that the shelter does not exist.
+        5. Ensures that the error message is `"The shelter does not exist."`.
+
+    Expected Outcome:
+        - An error response is returned with a message indicating that the shelter does not exist.
+        - The family should not be created in the database because the shelter is invalid.
+
+    """
+    controllers = Controllers()
+    db_session = setup_database
+
+    admin = AdminModel(idAdmin=1, email="admin1@gmail.com", name="Admin User", password="password")
+    db_session.add(admin)
+    db_session.commit()
+
+    room = Room(idRoom=1, roomName="Room A", createdBy=1, createDate=date.today(), idShelter=1, maxPeople=10)
+    db_session.add(room)
+    db_session.commit()
+
+    family = FamilySchema(
+        idFamily=1,
+        familyName="Smith Family",
+        idRoom=1,
+        idShelter=999,  
+        createdBy=1,
+        createDate=date.today()
+    )
+
+    response = controllers.create_family(family, session=db_session)
+
+    assert response == {"status": "error", "message": "The shelter does not exist."}
+
+
+def test_create_family_admin_does_not_exist(setup_database):
+
+    """
+    Test: Verifies that creating a family fails if the specified admin does not exist in the database.
+
+    This test ensures that when a family is created with an admin ID that does not exist, 
+    the system correctly returns an error indicating that the admin cannot be found. 
+    It checks that the family creation process is blocked if the assigned admin is invalid.
+
+    Steps:
+        1. Sets up the necessary dependencies, including a shelter and a room.
+        2. Creates a family object with a non-existent admin ID (createdBy=999).
+        3. Calls the `create_family` method from the controller to try and create the family.
+        4. Verifies that the response returned by the `create_family` method is an error, 
+           specifically indicating that the admin does not exist.
+        5. Ensures that the error message is `"The admin does not exist."`.
+
+    Expected Outcome:
+        - An error response is returned with a message indicating that the admin does not exist.
+        - The family should not be created in the database because the admin is invalid.
+
+    """
+
+    controllers = Controllers()
+    db_session = setup_database
+
+    shelter = Shelter(idShelter=1, shelterName="Shelter A", address="123 Main St", phone="1234567890", email="shelterA@gmail.com", maxPeople=100, energyLevel=80, waterLevel=90, radiationLevel=20)
+    db_session.add(shelter)
+
+    room = Room(idRoom=1, roomName="Room A", createdBy=1, createDate=date.today(), idShelter=1, maxPeople=10)
+    db_session.add(room)
+
+    db_session.commit()
+
+    family = FamilySchema(
+        idFamily=1,
+        familyName="Smith Family",
+        idRoom=1,
+        idShelter=1,
+        createdBy=999,  
+        createDate=date.today()
+    )
+
+    response = controllers.create_family(family, session=db_session)
+
+    assert response == {"status": "error", "message": "The admin does not exist."}
+
+
+def test_create_family_duplicate_name_in_room(setup_database):
+    
+    """
+    Test: Verifies that creating a family fails if there is already a family with the same name in the same room.
+
+    This test ensures that when a family is created with a name that already exists in the specified room, 
+    the system correctly blocks the creation of the family and returns an appropriate error message. 
+    It checks that family names within a room are unique and that the system prevents duplication.
+
+    Steps:
+        1. Sets up the necessary dependencies, including an admin account, a shelter, and a room.
+        2. Creates and adds the first family ("Smith Family") to the database, assigning it to the room.
+        3. Attempts to create a second family with the same name ("Smith Family") in the same room.
+        4. Verifies that the response returned by the `create_family` method indicates an error, 
+           specifically stating that a family with the same name already exists in the room.
+        5. Ensures that the error message is `"A family with the same name already exists in this room."`.
+
+    Expected Outcome:
+        - An error response is returned, indicating that a family with the same name already exists in the specified room.
+        - The second family should not be created in the database because the family name must be unique within a room.
+    """
+
+    controllers = Controllers()
+    db_session = setup_database
+
+    admin = AdminModel(idAdmin=1, email="admin1@gmail.com", name="Admin User", password="password")
+    db_session.add(admin)
+
+    shelter = Shelter(idShelter=1, shelterName="Shelter A", address="123 Main St", phone="1234567890", email="shelterA@gmail.com", maxPeople=100, energyLevel=80, waterLevel=90, radiationLevel=20)
+    db_session.add(shelter)
+
+    room = Room(idRoom=1, roomName="Room A", createdBy=1, createDate=date.today(), idShelter=1, maxPeople=10)
+    db_session.add(room)
+
+    db_session.commit()
+
+    family1 = FamilySchema(
+        idFamily=1,
+        familyName="Smith Family",
+        idRoom=1,
+        idShelter=1,
+        createdBy=1,
+        createDate=date.today()
+    )
+    controllers.create_family(family1, session=db_session)
+
+    family2 = FamilySchema(
+        idFamily=2,
+        familyName="Smith Family", 
+        idRoom=1,
+        idShelter=1,
+        createdBy=1,
+        createDate=date.today()
+    )
+
+    response = controllers.create_family(family2, session=db_session)
+
+    assert response == {"status": "error", "message": "A family with the same name already exists in this room."}
