@@ -263,10 +263,10 @@ async def create_machine(body: machine.Machine):
     """
     return controllers.create_machine(body)
 
-
+"""
 @app.post('/admin/create')
 async def create_admin(admin: AdminSchema, setup_database):
-    """
+    
     Endpoint to create a new admin.
 
     Parameters:
@@ -276,7 +276,7 @@ async def create_admin(admin: AdminSchema, setup_database):
         dict: A dictionary indicating the result of the admin creation:
               - "status": "ok" or "error".
               - "message": Success or error message.
-    """
+    
     try:
         controllers = Controllers()
         db_session = setup_database
@@ -285,4 +285,4 @@ async def create_admin(admin: AdminSchema, setup_database):
     except Exception as e:
         return {"error": str(e)}
 
-
+"""

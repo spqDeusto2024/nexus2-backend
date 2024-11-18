@@ -16,8 +16,7 @@ from app.mysql.room import Room
 from app.mysql.shelter import Shelter
 from app.mysql.family import Family
 from app.mysql.admin import Admin
-from app.mysql.admin import Admin as AdminModel
-from app.models.admin import Admin as AdminSchema
+
 
 from datetime import date
 import app.utils.vars as gb
@@ -625,7 +624,7 @@ class Controllers:
 
 
 
-  def create_admin(self, admin_data: AdminSchema, session: Session):
+  def create_admin(self, admin_data: adminMysql.Admin, session: Session):
 
     """
     Creates a new admin record in the database using hashlib for password hashing.
@@ -638,13 +637,13 @@ class Controllers:
         dict: A response indicating success or failure.
     """
 
-    existing_admin = session.query(AdminModel).filter_by(email=admin_data.email).first()
+    existing_admin = session.query(Admin).filter_by(email=admin_data.email).first()
     if existing_admin:
         return {"status": "error", "message": "An admin with this email already exists."}
 
     hashed_password = hashlib.sha256(admin_data.password.encode()).hexdigest()
 
-    new_admin = AdminModel(
+    new_admin = Admin(
         email=admin_data.email,
         name=admin_data.name,
         password=hashed_password
