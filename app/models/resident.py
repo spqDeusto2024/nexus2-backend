@@ -21,7 +21,7 @@ class Resident(BaseModel):
         idRoom: Foreign key to the room the resident is.
     """
     
-    idResident: int
+    idResident: Optional[int]
     name: str
     surname: str
     birthDate: date
@@ -30,4 +30,4 @@ class Resident(BaseModel):
     createDate: date
     update: Optional[date]
     idFamily: Optional[int]
-    idRoom: int
+    idRoom: Optional[int]
