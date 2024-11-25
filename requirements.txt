@@ -1,5 +1,6 @@
 SQLAlchemy==1.4.43
 pytest==7.4.2
+pytest-mock
 pytest-html==3.2.0
 fastapi==0.86.0
 pydantic==1.10.2
