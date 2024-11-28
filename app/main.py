@@ -323,3 +323,14 @@ async def loginAdmin(email: str, password: str):
         raise HTTPException(status_code=401, detail=result["message"])
     
     return result
+
+@app.get("/listRooms")
+async def list_rooms():
+    result = controllers.list_rooms()
+    
+    # Verifica si el resultado es un diccionario y contiene "status"
+    if isinstance(result, dict) and result.get("status") == "error":
+        raise HTTPException(status_code=401, detail=result["message"])
+    
+    # Si no es un diccionario, asumimos que es una lista de habitaciones
+    return {"status": "ok", "rooms": result}

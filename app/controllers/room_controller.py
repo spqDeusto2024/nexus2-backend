@@ -156,4 +156,31 @@ class RoomController:
         if family and resident.idFamily == family.idFamily:
             return "Access granted. Welcome to the room."
         else:
+
             return "Access denied. You are in the wrong room."
+    
+    def list_rooms(self, session=None):
+        """
+        Lista las habitaciones con información básica: id, nombre, capacidad, y shelter asociado.
+
+        Returns:
+            list[dict]: Una lista de habitaciones con id, nombre, capacidad, y shelter.
+        """
+        if session is None:
+            session = Session(self.db_client.engine)
+        try:
+            rooms = session.query(Room).all()
+            return [
+                {
+                    "idRoom": room.idRoom,
+                    "roomName": room.roomName,
+                    "maxPeople": room.maxPeople,
+                    "idShelter": room.idShelter,
+                    "createDate": room.createDate.isoformat() if room.createDate else None,
+                }
+                for room in rooms
+            ]
+        except Exception as e:
+            return {"status": "error", "message": str(e)}
+        finally:
+            session.close()

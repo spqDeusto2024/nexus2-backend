@@ -77,3 +77,6 @@ class Controllers:
 
     def loginAdmin(self, email, password, session=None):
         return admin_controller.loginAdmin(email, password,session)
+    
+    def list_rooms(self, session=None):
+        return room_controller.list_rooms(session)
