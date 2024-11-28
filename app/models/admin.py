@@ -14,7 +14,7 @@ class Admin(BaseModel):
         password (str): Password for admin authentication.
     """
     
-    idAdmin: int
+    idAdmin: Optional[int]
     email: str
     name: str
     password: str

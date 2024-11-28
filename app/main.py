@@ -163,7 +163,7 @@ async def list_rooms_with_resident_count():
     return controllers.list_rooms_with_resident_count()
 
 
-@app.post("/room/access")
+@app.get("/room/access")
 async def access_room(idResident: int, idRoom: int):
     """
     Verifies whether a resident can access a specified room.
