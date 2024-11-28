@@ -25,7 +25,7 @@ from app.mysql.room import Room
 from app.mysql.shelter import Shelter
 from app.mysql.family import Family
 from app.mysql.admin import Admin
-
+import os
 
 from datetime import date
 import app.utils.vars as gb
@@ -35,7 +35,10 @@ from sqlalchemy import func
 class FamilyController:
 
     def __init__(self, db_url=None):
-        self.db_url = db_url or "sqlite:///:memory:"  # Asignar correctamente el atributo
+        # Usa MYSQL_URL de la variable de entorno si no se pasa db_url
+        self.db_url = db_url or os.getenv("MYSQL_URL")
+        if not self.db_url:
+            raise ValueError("MYSQL_URL environment variable is not set.")
         self.db_client = DatabaseClient(self.db_url)
 
     def create_family(self, body: FamilyModel, session=None):

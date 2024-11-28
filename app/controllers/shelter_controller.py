@@ -3,10 +3,14 @@ from app.mysql.shelter import Shelter
 from sqlalchemy.orm import Session
 from datetime import date
 import app.utils.vars as gb
+import os
 
 class ShelterController:
     def __init__(self, db_url=None):
-        self.db_url = db_url or "sqlite:///:memory:"
+        # Usa MYSQL_URL de la variable de entorno si no se pasa db_url
+        self.db_url = db_url or os.getenv("MYSQL_URL")
+        if not self.db_url:
+            raise ValueError("MYSQL_URL environment variable is not set.")
         self.db_client = DatabaseClient(self.db_url)
 
     def get_shelter_energy_level(self, session=None):

@@ -3,6 +3,7 @@ from app.mysql.admin import Admin  # SQLAlchemy model for the database
 from app.models.admin import Admin as AdminModel  # Pydantic model for request validation
 from sqlalchemy.orm import Session
 import app.utils.vars as gb
+from fastapi import HTTPException
 
 import app.models.resident as resident
 import app.models.family as family
@@ -27,12 +28,15 @@ from datetime import date
 import app.utils.vars as gb
 from sqlalchemy.orm import Session
 from sqlalchemy import func
-
+import os
 
 class AdminController:
 
     def __init__(self, db_url=None):
-        self.db_url = db_url or "sqlite:///:memory:"  # Asignar a un atributo de instancia
+        # Usa MYSQL_URL de la variable de entorno si no se pasa db_url
+        self.db_url = db_url or os.getenv("MYSQL_URL")
+        if not self.db_url:
+            raise ValueError("MYSQL_URL environment variable is not set.")
         self.db_client = DatabaseClient(self.db_url)
 
     def create_admin(self, admin_data: AdminModel, session=None):
@@ -57,3 +61,50 @@ class AdminController:
         finally:
             session.close()
 
+
+
+    def loginAdmin(self, email: str, password: str, session=None):
+        """
+        Verifica las credenciales de login usando el email y la contraseña del administrador.
+
+        Args:
+            email (str): Email del administrador.
+            password (str): Contraseña del administrador.
+            session (Session, optional): Sesión SQLAlchemy para interacción con la base de datos.
+
+        Returns:
+            dict: Resultado del login.
+                - {"status": "ok", "user": {idAdmin, email}}: Si el login es exitoso.
+                - {"status": "error", "message": <error_message>}: Si ocurre algún error.
+        """
+        if session is None:
+            session = Session(self.db_client.engine)
+
+        try:
+            # Busca al administrador en la base de datos por email
+            user = session.query(Admin).filter(Admin.email == email).first()
+
+            # Verificamos si no se encontró el usuario
+            if not user:
+                return {"status": "error", "message": "Invalid credentials"}
+
+            # Compara la contraseña sin hash
+            if user.password != password:
+                return {"status": "error", "message": "Invalid credentials"}
+
+            return {
+                "status": "ok",
+                "user": {
+                    "idAdmin": user.idAdmin,  # Asegúrate de que el atributo sea correcto
+                    "email": user.email,
+                },
+            }
+
+        except Exception as e:
+            # Aquí se captura cualquier otra excepción que pueda ocurrir
+            return {"status": "error", "message": str(e)}
+
+        finally:
+            # Asegúrate de cerrar la sesión para evitar problemas de conexiones abiertas
+            if session:
+                session.close()

@@ -30,13 +30,16 @@ from datetime import date
 import app.utils.vars as gb
 from sqlalchemy.orm import Session
 from sqlalchemy import func
-
+import os
 
 class MachineController:
     
     def __init__(self, db_url=None):
-        db_url = db_url or "sqlite:///:memory:"  # Este código está mal porque se intenta asignar a sí mismo
-        self.db_client = DatabaseClient(db_url)
+        # Usa MYSQL_URL de la variable de entorno si no se pasa db_url
+        self.db_url = db_url or os.getenv("MYSQL_URL")
+        if not self.db_url:
+            raise ValueError("MYSQL_URL environment variable is not set.")
+        self.db_client = DatabaseClient(self.db_url)
         
     def create_machine(self, body: MachineModel, session=None):
         """

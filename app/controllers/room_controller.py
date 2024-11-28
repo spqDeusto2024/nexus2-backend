@@ -33,11 +33,15 @@ from datetime import date
 import app.utils.vars as gb
 from sqlalchemy.orm import Session
 from sqlalchemy import func
-
+import os
 
 class RoomController:
+
     def __init__(self, db_url=None):
-        self.db_url = db_url or "sqlite:///:memory:"
+        # Usa MYSQL_URL de la variable de entorno si no se pasa db_url
+        self.db_url = db_url or os.getenv("MYSQL_URL")
+        if not self.db_url:
+            raise ValueError("MYSQL_URL environment variable is not set.")
         self.db_client = DatabaseClient(self.db_url)
 
     def create_room(self, body: RoomModel, session=None):

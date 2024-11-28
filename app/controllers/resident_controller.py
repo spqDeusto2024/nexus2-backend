@@ -8,7 +8,7 @@ from datetime import date
 from sqlalchemy import func
 from app.models.resident import Resident as ResidentModel  # Import Pydantic model
 import app.utils.vars as gb
-
+import os
 import app.models.resident as resident
 import app.models.family as family
 import app.models.room as room
@@ -36,7 +36,10 @@ from sqlalchemy import func
 
 class ResidentController:
     def __init__(self, db_url=None):
-        self.db_url = db_url or "sqlite:///:memory:"
+        # Usa MYSQL_URL de la variable de entorno si no se pasa db_url
+        self.db_url = db_url or os.getenv("MYSQL_URL")
+        if not self.db_url:
+            raise ValueError("MYSQL_URL environment variable is not set.")
         self.db_client = DatabaseClient(self.db_url)
 
     def create_resident(self, body: ResidentModel, session=None) -> dict:

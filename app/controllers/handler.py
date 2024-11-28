@@ -74,3 +74,6 @@ class Controllers:
 
     def login(self, name, surname, session=None):
         return resident_controller.login(name, surname, session)
+
+    def loginAdmin(self, email, password, session=None):
+        return admin_controller.loginAdmin(email, password,session)

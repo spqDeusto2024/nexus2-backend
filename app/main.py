@@ -303,3 +303,23 @@ async def login(name: str, surname: str):
         raise HTTPException(status_code=401, detail=result["message"])
     
     return result
+
+@app.get("/loginAdmin")
+async def loginAdmin(email: str, password: str):
+    """
+    Login endpoint to verify resident credentials.
+
+    Args:
+        name (str): Resident's first name.
+        surname (str): Resident's surname.
+
+    Returns:
+        dict: Status of the login attempt and user details if successful.
+    """
+    # Llamada al controlador para realizar el login, pasando name y surname
+    result = controllers.loginAdmin(email, password)
+    
+    if result["status"] == "error":
+        raise HTTPException(status_code=401, detail=result["message"])
+    
+    return result
