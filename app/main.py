@@ -6,6 +6,9 @@ from app.mysql.initializeData import initialize_database
 from app.models import resident, room, family, machine, admin, alarm
 from datetime import date
 import app.utils.vars as gb
+from app.models.resident import Resident as ResidentModel
+from app.controllers import resident_controller
+from fastapi.middleware.cors import CORSMiddleware
 
 # Database initialization
 def initialize() -> None:
@@ -23,6 +26,13 @@ controllers = Controllers()
 # Execute database initialization
 initialize()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # Permitir solicitudes desde localhost:3000
+    allow_credentials=True,
+    allow_methods=["*"],  # Permitir todos los métodos HTTP (GET, POST, etc.)
+    allow_headers=["*"],  # Permitir todos los headers
+)
 
 # API Routes
 @app.get("/healthz")
@@ -273,3 +283,23 @@ async def create_admin(body: admin.Admin):
         dict: Operation status and a message.
     """
     return controllers.create_admin(body)
+
+@app.get("/login")
+async def login(name: str, surname: str):
+    """
+    Login endpoint to verify resident credentials.
+
+    Args:
+        name (str): Resident's first name.
+        surname (str): Resident's surname.
+
+    Returns:
+        dict: Status of the login attempt and user details if successful.
+    """
+    # Llamada al controlador para realizar el login, pasando name y surname
+    result = controllers.login(name, surname)
+    
+    if result["status"] == "error":
+        raise HTTPException(status_code=401, detail=result["message"])
+    
+    return result

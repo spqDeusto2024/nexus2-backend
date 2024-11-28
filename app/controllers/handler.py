@@ -71,3 +71,6 @@ class Controllers:
     
     def list_residents(self, session=None):
         return resident_controller.list_residents(session)
+
+    def login(self, name, surname, session=None):
+        return resident_controller.login(name, surname, session)

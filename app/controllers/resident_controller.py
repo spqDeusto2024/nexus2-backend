@@ -273,3 +273,44 @@ class ResidentController:
         finally:
             if session:
                 session.close()
+
+    def login(self, name: str, surname: str, session=None):
+        """
+        Verifica las credenciales de login usando el nombre y apellido del residente.
+
+        Args:
+            name (str): Nombre del residente.
+            surname (str): Apellido del residente.
+            session (Session, optional): Sesión SQLAlchemy para interacción con la base de datos.
+
+        Returns:
+            dict: Resultado del login.
+                - {"status": "ok", "user": {id, name, surname}}: Si el login es exitoso.
+                - {"status": "error", "message": <error_message>}: Si ocurre algún error.
+        """
+        if session is None:
+            session = Session(self.db_client.engine)
+
+        try:
+            # Busca al residente en la base de datos
+            user = session.query(Resident).filter(
+                Resident.name == name,
+                Resident.surname == surname
+            ).first()
+
+            if not user:
+                return {"status": "error", "message": "Invalid credentials"}
+
+            return {
+                "status": "ok",
+                "user": {
+                    "idResident": user.idResident,
+                    "name": user.name,
+                    "surname": user.surname,
+                },
+            }
+        except Exception as e:
+            return {"status": "error", "message": str(e)}
+        finally:
+            if session:
+                session.close()
