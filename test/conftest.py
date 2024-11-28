@@ -8,10 +8,6 @@ from app.mysql.family import Family
 from app.mysql.room import Room
 from app.mysql.shelter import Shelter
 
-@pytest.fixture(scope="function")
-import pytest
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 
 @pytest.fixture
 def setup_database():
