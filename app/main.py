@@ -123,7 +123,7 @@ async def list_residents():
     return controllers.list_residents()
 
 
-@app.get("/room/{idRoom}/residents")
+@app.get("/room/residents")
 async def list_residents_in_room(idRoom: int):
     """
     Retrieves a list of all residents in a specific room.
