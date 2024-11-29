@@ -185,3 +185,185 @@ class AdminController:
             # Cerramos la sesión
             if session:
                 session.close()
+
+    def getAdminById(self, idAdmin: int, session=None):
+        """
+        Obtiene un administrador por su ID.
+
+        Args:
+            idAdmin (int): El ID del administrador que se busca.
+            session (Session, optional): Sesión SQLAlchemy para interacción con la base de datos.
+
+        Returns:
+            dict: Resultado de la operación.
+                - {"status": "ok", "admin": <admin_info>} : Si se encuentra el administrador.
+                - {"status": "error", "message": <error_message>} : Si ocurre algún error o el admin no se encuentra.
+        """
+        if session is None:
+            session = Session(self.db_client.engine)
+
+        try:
+            # Busca el administrador por su idAdmin
+            admin = session.query(Admin).filter(Admin.idAdmin == idAdmin).first()
+
+            if admin is None:
+                return {"status": "error", "message": "Administrador no encontrado"}
+
+            # Convertimos el resultado en un diccionario
+            admin_info = {
+                "idAdmin": admin.idAdmin,
+                "email": admin.email,
+                "name": admin.name,
+                "password": admin.password
+            }
+
+            return {"status": "ok", "admin": admin_info}
+
+        except Exception as e:
+            # Captura cualquier excepción
+            return {"status": "error", "message": str(e)}
+
+        finally:
+            # Cerramos la sesión
+            if session:
+                session.close()
+
+    def updateAdminPassword(self, idAdmin: int, new_password: str, session=None):
+        """
+        Actualiza la contraseña de un administrador.
+
+        Args:
+            idAdmin (int): El ID del administrador cuyo password se va a actualizar.
+            new_password (str): La nueva contraseña que se asignará.
+            session (Session, optional): Sesión SQLAlchemy para interacción con la base de datos.
+
+        Returns:
+            dict: Resultado de la operación.
+                - {"status": "ok", "message": "Contraseña actualizada exitosamente"} : Si la contraseña se actualiza correctamente.
+                - {"status": "error", "message": <error_message>} : Si ocurre algún error.
+        """
+        if session is None:
+            session = Session(self.db_client.engine)
+
+        try:
+            # Buscar al administrador por idAdmin
+            admin = session.query(Admin).filter(Admin.idAdmin == idAdmin).first()
+
+            if admin is None:
+                return {"status": "error", "message": "Administrador no encontrado"}
+
+            # Actualizamos la contraseña
+            admin.password = new_password
+
+            # Guardamos los cambios
+            session.commit()
+
+            return {"status": "ok", "message": "Contraseña actualizada exitosamente"}
+
+        except SQLAlchemyError as e:
+            # Captura errores de la base de datos
+            session.rollback()  # Revertir cualquier cambio en caso de error
+            return {"status": "error", "message": f"Error de base de datos: {str(e)}"}
+
+        except Exception as e:
+            # Captura cualquier otro tipo de error
+            return {"status": "error", "message": str(e)}
+
+        finally:
+            # Cerramos la sesión
+            if session:
+                session.close()
+    
+    def updateAdminEmail(self, idAdmin: int, new_email: str, session=None):
+
+        """
+        Actualiza la contraseña de un administrador.
+
+        Args:
+            idAdmin (int): El ID del administrador cuyo password se va a actualizar.
+            new_password (str): La nueva contraseña que se asignará.
+            session (Session, optional): Sesión SQLAlchemy para interacción con la base de datos.
+
+        Returns:
+            dict: Resultado de la operación.
+                - {"status": "ok", "message": "Contraseña actualizada exitosamente"} : Si la contraseña se actualiza correctamente.
+                - {"status": "error", "message": <error_message>} : Si ocurre algún error.
+        """
+        if session is None:
+            session = Session(self.db_client.engine)
+
+        try:
+            # Buscar al administrador por idAdmin
+            admin = session.query(Admin).filter(Admin.idAdmin == idAdmin).first()
+
+            if admin is None:
+                return {"status": "error", "message": "Administrador no encontrado"}
+
+            # Actualizamos la contraseña
+            admin.email = new_email
+
+            # Guardamos los cambios
+            session.commit()
+
+            return {"status": "ok", "message": "Email actualizado exitosamente"}
+
+        except SQLAlchemyError as e:
+            # Captura errores de la base de datos
+            session.rollback()  # Revertir cualquier cambio en caso de error
+            return {"status": "error", "message": f"Error de base de datos: {str(e)}"}
+
+        except Exception as e:
+            # Captura cualquier otro tipo de error
+            return {"status": "error", "message": str(e)}
+
+        finally:
+            # Cerramos la sesión
+            if session:
+                session.close()
+    
+
+    def updateAdminName(self, idAdmin: int, new_name: str, session=None):
+        """
+        Actualiza la contraseña de un administrador.
+
+        Args:
+            idAdmin (int): El ID del administrador cuyo password se va a actualizar.
+            new_password (str): La nueva contraseña que se asignará.
+            session (Session, optional): Sesión SQLAlchemy para interacción con la base de datos.
+
+        Returns:
+            dict: Resultado de la operación.
+                - {"status": "ok", "message": "Contraseña actualizada exitosamente"} : Si la contraseña se actualiza correctamente.
+                - {"status": "error", "message": <error_message>} : Si ocurre algún error.
+        """
+        if session is None:
+            session = Session(self.db_client.engine)
+
+        try:
+            # Buscar al administrador por idAdmin
+            admin = session.query(Admin).filter(Admin.idAdmin == idAdmin).first()
+
+            if admin is None:
+                return {"status": "error", "message": "Administrador no encontrado"}
+
+            # Actualizamos la contraseña
+            admin.name = new_name
+
+            # Guardamos los cambios
+            session.commit()
+
+            return {"status": "ok", "message": "Nombre actualizado exitosamente"}
+
+        except SQLAlchemyError as e:
+            # Captura errores de la base de datos
+            session.rollback()  # Revertir cualquier cambio en caso de error
+            return {"status": "error", "message": f"Error de base de datos: {str(e)}"}
+
+        except Exception as e:
+            # Captura cualquier otro tipo de error
+            return {"status": "error", "message": str(e)}
+
+        finally:
+            # Cerramos la sesión
+            if session:
+                session.close()

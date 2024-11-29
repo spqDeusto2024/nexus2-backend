@@ -28,7 +28,7 @@ initialize()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Permitir solicitudes desde localhost:3000
+    allow_origins=["http://localhost:3000"],  # gePermitir solicitudes desde localhost:3000
     allow_credentials=True,
     allow_methods=["*"],  # Permitir todos los métodos HTTP (GET, POST, etc.)
     allow_headers=["*"],  # Permitir todos los headers
@@ -357,3 +357,58 @@ async def list_admins():
         dict: List of admins with their information.
     """
     return controllers.listAdmins()
+
+@app.get("/admin/get")
+async def get_admin(admin_id: int):
+    """
+    Obtiene los datos de un administrador por su ID.
+
+    Args:
+        admin_id (int): ID del administrador que se desea consultar.
+
+    Returns:
+        dict: Datos del administrador.
+    """
+    return controllers.getAdminById(admin_id)
+
+@app.put("/admin/password")
+async def update_admin_password(idAdmin: int, new_password: str):
+    """
+    Actualiza la contraseña de un administrador por su ID.
+
+    Args:
+        idAdmin (int): El ID del administrador cuyo password se va a actualizar.
+        new_password (str): La nueva contraseña del administrador.
+
+    Returns:
+        dict: Estado de la operación y un mensaje.
+    """
+    return controllers.updateAdminPassword(idAdmin, new_password)
+
+@app.put("/admin/email")
+async def update_admin_email(idAdmin: int, new_email: str):
+    """
+    Actualiza la contraseña de un administrador por su ID.
+
+    Args:
+        idAdmin (int): El ID del administrador cuyo password se va a actualizar.
+        new_password (str): La nueva contraseña del administrador.
+
+    Returns:
+        dict: Estado de la operación y un mensaje.
+    """
+    return controllers.updateAdminEmail(idAdmin, new_email)
+
+@app.put("/admin/name")
+async def update_admin_name(idAdmin: int, new_name: str):
+    """
+    Actualiza la contraseña de un administrador por su ID.
+
+    Args:
+        idAdmin (int): El ID del administrador cuyo password se va a actualizar.
+        new_password (str): La nueva contraseña del administrador.
+
+    Returns:
+        dict: Estado de la operación y un mensaje.
+    """
+    return controllers.updateAdminName(idAdmin, new_name)

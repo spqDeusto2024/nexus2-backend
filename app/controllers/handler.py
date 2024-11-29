@@ -86,3 +86,15 @@ class Controllers:
     
     def listAdmins(self, session=None):
         return admin_controller.listAdmins(session)
+
+    def getAdminById(self, admin_id, session=None):
+        return admin_controller.getAdminById(admin_id, session)
+    
+    def updateAdminPassword(self, idAdmin, new_password, session=None):
+        return admin_controller.updateAdminPassword(idAdmin, new_password, session)
+    
+    def updateAdminEmail(self, idAdmin, new_email, session=None):
+        return admin_controller.updateAdminEmail(idAdmin, new_email, session)
+    
+    def updateAdminName(self, idAdmin, new_name, session=None):
+        return admin_controller.updateAdminName(idAdmin, new_name, session)
