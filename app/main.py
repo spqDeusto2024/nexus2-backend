@@ -334,3 +334,26 @@ async def list_rooms():
     
     # Si no es un diccionario, asumimos que es una lista de habitaciones
     return {"status": "ok", "rooms": result}
+
+@app.delete("/admin/delete")
+async def delete_admin(admin_id: int):
+    """
+    Deletes an admin user by ID.
+
+    Args:
+        admin_id (int): ID of the admin to be deleted.
+
+    Returns:
+        dict: Operation status and a message.
+    """
+    return controllers.deleteAdmin(admin_id)
+
+@app.get("/admin/list")
+async def list_admins():
+    """
+    Lists all admin users.
+
+    Returns:
+        dict: List of admins with their information.
+    """
+    return controllers.listAdmins()
