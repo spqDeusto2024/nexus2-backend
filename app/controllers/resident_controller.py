@@ -46,13 +46,16 @@ class ResidentController:
         if session is None:
             session = Session(self.db_client.engine)
         try:
+            # Verificar si la familia existe
             family = session.query(Family).filter_by(idFamily=body.idFamily).first()
             if not family:
                 return {"status": "error", "message": "The family does not exist."}
 
+            # Verificar si la familia tiene una habitación asignada
             if not family.idRoom:
                 return {"status": "error", "message": "The family does not have an assigned room."}
 
+            # Verificar si ya existe un residente con los mismos datos
             existing_resident = session.query(Resident).filter(
                 Resident.idFamily == body.idFamily,
                 Resident.idRoom == family.idRoom,
@@ -62,35 +65,41 @@ class ResidentController:
             if existing_resident:
                 return {"status": "error", "message": "Resident already exists in this room."}
 
+            # Verificar si el refugio está lleno
             shelter = session.query(Shelter).filter_by(idShelter=family.idShelter).first()
             if shelter:
                 current_shelter_count = session.query(Resident).filter_by(idFamily=body.idFamily).count()
                 if current_shelter_count >= shelter.maxPeople:
                     return {"status": "error", "message": "Shelter is full."}
 
+            # Verificar si la habitación está llena
             room = session.query(Room).filter_by(idRoom=family.idRoom).first()
             if room:
                 current_room_count = session.query(Resident).filter_by(idRoom=family.idRoom).count()
                 if current_room_count >= room.maxPeople:
+                    # Crear una nueva habitación con un nombre basado en el idFamily
                     new_room = session.query(Room).filter(
                         Room.maxPeople > current_room_count,
                         Room.idShelter == room.idShelter,
                     ).first()
                     if not new_room:
+                        new_room_name = f"Room{family.idFamily}"  # Nombre de la nueva habitación
                         new_room = Room(
-                            roomName="New Room",
+                            roomName=new_room_name,  # Nombre con el formato deseado
                             idShelter=family.idShelter,
                             maxPeople=current_room_count + 1,
                         )
                         session.add(new_room)
                         session.commit()
 
+                    # Actualizar la familia con la nueva habitación
                     family.idRoom = new_room.idRoom
                     session.query(Family).filter_by(idFamily=body.idFamily).update(
                         {"idRoom": new_room.idRoom}, synchronize_session=False
                     )
                     session.commit()
 
+            # Crear un nuevo residente
             new_resident = Resident(
                 name=body.name,
                 surname=body.surname,
@@ -109,6 +118,7 @@ class ResidentController:
             return {"status": "error", "message": str(e)}
         finally:
             session.close()
+
 
       
     def delete_resident(self, idResident: int, session=None):
