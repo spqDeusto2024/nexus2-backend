@@ -16,7 +16,7 @@ class Room(BaseModel):
         maxPeople (int): Maximum number of people that can occupy the room.
     """
     
-    idRoom: int
+    idRoom: Optional[int]
     roomName: str
     createdBy: int
     createDate: date
