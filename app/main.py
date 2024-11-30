@@ -484,3 +484,6 @@ async def delete_machine(machine_id: int):
 async def update_machine (machine_name: str):
     return controllers.updateMachineDate(machine_name)
 
+@app.put("/room/name")
+async def update_Room_Name(idRoom: int, new_name: str):
+    return controllers.updateRoomName(idRoom, new_name)

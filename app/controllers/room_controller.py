@@ -154,6 +154,7 @@ class RoomController:
 
 
     def list_rooms(self, session=None):
+
         """
         Lista las habitaciones con información básica: id, nombre, capacidad, y shelter asociado.
 
@@ -178,3 +179,50 @@ class RoomController:
             return {"status": "error", "message": str(e)}
         finally:
             session.close()
+
+
+    def updateRoomName(self, idRoom: int, new_name: str, session=None):
+        """
+        Actualiza el nombre de una habitación.
+
+        Args:
+            idRoom (int): El ID de la habitación cuyo nombre se va a actualizar.
+            new_name (str): El nuevo nombre que se asignará.
+            session (Session, optional): Sesión SQLAlchemy para interacción con la base de datos.
+
+        Returns:
+            dict: Resultado de la operación.
+                - {"status": "ok", "message": "Nombre de la habitación actualizado exitosamente"} : Si el nombre se actualiza correctamente.
+                - {"status": "error", "message": <error_message>} : Si ocurre algún error.
+        """
+        if session is None:
+            session = Session(self.db_client.engine)
+
+        try:
+            # Buscar la habitación por idRoom
+            room = session.query(Room).filter(Room.idRoom == idRoom).first()
+
+            if room is None:
+                return {"status": "error", "message": "Habitación no encontrada"}
+
+            # Actualizamos el nombre de la habitación
+            room.roomName = new_name
+
+            # Guardamos los cambios
+            session.commit()
+
+            return {"status": "ok", "message": "Nombre de la habitación actualizado exitosamente"}
+
+        except SQLAlchemyError as e:
+            # Captura errores de la base de datos
+            session.rollback()  # Revertir cualquier cambio en caso de error
+            return {"status": "error", "message": f"Error de base de datos: {str(e)}"}
+
+        except Exception as e:
+            # Captura cualquier otro tipo de error
+            return {"status": "error", "message": str(e)}
+
+        finally:
+            # Cerramos la sesión
+            if session:
+                session.close()

@@ -137,3 +137,6 @@ class Controllers:
     
     def updateMachineDate(self, machine_name, session=None):
         return machine_controller.updateMachineDate(machine_name,session)
+
+    def updateRoomName(self, idRoom, new_name, session=None):
+        return room_controller.updateRoomName(idRoom, new_name)
