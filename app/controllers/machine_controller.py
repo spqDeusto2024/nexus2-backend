@@ -40,7 +40,8 @@ class MachineController:
         if not self.db_url:
             raise ValueError("MYSQL_URL environment variable is not set.")
         self.db_client = DatabaseClient(self.db_url)
-        
+    
+    
     def create_machine(self, body: MachineModel, session=None):
         """
         Creates a new machine entry in the database. Ensures that the machine is assigned to an 
@@ -107,3 +108,94 @@ class MachineController:
         finally:
             if session is None:
                 session.close()
+
+    def updateMachineStatus(self, machine_name: str, session=None):
+        """
+        Actualiza el estado 'on' de una máquina específica a False.
+
+        Args:
+            machine_name (str): El nombre de la máquina que se va a actualizar.
+            session (Session, optional): Sesión SQLAlchemy para interacción con la base de datos.
+
+        Returns:
+            dict: Resultado de la operación.
+                - {"status": "ok", "message": "Estado de la máquina actualizado exitosamente"} : Si se actualiza correctamente.
+                - {"status": "error", "message": <error_message>} : Si ocurre algún error.
+        """
+        if session is None:
+            session = Session(self.db_client.engine)
+
+        try:
+            # Buscar la máquina por su nombre
+            machine = session.query(Machine).filter(Machine.machineName == machine_name).first()
+
+            if machine is None:
+                return {"status": "error", "message": f"Máquina '{machine_name}' no encontrada"}
+
+            # Actualizar el estado de 'on' a False
+            machine.on = False
+
+            # Guardar los cambios
+            session.commit()
+
+            return {"status": "ok", "message": f"Estado de la máquina '{machine_name}' actualizado a False"}
+
+        except SQLAlchemyError as e:
+            # Captura errores de la base de datos
+            session.rollback()  # Revertir cualquier cambio en caso de error
+            return {"status": "error", "message": f"Error de base de datos: {str(e)}"}
+
+        except Exception as e:
+            # Captura cualquier otro tipo de error
+            return {"status": "error", "message": str(e)}
+
+        finally:
+            # Cerramos la sesión
+            if session:
+                session.close()
+    
+    def updateMachineStatusOn(self, machine_name: str, session=None):
+        """
+        Actualiza el estado 'on' de una máquina específica a False.
+
+        Args:
+            machine_name (str): El nombre de la máquina que se va a actualizar.
+            session (Session, optional): Sesión SQLAlchemy para interacción con la base de datos.
+
+        Returns:
+            dict: Resultado de la operación.
+                - {"status": "ok", "message": "Estado de la máquina actualizado exitosamente"} : Si se actualiza correctamente.
+                - {"status": "error", "message": <error_message>} : Si ocurre algún error.
+        """
+        if session is None:
+            session = Session(self.db_client.engine)
+
+        try:
+            # Buscar la máquina por su nombre
+            machine = session.query(Machine).filter(Machine.machineName == machine_name).first()
+
+            if machine is None:
+                return {"status": "error", "message": f"Máquina '{machine_name}' no encontrada"}
+
+            # Actualizar el estado de 'on' a False
+            machine.on = True
+
+            # Guardar los cambios
+            session.commit()
+
+            return {"status": "ok", "message": f"Estado de la máquina '{machine_name}' actualizado a True"}
+
+        except SQLAlchemyError as e:
+            # Captura errores de la base de datos
+            session.rollback()  # Revertir cualquier cambio en caso de error
+            return {"status": "error", "message": f"Error de base de datos: {str(e)}"}
+
+        except Exception as e:
+            # Captura cualquier otro tipo de error
+            return {"status": "error", "message": str(e)}
+
+        finally:
+            # Cerramos la sesión
+            if session:
+                session.close()
+            

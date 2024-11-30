@@ -412,3 +412,23 @@ async def update_admin_name(idAdmin: int, new_name: str):
         dict: Estado de la operación y un mensaje.
     """
     return controllers.updateAdminName(idAdmin, new_name)
+
+@app.put("/shelter/energyLevel")
+async def update_energy_level(new_energy_level: int):
+    return controllers.updateShelterEnergyLevel(new_energy_level)
+
+@app.put("/shelter/waterLevel")
+async def update_water_level(new_water_level: int):
+    return controllers.updateShelterWaterLevel(new_water_level)
+
+@app.put("/shelter/radiationLevel")
+async def update_radiation_level(new_radiation_level: int):
+    return controllers.updateShelterRadiationLevel(new_radiation_level)
+
+@app.put("/machine/off")
+async def off_machine (machine_name: str):
+    return controllers.updateMachineStatus(machine_name)
+
+@app.put("/machine/on")
+async def on_machine (machine_name: str):
+    return controllers.updateMachineStatusOn(machine_name)

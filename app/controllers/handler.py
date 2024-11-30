@@ -98,3 +98,18 @@ class Controllers:
     
     def updateAdminName(self, idAdmin, new_name, session=None):
         return admin_controller.updateAdminName(idAdmin, new_name, session)
+    
+    def updateShelterEnergyLevel(self, new_energy_level, session=None):
+        return shelter_controller.updateShelterEnergyLevel(new_energy_level, session)
+    
+    def updateShelterWaterLevel(self, new_water_level, session=None):
+        return shelter_controller.updateShelterWaterLevel(new_water_level, session)
+    
+    def updateShelterRadiationLevel(self, new_radiation_level, session=None):
+        return shelter_controller.updateShelterRadiationLevel(new_radiation_level, session)
+    
+    def updateMachineStatus(self, machine_name, session=None):
+        return machine_controller.updateMachineStatus(machine_name)
+    
+    def updateMachineStatusOn(self, machine_name, session=None):
+        return machine_controller.updateMachineStatusOn(machine_name)
