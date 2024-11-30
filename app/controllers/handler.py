@@ -117,6 +117,20 @@ class Controllers:
     def updateResidentRoom(self, resident_id, new_room_id, session=None):
         return resident_controller.updateResidentRoom(resident_id, new_room_id)
     
-    def getResidentById(self, idResident: int, session=None):
+    def getResidentById(self, idResident, session=None):
         return resident_controller.getResidentById(idResident, session)
-        
+    
+    def create_alarmLevel(self, body, session=None):
+        return alarm_controller.create_alarmLevel(body, session)
+    
+    def updateAlarmEndDate(self, idAlarm, new_enddate, session=None):
+        return alarm_controller.updateAlarmEndDate(idAlarm, new_enddate)
+    
+    def list_alarms(self, session=None):
+        return alarm_controller.list_alarms(session)
+    
+    def list_machines(self, session=None):
+        return machine_controller.list_machines(session)
+
+    def deleteMachine(self, machine_id, session=None):
+        return machine_controller.deleteMachine(machine_id,session)

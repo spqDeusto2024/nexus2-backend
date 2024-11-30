@@ -26,7 +26,5 @@ class Alarm(Base):
     start = Column(DateTime)
     end = Column(DateTime)
     idRoom = Column(Integer, ForeignKey("room.idRoom"))
-    idResident = Column(Integer, ForeignKey("resident.idResident"))
-    idAdmin = Column(Integer, ForeignKey("admin.idAdmin"))
     createDate = Column(DateTime)
 

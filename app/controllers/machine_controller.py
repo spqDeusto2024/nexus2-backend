@@ -199,3 +199,86 @@ class MachineController:
             if session:
                 session.close()
             
+    def list_machines(self, session=None):
+        """
+        List all machines in the database.
+
+        Args:
+            session (Session, optional): SQLAlchemy session for database interaction.
+
+        Returns:
+            dict: A dictionary with the list of all machines or an error message.
+                - {"status": "ok", "machines": [list of machines]}
+                - {"status": "error", "message": <error message>}
+        """
+        if session is None:
+            session = Session(self.db_client.engine)
+
+        try:
+            # Obtener todas las máquinas de la base de datos
+            machines = session.query(Machine).all()
+
+            if not machines:
+                return {"status": "ok", "machines": []}
+
+            machines_data = [
+                {
+                    "idMachine": machine.idMachine,
+                    "machineName": machine.machineName,
+                    "on": machine.on,
+                    "idRoom": machine.idRoom,
+                    "createdBy": machine.createdBy,
+                    "createDate": machine.createDate.isoformat() if machine.createDate else None,
+                    "update": machine.update.isoformat() if machine.update else None
+                }
+                for machine in machines
+            ]
+            
+            return {"status": "ok", "machines": machines_data}
+
+        except Exception as e:
+            return {"status": "error", "message": str(e)}
+
+        finally:
+            if session:
+                session.close()
+            
+    def deleteMachine(self, machine_id: int, session=None):
+        """
+        Elimina una máquina de la base de datos usando su ID.
+
+        Args:
+            machine_id (int): ID de la máquina que se desea eliminar.
+            session (Session, optional): Sesión SQLAlchemy para interacción con la base de datos.
+
+        Returns:
+            dict: Resultado de la operación.
+                - {"status": "ok", "message": "Machine deleted successfully"}: Si la eliminación es exitosa.
+                - {"status": "error", "message": <error_message>}: Si ocurre algún error.
+        """
+        if session is None:
+            session = Session(self.db_client.engine)
+
+        try:
+            # Busca la máquina en la base de datos por ID
+            machine = session.query(Machine).filter(Machine.idMachine == machine_id).first()
+
+            # Verificamos si no se encontró la máquina
+            if not machine:
+                return {"status": "error", "message": "Machine not found"}
+
+            # Eliminamos la máquina
+            session.delete(machine)
+            session.commit()
+
+            return {"status": "ok", "message": "Machine deleted successfully"}
+
+        except Exception as e:
+            # Aquí se captura cualquier otra excepción que pueda ocurrir
+            session.rollback()  # Deshacemos cualquier cambio en caso de error
+            return {"status": "error", "message": str(e)}
+
+        finally:
+            # Asegúrate de cerrar la sesión para evitar problemas de conexiones abiertas
+            if session:
+                session.close()

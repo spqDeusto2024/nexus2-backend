@@ -18,10 +18,8 @@ class Alarm(BaseModel):
         createDate (datetime): The timestamp when the alarm record was created.
     """
     
-    idAlarm: int
+    idAlarm: Optional[int]
     start: datetime
-    end: datetime
+    end: Optional[datetime]
     idRoom: int
-    idResident: int
-    idAdmin: int
     createDate: datetime

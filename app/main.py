@@ -9,6 +9,7 @@ import app.utils.vars as gb
 from app.models.resident import Resident as ResidentModel
 from app.controllers import resident_controller
 from fastapi.middleware.cors import CORSMiddleware
+from datetime import datetime
 
 # Database initialization
 def initialize() -> None:
@@ -440,3 +441,43 @@ async def new_idRoom (resident_id: int, new_room_id: int):
 @app.get("/resident/get")
 async def get_admin(idResident: int):
     return controllers.getResidentById(idResident)
+
+@app.post("/alarmLevel/create")
+async def create_alarm_level(body: alarm.Alarm):
+    """
+    Creates a new alarm.
+
+    Args:
+        body (alarm.Alarm): Alarm data.
+
+    Returns:
+        dict: Operation status and a message.
+    """
+    return controllers.create_alarmLevel(body)
+
+@app.put("/alarm/putEnd")
+async def alarm_endDate (idAlarm: int, new_enddate: datetime):
+    return controllers.updateAlarmEndDate(idAlarm, new_enddate)
+
+@app.get("/alarm/list")
+async def list_alarms():
+    """
+    Retrieves a list of all residents.
+
+    Returns:
+        list[dict]: List of residents.
+    """
+    return controllers.list_alarms()
+
+@app.get("/machine/list")
+async def list_machines():
+    """
+    Retrieves a list of all machines.
+    """
+    return controllers.list_machines()
+
+@app.delete("/machine/delete")
+async def delete_machine(machine_id: int):
+    
+    return controllers.deleteMachine(machine_id)
+

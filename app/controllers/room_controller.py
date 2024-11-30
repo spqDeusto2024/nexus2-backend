@@ -106,35 +106,9 @@ class RoomController:
 
     def access_room(self, idResident: int, idRoom: int, session=None):
         """
-        Determines whether a resident is allowed to access a specified room.
-
-        Steps:
-            1. If the room name is "mantenimiento", access is denied immediately.
-            2. If the room name does **not** start with "Room" (e.g., a public or common room), 
-            the resident is granted access regardless of family association.
-            3. If the room name **does** start with "Room" (e.g., a private or restricted room), 
-            access is granted only if:
-            - The resident is part of a family.
-            - The room is assigned to the resident's family.
-            4. Returns appropriate error messages if the resident or room does not exist.
-
-        Parameters:
-            idResident (int): 
-                The unique identifier of the resident attempting to access the room.
-            idRoom (int): 
-                The unique identifier of the room the resident is trying to access.
-            session (Session, optional): 
-                An active SQLAlchemy database session. If not provided, the method will 
-                create a new session using the application's database configuration.
-
-        Returns:
-            str: 
-                A message indicating the outcome of the access attempt:
-                - `"Access granted. Welcome to the room."`: Resident has permission to access the room.
-                - `"Access denied. You are in the wrong room."`: Resident does not have permission.
-                - `"Resident not found."`: The specified resident does not exist in the database.
-                - `"Room not found."`: The specified room does not exist in the database.
-                - `"Access denied. No puedes entrar a la sala de mantenimiento."`: Access is denied to maintenance.
+        Determina si un residente puede acceder a una sala específica, considerando la capacidad de la sala.
+        
+        ...
         """
         if session is None:
             db = DatabaseClient(gb.MYSQL_URL)
@@ -156,6 +130,16 @@ class RoomController:
         if room.roomName.lower() == "mantenimiento":  # Comparamos en minúsculas por seguridad
             return "Access denied. No puedes entrar a la sala de mantenimiento."
 
+        # Verificar la ocupación actual de la sala
+        currentOccupancy = (
+            session.query(Resident)
+            .filter(Resident.idRoom == idRoom)  # Filtrar a los residentes en esta sala
+            .count()
+        )
+
+        if currentOccupancy >= room.maxPeople:
+            return "Access denied. La sala está llena."
+
         # Acceso permitido a salas públicas o comunes
         if not room.roomName.startswith("Room"):
             return "Access granted. Welcome to the room."
@@ -167,6 +151,7 @@ class RoomController:
 
         # Acceso denegado por no pertenecer a la familia asignada
         return "Access denied. You are in the wrong room."
+
 
     def list_rooms(self, session=None):
         """
