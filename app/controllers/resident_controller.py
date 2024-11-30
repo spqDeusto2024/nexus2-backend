@@ -364,3 +364,47 @@ class ResidentController:
             # Cerramos la sesión
             if session:
                 session.close()
+
+    def getResidentById(self, idResident: int, session=None):
+        """
+        Obtiene un residente por su ID.
+
+        Args:
+            idResident (int): El ID del residente que se busca.
+            session (Session, optional): Sesión SQLAlchemy para interacción con la base de datos.
+
+        Returns:
+            dict: Resultado de la operación.
+                - {"status": "ok", "resident": <resident_info>} : Si se encuentra el residente.
+                - {"status": "error", "message": <error_message>} : Si ocurre algún error o el residente no se encuentra.
+        """
+        if session is None:
+            session = Session(self.db_client.engine)
+
+        try:
+            # Busca el residente por su idResident
+            resident = session.query(Resident).filter(Resident.idResident == idResident).first()
+
+            if resident is None:
+                return {"status": "error", "message": "Residente no encontrado"}
+
+            # Convertimos el resultado en un diccionario
+            resident_info = {
+                "idResident": resident.idResident,
+                "name": resident.name,
+                "surname": resident.surname,
+                "birthDate": resident.birthDate,
+                "gender": resident.gender,
+                "idFamily": resident.idFamily
+            }
+
+            return {"status": "ok", "resident": resident_info}
+
+        except Exception as e:
+            # Captura cualquier excepción
+            return {"status": "error", "message": str(e)}
+
+        finally:
+            # Cerramos la sesión
+            if session:
+                session.close()

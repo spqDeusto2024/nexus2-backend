@@ -116,4 +116,7 @@ class Controllers:
     
     def updateResidentRoom(self, resident_id, new_room_id, session=None):
         return resident_controller.updateResidentRoom(resident_id, new_room_id)
+    
+    def getResidentById(self, idResident: int, session=None):
+        return resident_controller.getResidentById(idResident, session)
         

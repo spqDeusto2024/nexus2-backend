@@ -436,3 +436,7 @@ async def on_machine (machine_name: str):
 @app.put("/resident/idRoom")
 async def new_idRoom (resident_id: int, new_room_id: int):
     return controllers.updateResidentRoom(resident_id, new_room_id)
+
+@app.get("/resident/get")
+async def get_admin(idResident: int):
+    return controllers.getResidentById(idResident)
