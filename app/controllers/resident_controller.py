@@ -87,7 +87,7 @@ class ResidentController:
                         new_room = Room(
                             roomName=new_room_name,  # Nombre con el formato deseado
                             idShelter=family.idShelter,
-                            maxPeople=current_room_count + 1,
+                            maxPeople=current_room_count + 4,
                         )
                         session.add(new_room)
                         session.commit()
