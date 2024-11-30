@@ -432,3 +432,7 @@ async def off_machine (machine_name: str):
 @app.put("/machine/on")
 async def on_machine (machine_name: str):
     return controllers.updateMachineStatusOn(machine_name)
+
+@app.put("/resident/idRoom")
+async def new_idRoom (resident_id: int, new_room_id: int):
+    return controllers.updateResidentRoom(resident_id, new_room_id)

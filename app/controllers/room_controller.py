@@ -106,76 +106,68 @@ class RoomController:
 
     def access_room(self, idResident: int, idRoom: int, session=None):
         """
-        Determines whether a resident is allowed to access a specified room and updates the room for the resident.
+        Determines whether a resident is allowed to access a specified room.
+
+        Steps:
+            1. If the room name is "mantenimiento", access is denied immediately.
+            2. If the room name does **not** start with "Room" (e.g., a public or common room), 
+            the resident is granted access regardless of family association.
+            3. If the room name **does** start with "Room" (e.g., a private or restricted room), 
+            access is granted only if:
+            - The resident is part of a family.
+            - The room is assigned to the resident's family.
+            4. Returns appropriate error messages if the resident or room does not exist.
+
+        Parameters:
+            idResident (int): 
+                The unique identifier of the resident attempting to access the room.
+            idRoom (int): 
+                The unique identifier of the room the resident is trying to access.
+            session (Session, optional): 
+                An active SQLAlchemy database session. If not provided, the method will 
+                create a new session using the application's database configuration.
+
+        Returns:
+            str: 
+                A message indicating the outcome of the access attempt:
+                - `"Access granted. Welcome to the room."`: Resident has permission to access the room.
+                - `"Access denied. You are in the wrong room."`: Resident does not have permission.
+                - `"Resident not found."`: The specified resident does not exist in the database.
+                - `"Room not found."`: The specified room does not exist in the database.
+                - `"Access denied. No puedes entrar a la sala de mantenimiento."`: Access is denied to maintenance.
         """
         if session is None:
             db = DatabaseClient(gb.MYSQL_URL)
             session = Session(db.engine)
 
-        try:
-            # Obtener el residente y la habitación
-            resident = session.query(Resident).filter_by(idResident=idResident).first()
-            room = session.query(Room).filter_by(idRoom=idRoom).first()
+        # Obtener los datos del residente y de la sala
+        resident = session.query(Resident).filter_by(idResident=idResident).first()
+        room = session.query(Room).filter_by(idRoom=idRoom).first()
 
-            # Verificar si el residente existe
-            if resident is None:
-                print(f"Resident {idResident} not found.")
-                return "Resident not found."
+        # Validar si el residente existe
+        if resident is None:
+            return "Resident not found."
 
-            # Verificar si la habitación existe
-            if room is None:
-                print(f"Room {idRoom} not found.")
-                return "Room not found."
+        # Validar si la sala existe
+        if room is None:
+            return "Room not found."
 
-            # Verificar si la habitación es pública o común (ej: Kitchen)
-            public_rooms = ["Kitchen", "Bathroom", "Lobby"]
-            if room.roomName in public_rooms:
-                print(f"Access granted to public room {room.roomName}.")
-                return "Access granted. Welcome to the room."
+        # Bloquear acceso a la sala de mantenimiento
+        if room.roomName.lower() == "mantenimiento":  # Comparamos en minúsculas por seguridad
+            return "Access denied. No puedes entrar a la sala de mantenimiento."
 
-            # Si la habitación no comienza con "Room", acceso concedido
-            if not room.roomName.startswith("Room"):
-                print(f"Access granted without family check, room {room.roomName} is not restricted.")
-                return "Access granted. Welcome to the room."
+        # Acceso permitido a salas públicas o comunes
+        if not room.roomName.startswith("Room"):
+            return "Access granted. Welcome to the room."
 
-            # Verificar si el residente es parte de una familia y si la habitación es asignada a esa familia
-            family = session.query(Family).filter_by(idRoom=room.idRoom).first()
-            if family and resident.idFamily == family.idFamily:
-                print(f"Resident {resident.idResident} is allowed to access room {room.idRoom}.")
+        # Verificar si la sala pertenece a la familia del residente
+        family = session.query(Family).filter_by(idRoom=room.idRoom).first()
+        if family and resident.idFamily == family.idFamily:
+            return "Access granted. Welcome to the room."
 
-                # Actualizar el idRoom del residente
-                resident.idRoom = room.idRoom
-                session.flush()  # Escribir los cambios en la base de datos
-                session.commit()
+        # Acceso denegado por no pertenecer a la familia asignada
+        return "Access denied. You are in the wrong room."
 
-                # Verificar si la actualización fue exitosa
-                session.refresh(resident)  # Vuelve a cargar el objeto residente desde la base de datos
-                print(f"Updated resident idRoom: {resident.idRoom}")
-
-                if resident.idRoom == room.idRoom:
-                    return "Access granted. Welcome to the room."
-                else:
-                    print("Error: Resident idRoom update failed.")
-                    return "Error updating resident's room."
-
-            else:
-                print(f"Resident {resident.idResident} is not allowed to access room {room.idRoom}.")
-                return "Access denied. You are in the wrong room."
-
-        except SQLAlchemyError as e:
-            session.rollback()
-            print(f"SQLAlchemy error: {str(e)}")
-            return {"status": "error", "message": str(e)}
-
-        except Exception as e:
-            session.rollback()
-            print(f"Error: {str(e)}")
-            return {"status": "error", "message": str(e)}
-
-        finally:
-            session.close()  # Asegurarse de cerrar la sesión después de la operación
-
-        
     def list_rooms(self, session=None):
         """
         Lista las habitaciones con información básica: id, nombre, capacidad, y shelter asociado.

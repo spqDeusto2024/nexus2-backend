@@ -317,3 +317,50 @@ class ResidentController:
         finally:
             if session:
                 session.close()
+    
+
+    def updateResidentRoom(self, resident_id: int, new_room_id: int, session=None):
+        """
+        Actualiza el ID de la habitación (idRoom) de un residente específico.
+
+        Args:
+            resident_id (int): El ID del residente cuyo idRoom se actualizará.
+            new_room_id (int): El nuevo ID de la habitación que se asignará al residente.
+            session (Session, optional): Sesión SQLAlchemy para interacción con la base de datos.
+
+        Returns:
+            dict: Resultado de la operación.
+                - {"status": "ok", "message": "Room updated successfully."} : Si se actualiza correctamente.
+                - {"status": "error", "message": <error_message>} : Si ocurre algún error.
+        """
+        if session is None:
+            session = Session(self.db_client.engine)
+
+        try:
+            # Buscar el residente por su ID
+            resident = session.query(Resident).filter(Resident.idResident == resident_id).first()
+
+            if resident is None:
+                return {"status": "error", "message": f"Residente con ID '{resident_id}' no encontrado"}
+
+            # Actualizar el ID de la habitación
+            resident.idRoom = new_room_id
+
+            # Guardar los cambios
+            session.commit()
+
+            return {"status": "ok", "message": "Room updated successfully."}  # Mensaje modificado aquí
+
+        except SQLAlchemyError as e:
+            # Captura errores de la base de datos
+            session.rollback()  # Revertir cualquier cambio en caso de error
+            return {"status": "error", "message": f"Error de base de datos: {str(e)}"}
+
+        except Exception as e:
+            # Captura cualquier otro tipo de error
+            return {"status": "error", "message": str(e)}
+
+        finally:
+            # Cerramos la sesión
+            if session:
+                session.close()

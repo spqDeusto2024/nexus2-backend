@@ -113,3 +113,7 @@ class Controllers:
     
     def updateMachineStatusOn(self, machine_name, session=None):
         return machine_controller.updateMachineStatusOn(machine_name)
+    
+    def updateResidentRoom(self, resident_id, new_room_id, session=None):
+        return resident_controller.updateResidentRoom(resident_id, new_room_id)
+        
