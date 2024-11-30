@@ -134,3 +134,6 @@ class Controllers:
 
     def deleteMachine(self, machine_id, session=None):
         return machine_controller.deleteMachine(machine_id,session)
+    
+    def updateMachineDate(self, machine_name, session=None):
+        return machine_controller.updateMachineDate(machine_name,session)

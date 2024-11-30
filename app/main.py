@@ -478,6 +478,9 @@ async def list_machines():
 
 @app.delete("/machine/delete")
 async def delete_machine(machine_id: int):
-    
     return controllers.deleteMachine(machine_id)
+
+@app.put("/machine/update")
+async def update_machine (machine_name: str):
+    return controllers.updateMachineDate(machine_name)
 

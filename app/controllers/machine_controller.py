@@ -282,3 +282,49 @@ class MachineController:
             # Asegúrate de cerrar la sesión para evitar problemas de conexiones abiertas
             if session:
                 session.close()
+
+
+    def updateMachineDate(self, machine_name: str, session=None):
+        """
+        Actualiza la fecha del campo 'update' de una máquina específica con la fecha actual.
+
+        Args:
+            machine_name (str): El nombre de la máquina que se va a actualizar.
+            session (Session, optional): Sesión SQLAlchemy para interacción con la base de datos.
+
+        Returns:
+            dict: Resultado de la operación.
+                - {"status": "ok", "message": "Fecha de la máquina actualizada exitosamente"} : Si se actualiza correctamente.
+                - {"status": "error", "message": <error_message>} : Si ocurre algún error.
+        """
+        if session is None:
+            session = Session(self.db_client.engine)
+
+        try:
+            # Buscar la máquina por su nombre
+            machine = session.query(Machine).filter(Machine.machineName == machine_name).first()
+
+            if machine is None:
+                return {"status": "error", "message": f"Máquina '{machine_name}' no encontrada"}
+
+            # Actualizar el campo 'update' con la fecha actual
+            machine.update = date.today()  # Utiliza 'date.today()' para obtener solo la fecha actual
+
+            # Guardar los cambios
+            session.commit()
+
+            return {"status": "ok", "message": f"Fecha de la máquina '{machine_name}' actualizada exitosamente"}
+
+        except SQLAlchemyError as e:
+            # Captura errores de la base de datos
+            session.rollback()  # Revertir cualquier cambio en caso de error
+            return {"status": "error", "message": f"Error de base de datos: {str(e)}"}
+
+        except Exception as e:
+            # Captura cualquier otro tipo de error
+            return {"status": "error", "message": str(e)}
+
+        finally:
+            # Cerramos la sesión
+            if session:
+                session.close()
