@@ -336,6 +336,17 @@ async def list_rooms():
     # Si no es un diccionario, asumimos que es una lista de habitaciones
     return {"status": "ok", "rooms": result}
 
+@app.get("/listRooms/Room")
+async def list_rooms_Room():
+    result = controllers.list_rooms_Room()
+    
+    # Verifica si el resultado es un diccionario y contiene "status"
+    if isinstance(result, dict) and result.get("status") == "error":
+        raise HTTPException(status_code=401, detail=result["message"])
+    
+    # Si no es un diccionario, asumimos que es una lista de habitaciones
+    return {"status": "ok", "rooms": result}
+
 @app.delete("/admin/delete")
 async def delete_admin(admin_id: int):
     """

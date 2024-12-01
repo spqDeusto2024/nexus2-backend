@@ -226,3 +226,28 @@ class RoomController:
             # Cerramos la sesión
             if session:
                 session.close()
+    
+
+    def list_rooms_Room(self, session=None):
+
+        if session is None:
+            session = Session(self.db_client.engine)
+        try:
+            # Filtramos las habitaciones cuyo nombre empieza con "Room"
+            rooms = session.query(Room).filter(Room.roomName.like('Room%')).all()
+            
+            # Retornamos la lista con los datos de las habitaciones
+            return [
+                {
+                    "idRoom": room.idRoom,
+                    "roomName": room.roomName,
+                    "maxPeople": room.maxPeople,
+                    "idShelter": room.idShelter,
+                    "createDate": room.createDate.isoformat() if room.createDate else None,
+                }
+                for room in rooms
+            ]
+        except Exception as e:
+            return {"status": "error", "message": str(e)}
+        finally:
+            session.close()

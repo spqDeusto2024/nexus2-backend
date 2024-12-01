@@ -81,6 +81,9 @@ class Controllers:
     def list_rooms(self, session=None):
         return room_controller.list_rooms(session)
     
+    def list_rooms_Room(self, session=None):
+        return room_controller.list_rooms_Room(session)
+    
     def deleteAdmin(self, admin_id, session=None):
         return admin_controller.deleteAdmin(admin_id, session)
     
