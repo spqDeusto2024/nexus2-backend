@@ -506,3 +506,7 @@ async def delete_family(family_id: int):
 @app.get("/family/list")
 async def list_family():
     return controllers.listFamilies()
+
+@app.put("/name/resident")
+async def update_resident_name(idResident: int, new_name: str):
+    return controllers.updateResidentName(idResident, new_name)

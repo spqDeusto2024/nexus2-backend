@@ -149,3 +149,6 @@ class Controllers:
     
     def listFamilies(self, session=None):
         return family_controller.listFamilies(session)
+    
+    def updateResidentName(self, idResident, new_name, session=None):
+        return resident_controller.updateResidentName(idResident, new_name, session)

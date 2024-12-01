@@ -367,3 +367,5 @@ class AdminController:
             # Cerramos la sesión
             if session:
                 session.close()
+    
+    
