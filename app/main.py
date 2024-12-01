@@ -514,3 +514,7 @@ async def update_resident_name(idResident: int, new_name: str):
 @app.put("/surname/resident")
 async def update_resident_surname(idResident: int, new_surname: str):
     return controllers.updateResidentSurname(idResident, new_surname)
+
+@app.put("/birthDate/resident")
+async def update_resident_birthDate(idResident: int, new_birthDate: str):
+    return controllers.updateResidentBirthDate(idResident, new_birthDate)

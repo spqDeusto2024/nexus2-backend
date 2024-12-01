@@ -9,6 +9,7 @@ from sqlalchemy import func
 from app.models.resident import Resident as ResidentModel  # Import Pydantic model
 import app.utils.vars as gb
 import os
+from datetime import datetime
 from datetime import date
 import app.models.resident as resident
 import app.models.family as family
@@ -504,6 +505,57 @@ class ResidentController:
             session.commit()
 
             return {"status": "ok", "message": "Apellido actualizado exitosamente"}
+
+        except SQLAlchemyError as e:
+            # Captura errores de la base de datos
+            session.rollback()  # Revertir cualquier cambio en caso de error
+            return {"status": "error", "message": f"Error de base de datos: {str(e)}"}
+
+        except Exception as e:
+            # Captura cualquier otro tipo de error
+            return {"status": "error", "message": str(e)}
+
+        finally:
+            # Cerramos la sesión
+            if session:
+                session.close()
+
+
+    def updateResidentBirthDate(self, idResident: int, new_birthDate: str, session=None):
+        """
+        Actualiza la fecha de nacimiento de un residente.
+
+        Args:
+            idResident (int): El ID del residente cuya fecha de nacimiento se va a actualizar.
+            new_birthDate (str): La nueva fecha de nacimiento que se asignará al residente (formato 'YYYY-MM-DD').
+            session (Session, optional): Sesión SQLAlchemy para interacción con la base de datos.
+
+        Returns:
+            dict: Resultado de la operación.
+                - {"status": "ok", "message": "Fecha de nacimiento actualizada exitosamente"} : Si la fecha se actualiza correctamente.
+                - {"status": "error", "message": <error_message>} : Si ocurre algún error.
+        """
+        if session is None:
+            session = Session(self.db_client.engine)
+
+        try:
+            # Convertir el string new_birthDate a un objeto de tipo date (solo si es un string)
+            if isinstance(new_birthDate, str):
+                new_birthDate = datetime.strptime(new_birthDate, "%Y-%m-%d").date()
+
+            # Buscar al residente por idResident
+            resident = session.query(Resident).filter(Resident.idResident == idResident).first()
+
+            if resident is None:
+                return {"status": "error", "message": "Residente no encontrado"}
+
+            # Actualizamos la fecha de nacimiento del residente
+            resident.birthDate = new_birthDate
+
+            # Guardamos los cambios
+            session.commit()
+
+            return {"status": "ok", "message": "Fecha de nacimiento actualizada exitosamente"}
 
         except SQLAlchemyError as e:
             # Captura errores de la base de datos

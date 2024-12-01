@@ -153,5 +153,8 @@ class Controllers:
     def updateResidentName(self, idResident, new_name, session=None):
         return resident_controller.updateResidentName(idResident, new_name, session)
     
-    def updateResidentSurname(self, idResident: int, new_surname: str, session=None):
+    def updateResidentSurname(self, idResident, new_surname, session=None):
         return resident_controller.updateResidentSurname(idResident, new_surname, session)
+    
+    def updateResidentBirthDate(self, idResident, new_birthDate, session=None):
+        return resident_controller.updateResidentBirthDate(idResident, new_birthDate, session)
