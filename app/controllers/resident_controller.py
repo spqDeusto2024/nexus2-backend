@@ -620,3 +620,61 @@ class ResidentController:
             # Cerramos la sesión
             if session:
                 session.close()
+    
+    def getResidentRoomByNameAndSurname(self, name: str, surname: str, session=None):
+        """
+        Obtiene la habitación donde se encuentra un residente dado su nombre y apellido.
+
+        Args:
+            name (str): El nombre del residente que se busca.
+            surname (str): El apellido del residente que se busca.
+            session (Session, optional): Sesión SQLAlchemy para interacción con la base de datos.
+
+        Returns:
+            dict: Resultado de la operación.
+                - {"status": "ok", "room": <room_info>} : Si se encuentra el residente y su habitación.
+                - {"status": "error", "message": <error_message>} : Si ocurre algún error o el residente no se encuentra.
+        """
+        if session is None:
+            session = Session(self.db_client.engine)
+
+        try:
+            # Busca el residente por su nombre y apellido
+            resident = session.query(Resident).filter(
+                Resident.name == name, 
+                Resident.surname == surname
+            ).first()
+
+            if resident is None:
+                return {"status": "error", "message": "Residente no encontrado"}
+
+            # Verifica si el residente tiene asignada una habitación
+            if not resident.idRoom:
+                return {"status": "error", "message": "Residente no tiene habitación asignada"}
+
+            # Obtener información de la habitación
+            room = session.query(Room).filter(Room.idRoom == resident.idRoom).first()
+
+            if room is None:
+                return {"status": "error", "message": "Habitación no encontrada"}
+
+            # Convertir la información de la habitación en un diccionario
+            room_info = {
+                "roomName": room.roomName,
+                "maxPeople": room.maxPeople,
+                "idShelter": room.idShelter,
+                "createDate": room.createDate,
+                "createdBy": room.createdBy
+            }
+
+            return {"status": "ok", "room": room_info}
+
+        except Exception as e:
+            # Captura cualquier excepción
+            return {"status": "error", "message": str(e)}
+
+        finally:
+            # Cerramos la sesión
+            if session:
+                session.close()
+

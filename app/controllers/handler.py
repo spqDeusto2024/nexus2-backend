@@ -160,4 +160,7 @@ class Controllers:
         return resident_controller.updateResidentBirthDate(idResident, new_birthDate, session)
     
     def updateResidentGender(self, idResident, new_gender, session=None):
-        return resident_controller.updateResidentGender(idResident, new_gender)
+        return resident_controller.updateResidentGender(idResident, new_gender,session)
+    
+    def getResidentRoomByNameAndSurname(self, name, surname, session=None):
+        return resident_controller.getResidentRoomByNameAndSurname(name, surname,session)

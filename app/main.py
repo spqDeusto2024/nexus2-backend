@@ -522,3 +522,7 @@ async def update_resident_birthDate(idResident: int, new_birthDate: str):
 @app.put("/gender/resident")
 async def update_resident_gender(idResident: int, new_gender: str):
     return controllers.updateResidentGender(idResident, new_gender)
+
+@app.get("/resident/search")
+async def search_residents(name: str, surname: str):
+    return controllers.getResidentRoomByNameAndSurname(name, surname)
