@@ -510,3 +510,7 @@ async def list_family():
 @app.put("/name/resident")
 async def update_resident_name(idResident: int, new_name: str):
     return controllers.updateResidentName(idResident, new_name)
+
+@app.put("/surname/resident")
+async def update_resident_surname(idResident: int, new_surname: str):
+    return controllers.updateResidentSurname(idResident, new_surname)

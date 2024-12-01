@@ -473,4 +473,48 @@ class ResidentController:
             if session:
                 session.close()
 
-    
+    def updateResidentSurname(self, idResident: int, new_surname: str, session=None):
+        """
+        Actualiza el apellido de un residente.
+
+        Args:
+            idResident (int): El ID del residente cuyo apellido se va a actualizar.
+            new_surname (str): El nuevo apellido que se asignará al residente.
+            session (Session, optional): Sesión SQLAlchemy para interacción con la base de datos.
+
+        Returns:
+            dict: Resultado de la operación.
+                - {"status": "ok", "message": "Apellido actualizado exitosamente"} : Si el apellido se actualiza correctamente.
+                - {"status": "error", "message": <error_message>} : Si ocurre algún error.
+        """
+        if session is None:
+            session = Session(self.db_client.engine)
+
+        try:
+            # Buscar al residente por idResident
+            resident = session.query(Resident).filter(Resident.idResident == idResident).first()
+
+            if resident is None:
+                return {"status": "error", "message": "Residente no encontrado"}
+
+            # Actualizamos el apellido del residente
+            resident.surname = new_surname
+
+            # Guardamos los cambios
+            session.commit()
+
+            return {"status": "ok", "message": "Apellido actualizado exitosamente"}
+
+        except SQLAlchemyError as e:
+            # Captura errores de la base de datos
+            session.rollback()  # Revertir cualquier cambio en caso de error
+            return {"status": "error", "message": f"Error de base de datos: {str(e)}"}
+
+        except Exception as e:
+            # Captura cualquier otro tipo de error
+            return {"status": "error", "message": str(e)}
+
+        finally:
+            # Cerramos la sesión
+            if session:
+                session.close()
