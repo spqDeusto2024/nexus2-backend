@@ -158,3 +158,6 @@ class Controllers:
     
     def updateResidentBirthDate(self, idResident, new_birthDate, session=None):
         return resident_controller.updateResidentBirthDate(idResident, new_birthDate, session)
+    
+    def updateResidentGender(self, idResident, new_gender, session=None):
+        return resident_controller.updateResidentGender(idResident, new_gender)

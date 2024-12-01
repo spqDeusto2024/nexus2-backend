@@ -570,3 +570,53 @@ class ResidentController:
             # Cerramos la sesión
             if session:
                 session.close()
+
+    def updateResidentGender(self, idResident: int, new_gender: str, session=None):
+        """
+        Actualiza el género de un residente.
+
+        Args:
+            idResident (int): El ID del residente cuyo género se va a actualizar.
+            new_gender (str): El nuevo género que se asignará al residente ("M", "F", "Otro").
+            session (Session, optional): Sesión SQLAlchemy para interacción con la base de datos.
+
+        Returns:
+            dict: Resultado de la operación.
+                - {"status": "ok", "message": "Género actualizado exitosamente"} : Si el género se actualiza correctamente.
+                - {"status": "error", "message": <error_message>} : Si ocurre algún error.
+        """
+        if session is None:
+            session = Session(self.db_client.engine)
+
+        try:
+            # Verificar que el nuevo género sea válido
+            if new_gender not in ["M", "F", "Otro"]:
+                return {"status": "error", "message": "Género no válido. Los valores válidos son 'M', 'F' o 'Otro'."}
+
+            # Buscar al residente por idResident
+            resident = session.query(Resident).filter(Resident.idResident == idResident).first()
+
+            if resident is None:
+                return {"status": "error", "message": "Residente no encontrado"}
+
+            # Actualizamos el género del residente
+            resident.gender = new_gender
+
+            # Guardamos los cambios
+            session.commit()
+
+            return {"status": "ok", "message": "Género actualizado exitosamente"}
+
+        except SQLAlchemyError as e:
+            # Captura errores de la base de datos
+            session.rollback()  # Revertir cualquier cambio en caso de error
+            return {"status": "error", "message": f"Error de base de datos: {str(e)}"}
+
+        except Exception as e:
+            # Captura cualquier otro tipo de error
+            return {"status": "error", "message": str(e)}
+
+        finally:
+            # Cerramos la sesión
+            if session:
+                session.close()
