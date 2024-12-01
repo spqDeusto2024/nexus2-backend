@@ -17,7 +17,7 @@ class Family(BaseModel):
         createDate (date): The date when the family record was created.
     """
 
-    idFamily: int
+    idFamily: Optional[int]
     familyName: str
     idRoom: int
     idShelter: int
