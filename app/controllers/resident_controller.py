@@ -9,6 +9,7 @@ from sqlalchemy import func
 from app.models.resident import Resident as ResidentModel  # Import Pydantic model
 import app.utils.vars as gb
 import os
+from datetime import date
 import app.models.resident as resident
 import app.models.family as family
 import app.models.room as room
@@ -77,22 +78,30 @@ class ResidentController:
             if room:
                 current_room_count = session.query(Resident).filter_by(idRoom=family.idRoom).count()
                 if current_room_count >= room.maxPeople:
-                    # Crear una nueva habitación con un nombre basado en el idFamily
-                    new_room = session.query(Room).filter(
-                        Room.maxPeople > current_room_count,
-                        Room.idShelter == room.idShelter,
-                    ).first()
-                    if not new_room:
-                        new_room_name = f"Room{family.idFamily}"  # Nombre de la nueva habitación
-                        new_room = Room(
-                            roomName=new_room_name,  # Nombre con el formato deseado
-                            idShelter=family.idShelter,
-                            maxPeople=current_room_count + 4,
-                        )
-                        session.add(new_room)
-                        session.commit()
+                    # Buscar la última habitación cuyo nombre empieza con "Room"
+                    last_room = session.query(Room).filter(Room.roomName.like("Room%")).order_by(Room.idRoom.desc()).first()
 
-                    # Actualizar la familia con la nueva habitación
+                    # Si existe alguna habitación, incrementamos el número
+                    if last_room:
+                        # Extraemos el número del último nombre de habitación "Room{número}"
+                        last_room_number = int(last_room.roomName.replace("Room", ""))
+                        new_room_number = last_room_number + 1
+                    else:
+                        # Si no hay habitaciones con ese nombre, empezamos con Room1
+                        new_room_number = 1
+
+                    # Crear la nueva habitación con el nombre "Room{nuevo número}" y con fecha de creación
+                    new_room_name = f"Room{new_room_number}"
+                    new_room = Room(
+                        roomName=new_room_name,  # Nombre con el formato "Room{nuevo número}"
+                        idShelter=family.idShelter,
+                        maxPeople=current_room_count + 4,  # Ajusta la capacidad según sea necesario
+                        createDate=date.today()  # Asignar la fecha de creación
+                    )
+                    session.add(new_room)
+                    session.commit()  # Commit para obtener el idRoom asignado
+
+                    # Ahora que tenemos el idRoom, podemos actualizar la familia con el nuevo idRoom
                     family.idRoom = new_room.idRoom
                     session.query(Family).filter_by(idFamily=body.idFamily).update(
                         {"idRoom": new_room.idRoom}, synchronize_session=False
@@ -106,7 +115,7 @@ class ResidentController:
                 birthDate=body.birthDate,
                 gender=body.gender,
                 createdBy=body.createdBy,
-                createDate=date.today(),
+                createDate=date.today(),  # Fecha de creación del residente
                 idFamily=body.idFamily,
                 idRoom=family.idRoom,
             )
@@ -119,8 +128,7 @@ class ResidentController:
         finally:
             session.close()
 
-
-      
+        
     def delete_resident(self, idResident: int, session=None):
     
         """
