@@ -89,3 +89,94 @@ class FamilyController:
             return {"status": "error", "message": str(e)}
         finally:
             session.close()
+
+    def deleteFamily(self, family_id: int, session=None):
+        """
+        Elimina una familia de la base de datos usando su ID, si no tiene miembros asociados.
+
+        Args:
+            family_id (int): ID de la familia que se desea eliminar.
+            session (Session, optional): Sesión SQLAlchemy para interacción con la base de datos.
+
+        Returns:
+            dict: Resultado de la operación.
+                - {"status": "ok", "message": "Family deleted successfully"}: Si la eliminación es exitosa.
+                - {"status": "error", "message": <error_message>}: Si ocurre algún error.
+        """
+        if session is None:
+            session = Session(self.db_client.engine)
+
+        try:
+            # Buscar la familia en la base de datos por ID
+            family = session.query(Family).filter(Family.idFamily == family_id).first()
+
+            # Verificamos si no se encontró la familia
+            if not family:
+                return {"status": "error", "message": "Family not found"}
+
+            # Verificamos si hay miembros asociados a esta familia
+            members = session.query(Resident).filter(Resident.idFamily == family_id).all()
+
+            # Si hay miembros asociados, no permitimos eliminar la familia
+            if members:
+                return {"status": "error", "message": "Cannot delete family, there are members associated with it"}
+
+            # Si no hay miembros, procedemos a eliminar la familia
+            session.delete(family)
+            session.commit()
+
+            return {"status": "ok", "message": "Family deleted successfully"}
+
+        except Exception as e:
+            # Capturamos cualquier excepción y deshacemos los cambios en caso de error
+            session.rollback()
+            return {"status": "error", "message": str(e)}
+
+        finally:
+            # Aseguramos cerrar la sesión para evitar problemas con conexiones abiertas
+            if session:
+                session.close()
+    
+    def listFamilies(self, session=None):
+        """
+        Lista todas las familias registradas en la base de datos.
+
+        Args:
+            session (Session, optional): Sesión SQLAlchemy para interacción con la base de datos.
+
+        Returns:
+            dict: Resultado de la operación.
+                - {"status": "ok", "families": [<listado_de_familias>]}: Si se encuentran familias.
+                - {"status": "error", "message": <error_message>}: Si ocurre algún error.
+        """
+        if session is None:
+            session = Session(self.db_client.engine)
+
+        try:
+            # Consulta todas las familias
+            families = session.query(Family).all()
+
+            # Convertimos el resultado en una lista de diccionarios con los atributos deseados
+            families_list = [
+                {
+                    "idFamily": family.idFamily,
+                    "familyName": family.familyName,
+                    "idRoom": family.idRoom,
+                    "idShelter": family.idShelter,
+                    "createdBy": family.createdBy,
+                    "createDate": family.createDate.isoformat() if family.createDate else None
+                }
+                for family in families
+            ]
+
+            return {"status": "ok", "families": families_list}
+
+        except Exception as e:
+            # Captura cualquier excepción
+            return {"status": "error", "message": str(e)}
+
+        finally:
+            # Cerramos la sesión
+            if session:
+                session.close()
+

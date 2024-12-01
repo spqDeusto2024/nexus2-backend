@@ -498,3 +498,11 @@ async def update_machine (machine_name: str):
 @app.put("/room/name")
 async def update_Room_Name(idRoom: int, new_name: str):
     return controllers.updateRoomName(idRoom, new_name)
+
+@app.delete("/family/delete")
+async def delete_family(family_id: int):
+    return controllers.deleteFamily(family_id)
+
+@app.get("/family/list")
+async def list_family():
+    return controllers.listFamilies()

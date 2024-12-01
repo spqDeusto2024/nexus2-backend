@@ -142,4 +142,10 @@ class Controllers:
         return machine_controller.updateMachineDate(machine_name,session)
 
     def updateRoomName(self, idRoom, new_name, session=None):
-        return room_controller.updateRoomName(idRoom, new_name)
+        return room_controller.updateRoomName(idRoom, new_name,session)
+    
+    def deleteFamily(self, family_id, session=None):
+        return family_controller.deleteFamily(family_id, session)
+    
+    def listFamilies(self, session=None):
+        return family_controller.listFamilies(session)
