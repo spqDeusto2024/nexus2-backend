@@ -45,6 +45,45 @@ class RoomController:
         self.db_client = DatabaseClient(self.db_url)
 
     def create_room(self, body: RoomModel, session=None):
+        """
+        Creates a new room in the database.
+
+        This method validates the existence of the admin and shelter before creating a room. 
+        It also ensures that no duplicate rooms exist in the specified shelter.
+
+        Args:
+            body (RoomModel): The data of the room to be created, including:
+                - idRoom (int, optional): The unique identifier for the room.
+                - roomName (str): The name of the room.
+                - createdBy (int): The ID of the admin who creates the room.
+                - createDate (date): The date the room is created.
+                - idShelter (int): The ID of the shelter where the room belongs.
+                - maxPeople (int): The maximum capacity of the room.
+            session (Session, optional): SQLAlchemy session object for database interaction.
+                If not provided, a new session will be created.
+
+        Returns:
+            dict: Result of the operation.
+                - {"status": "ok"}:
+                If the room is successfully created.
+                - {"status": "error", "message": "The admin does not exist"}:
+                If the provided admin ID does not exist in the database.
+                - {"status": "error", "message": "The shelter does not exist"}:
+                If the provided shelter ID does not exist in the database.
+                - {"status": "error", "message": "The room already exists in this shelter"}:
+                If a room with the same name already exists in the specified shelter.
+                - {"status": "error", "message": <error_message>}:
+                If any other error occurs during the operation.
+
+        Raises:
+            Exception: If an unexpected error occurs during the operation.
+
+        Notes:
+            - Ensure the provided `roomName` is unique within the specified shelter.
+            - The `createdBy` field must correspond to an existing admin, and `idShelter` must correspond to an existing shelter.
+
+        """
+
         if session is None:
             session = Session(self.db_client.engine)
         try:
@@ -81,6 +120,52 @@ class RoomController:
             session.close()
 
     def list_rooms_with_resident_count(self, session=None):
+
+        """
+        Lists all rooms along with the count of residents in each room.
+
+        This method retrieves a list of all rooms in the database, including their details 
+        and the number of residents currently assigned to each room.
+
+        Args:
+            session (Session, optional): SQLAlchemy session object for database interaction.
+                If not provided, a new session will be created.
+
+        Returns:
+            list: A list of dictionaries, each representing a room and its resident count. 
+                Each dictionary contains:
+                    - idRoom (int): The unique identifier of the room.
+                    - roomName (str): The name of the room.
+                    - maxPeople (int): The maximum capacity of the room.
+                    - resident_count (int): The number of residents currently in the room.
+            dict: If an error occurs, a dictionary with:
+                    - {"status": "error", "message": <error_message>}
+
+        Raises:
+            Exception: If an unexpected error occurs during the operation.
+
+        Example Response:
+            [
+                {
+                    "idRoom": 1,
+                    "roomName": "Room A",
+                    "maxPeople": 10,
+                    "resident_count": 5
+                },
+                {
+                    "idRoom": 2,
+                    "roomName": "Room B",
+                    "maxPeople": 8,
+                    "resident_count": 0
+                }
+            ]
+
+        Notes:
+            - Rooms without residents will still appear in the list with a `resident_count` of 0.
+            - The method uses an `outerjoin` to include rooms without any assigned residents.
+        """
+
+
         if session is None:
             session = Session(self.db_client.engine)
         try:
@@ -106,9 +191,40 @@ class RoomController:
 
     def access_room(self, idResident: int, idRoom: int, session=None):
         """
-        Determina si un residente puede acceder a una sala específica, considerando la capacidad de la sala.
-        
-        ...
+        Determines if a resident can access a specific room based on the room's capacity, 
+        type, and family assignment.
+
+        This method checks the access rules for a resident attempting to enter a room:
+        - Verifies if the resident and room exist.
+        - Denies access to restricted rooms like "Maintenance."
+        - Ensures the room is not over capacity.
+        - Allows access to public or common rooms.
+        - Grants access if the room belongs to the resident's family.
+        - Denies access otherwise.
+
+        Args:
+            idResident (int): The unique identifier of the resident attempting to access the room.
+            idRoom (int): The unique identifier of the room the resident is trying to access.
+            session (Session, optional): SQLAlchemy session object for database interaction.
+                If not provided, a new session will be created.
+
+        Returns:
+            str: A message indicating the result of the access attempt:
+                - "Resident not found.": If the resident does not exist.
+                - "Room not found.": If the room does not exist.
+                - "Access denied. No puedes entrar a la sala de mantenimiento.": If the room is restricted (e.g., Maintenance).
+                - "Access denied. La sala está llena.": If the room is at maximum capacity.
+                - "Access granted. Welcome to the room.": If access is granted to public or family-assigned rooms.
+                - "Access denied. You are in the wrong room.": If the resident is not assigned to the room.
+
+        Raises:
+            Exception: If an unexpected error occurs during the operation.
+
+        Notes:
+            - Public or common rooms (not starting with "Room") are accessible to all residents.
+            - Family-assigned rooms are only accessible to members of the assigned family.
+            - The room's current occupancy is checked against its maximum capacity.
+
         """
         if session is None:
             db = DatabaseClient(gb.MYSQL_URL)
@@ -156,11 +272,50 @@ class RoomController:
     def list_rooms(self, session=None):
 
         """
-        Lista las habitaciones con información básica: id, nombre, capacidad, y shelter asociado.
+        Lists all rooms with basic information.
+
+        This method retrieves a list of all rooms in the database, including their 
+        basic details such as ID, name, capacity, associated shelter, and creation date.
+
+        Args:
+            session (Session, optional): SQLAlchemy session object for database interaction.
+                If not provided, a new session will be created.
 
         Returns:
-            list[dict]: Una lista de habitaciones con id, nombre, capacidad, y shelter.
+            list: A list of dictionaries, each representing a room with the following details:
+                - idRoom (int): The unique identifier of the room.
+                - roomName (str): The name of the room.
+                - maxPeople (int): The maximum capacity of the room.
+                - idShelter (int): The ID of the shelter the room belongs to.
+                - createDate (str, optional): The creation date of the room in ISO 8601 format.
+            dict: If an error occurs, a dictionary with:
+                - {"status": "error", "message": <error_message>}
+
+        Raises:
+            Exception: If an unexpected error occurs during the operation.
+
+        Example Response:
+            [
+                {
+                    "idRoom": 1,
+                    "roomName": "Room A",
+                    "maxPeople": 10,
+                    "idShelter": 1,
+                    "createDate": "2024-12-01"
+                },
+                {
+                    "idRoom": 2,
+                    "roomName": "Room B",
+                    "maxPeople": 8,
+                    "idShelter": 2,
+                    "createDate": "2024-12-02"
+                }
+            ]
+
+        Notes:
+            - The creation date (`createDate`) will be formatted in ISO 8601. If not available, it will be `None`.
         """
+
         if session is None:
             session = Session(self.db_client.engine)
         try:
@@ -183,17 +338,30 @@ class RoomController:
 
     def updateRoomName(self, idRoom: int, new_name: str, session=None):
         """
-        Actualiza el nombre de una habitación.
+        Updates the name of a specific room.
+
+        This method searches for a room by its unique ID and updates its `roomName` field 
+        with the provided new name.
 
         Args:
-            idRoom (int): El ID de la habitación cuyo nombre se va a actualizar.
-            new_name (str): El nuevo nombre que se asignará.
-            session (Session, optional): Sesión SQLAlchemy para interacción con la base de datos.
+            idRoom (int): The unique identifier of the room whose name will be updated.
+            new_name (str): The new name to assign to the room.
+            session (Session, optional): SQLAlchemy session object for database interaction.
+                If not provided, a new session will be created.
 
         Returns:
-            dict: Resultado de la operación.
-                - {"status": "ok", "message": "Nombre de la habitación actualizado exitosamente"} : Si el nombre se actualiza correctamente.
-                - {"status": "error", "message": <error_message>} : Si ocurre algún error.
+            dict: Result of the operation.
+                - {"status": "ok", "message": "Room name updated successfully"}:
+                If the room name is successfully updated.
+                - {"status": "error", "message": "Room not found"}:
+                If no room with the given ID is found in the database.
+                - {"status": "error", "message": <error_message>}:
+                If an error occurs during the operation.
+
+        Raises:
+            SQLAlchemyError: If a database-related error occurs.
+            Exception: If an unexpected error occurs during the operation.
+
         """
         if session is None:
             session = Session(self.db_client.engine)
@@ -230,6 +398,52 @@ class RoomController:
 
     def list_rooms_Room(self, session=None):
 
+        """
+        Lists all rooms whose names start with "Room".
+
+        This method retrieves a list of rooms from the database where the `roomName` field 
+        begins with the string "Room".
+
+        Args:
+            session (Session, optional): SQLAlchemy session object for database interaction.
+                If not provided, a new session will be created.
+
+        Returns:
+            list: A list of dictionaries, each representing a room with the following details:
+                - idRoom (int): The unique identifier of the room.
+                - roomName (str): The name of the room.
+                - maxPeople (int): The maximum capacity of the room.
+                - idShelter (int): The ID of the shelter the room belongs to.
+                - createDate (str, optional): The creation date of the room in ISO 8601 format.
+            dict: If an error occurs, a dictionary with:
+                - {"status": "error", "message": <error_message>}
+
+        Raises:
+            Exception: If an unexpected error occurs during the operation.
+
+        Example Response:
+            [
+                {
+                    "idRoom": 1,
+                    "roomName": "Room A",
+                    "maxPeople": 10,
+                    "idShelter": 1,
+                    "createDate": "2024-12-01"
+                },
+                {
+                    "idRoom": 2,
+                    "roomName": "Room B",
+                    "maxPeople": 8,
+                    "idShelter": 1,
+                    "createDate": "2024-12-02"
+                }
+            ]
+
+        Notes:
+            - Only rooms whose `roomName` starts with "Room" will be included in the response.
+            - The creation date (`createDate`) will be formatted in ISO 8601. If not available, it will be `None`.
+
+        """
         if session is None:
             session = Session(self.db_client.engine)
         try:

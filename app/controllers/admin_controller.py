@@ -40,6 +40,29 @@ class AdminController:
         self.db_client = DatabaseClient(self.db_url)
 
     def create_admin(self, admin_data: AdminModel, session=None):
+        """
+        Creates a new admin in the system.
+
+        This method checks if an admin with the provided email already exists. 
+        If not, it creates a new admin record in the database with the provided details.
+
+        Args:
+            admin_data (AdminModel): An object containing the admin's details, including:
+                - email (str): The admin's email address.
+                - name (str): The admin's name.
+                - password (str): The admin's hashed password.
+            session (Session, optional): SQLAlchemy session object for database interaction.
+                If not provided, a new session will be created.
+
+        Returns:
+            dict: Result of the operation.
+                - {"status": "ok", "message": "Admin created successfully."} if the admin is created successfully.
+                - {"status": "error", "message": <error_message>} if there is an error, such as an existing email or a database issue.
+
+        Raises:
+            Exception: If any unexpected error occurs during the creation process.
+
+        """
         if session is None:
             session = Session(self.db_client.engine)
         try:
@@ -65,17 +88,27 @@ class AdminController:
 
     def loginAdmin(self, email: str, password: str, session=None):
         """
-        Verifica las credenciales de login usando el email y la contraseña del administrador.
+        Verifies the login credentials of an admin using their email and password.
+
+        This method queries the database for an admin with the provided email and compares 
+        the given password with the one stored in the database.
 
         Args:
-            email (str): Email del administrador.
-            password (str): Contraseña del administrador.
-            session (Session, optional): Sesión SQLAlchemy para interacción con la base de datos.
+            email (str): The admin's email address.
+            password (str): The admin's plain text password.
+            session (Session, optional): SQLAlchemy session object for database interaction.
+                If not provided, a new session will be created.
 
         Returns:
-            dict: Resultado del login.
-                - {"status": "ok", "user": {idAdmin, email}}: Si el login es exitoso.
-                - {"status": "error", "message": <error_message>}: Si ocurre algún error.
+            dict: Result of the login attempt.
+                - {"status": "ok", "user": {"idAdmin": <idAdmin>, "email": <email>}}: 
+                If the login is successful.
+                - {"status": "error", "message": <error_message>}: 
+                If an error occurs or the credentials are invalid.
+
+        Raises:
+            Exception: If any unexpected error occurs during the process.
+
         """
         if session is None:
             session = Session(self.db_client.engine)
@@ -111,16 +144,26 @@ class AdminController:
 
     def deleteAdmin(self, admin_id: int, session=None):
         """
-        Elimina un administrador de la base de datos usando su ID.
+        Deletes an admin from the database using their ID.
+
+        This method looks up an admin in the database by their unique ID and deletes 
+        the corresponding record if it exists.
 
         Args:
-            admin_id (int): ID del administrador que se desea eliminar.
-            session (Session, optional): Sesión SQLAlchemy para interacción con la base de datos.
+            admin_id (int): The unique identifier of the admin to delete.
+            session (Session, optional): SQLAlchemy session object for database interaction.
+                If not provided, a new session will be created.
 
         Returns:
-            dict: Resultado de la operación.
-                - {"status": "ok", "message": "Admin deleted successfully"}: Si la eliminación es exitosa.
-                - {"status": "error", "message": <error_message>}: Si ocurre algún error.
+            dict: Result of the operation.
+                - {"status": "ok", "message": "Admin deleted successfully"}:
+                If the admin is successfully deleted.
+                - {"status": "error", "message": <error_message>}:
+                If an error occurs or the admin is not found.
+
+        Raises:
+            Exception: If an unexpected error occurs during the deletion process.
+
         """
         if session is None:
             session = Session(self.db_client.engine)
@@ -149,18 +192,32 @@ class AdminController:
             if session:
                 session.close()
 
+
+
+
     def listAdmins(self, session=None):
         
         """
-        Lista todos los administradores registrados en la base de datos.
+        Lists all admins registered in the database.
+
+        This method retrieves all admin records from the database and formats them 
+        into a list of dictionaries containing their ID and email.
 
         Args:
-            session (Session, optional): Sesión SQLAlchemy para interacción con la base de datos.
+            session (Session, optional): SQLAlchemy session object for database interaction.
+                If not provided, a new session will be created.
 
         Returns:
-            dict: Resultado de la operación.
-                - {"status": "ok", "admins": [<listado_de_admins>]}: Si se encuentran administradores.
-                - {"status": "error", "message": <error_message>}: Si ocurre algún error.
+            dict: Result of the operation.
+                - {"status": "ok", "admins": [<list_of_admins>]}:
+                If the admins are successfully retrieved. Each admin in the list contains:
+                    - idAdmin (int): The unique identifier of the admin.
+                    - email (str): The email address of the admin.
+                - {"status": "error", "message": <error_message>}:
+                If an error occurs during the operation.
+
+        Raises:
+            Exception: If an unexpected error occurs while querying the database.
         """
         if session is None:
             session = Session(self.db_client.engine)
@@ -186,18 +243,33 @@ class AdminController:
             if session:
                 session.close()
 
+
+
     def getAdminById(self, idAdmin: int, session=None):
         """
-        Obtiene un administrador por su ID.
+        Retrieves an admin by their ID.
+
+        This method queries the database for an admin with the specified ID and 
+        returns their details if found.
 
         Args:
-            idAdmin (int): El ID del administrador que se busca.
-            session (Session, optional): Sesión SQLAlchemy para interacción con la base de datos.
+            idAdmin (int): The unique identifier of the admin to retrieve.
+            session (Session, optional): SQLAlchemy session object for database interaction.
+                If not provided, a new session will be created.
 
         Returns:
-            dict: Resultado de la operación.
-                - {"status": "ok", "admin": <admin_info>} : Si se encuentra el administrador.
-                - {"status": "error", "message": <error_message>} : Si ocurre algún error o el admin no se encuentra.
+            dict: Result of the operation.
+                - {"status": "ok", "admin": <admin_info>}:
+                If the admin is found. `admin_info` contains:
+                    - idAdmin (int): The unique identifier of the admin.
+                    - email (str): The admin's email address.
+                    - name (str): The admin's name.
+                    - password (str): The admin's hashed password.
+                - {"status": "error", "message": <error_message>}:
+                If an error occurs or the admin is not found.
+
+        Raises:
+            Exception: If an unexpected error occurs while querying the database.
         """
         if session is None:
             session = Session(self.db_client.engine)
@@ -228,19 +300,31 @@ class AdminController:
             if session:
                 session.close()
 
+
+
+
     def updateAdminPassword(self, idAdmin: int, new_password: str, session=None):
         """
-        Actualiza la contraseña de un administrador.
+        Updates the password of an admin.
+
+        This method searches for an admin by their ID and updates their password to the provided new value.
 
         Args:
-            idAdmin (int): El ID del administrador cuyo password se va a actualizar.
-            new_password (str): La nueva contraseña que se asignará.
-            session (Session, optional): Sesión SQLAlchemy para interacción con la base de datos.
+            idAdmin (int): The unique identifier of the admin whose password will be updated.
+            new_password (str): The new password to assign to the admin.
+            session (Session, optional): SQLAlchemy session object for database interaction.
+                If not provided, a new session will be created.
 
         Returns:
-            dict: Resultado de la operación.
-                - {"status": "ok", "message": "Contraseña actualizada exitosamente"} : Si la contraseña se actualiza correctamente.
-                - {"status": "error", "message": <error_message>} : Si ocurre algún error.
+            dict: Result of the operation.
+                - {"status": "ok", "message": "Password updated successfully"}:
+                If the password is updated successfully.
+                - {"status": "error", "message": <error_message>}:
+                If an error occurs or the admin is not found.
+
+        Raises:
+            SQLAlchemyError: If a database-related error occurs.
+            Exception: If an unexpected error occurs during the operation.
         """
         if session is None:
             session = Session(self.db_client.engine)
@@ -274,20 +358,31 @@ class AdminController:
             if session:
                 session.close()
     
+
+
     def updateAdminEmail(self, idAdmin: int, new_email: str, session=None):
 
         """
-        Actualiza la contraseña de un administrador.
+        Updates the email of an admin.
+
+        This method searches for an admin by their ID and updates their email to the provided new value.
 
         Args:
-            idAdmin (int): El ID del administrador cuyo password se va a actualizar.
-            new_password (str): La nueva contraseña que se asignará.
-            session (Session, optional): Sesión SQLAlchemy para interacción con la base de datos.
+            idAdmin (int): The unique identifier of the admin whose email will be updated.
+            new_email (str): The new email address to assign to the admin.
+            session (Session, optional): SQLAlchemy session object for database interaction.
+                If not provided, a new session will be created.
 
         Returns:
-            dict: Resultado de la operación.
-                - {"status": "ok", "message": "Contraseña actualizada exitosamente"} : Si la contraseña se actualiza correctamente.
-                - {"status": "error", "message": <error_message>} : Si ocurre algún error.
+            dict: Result of the operation.
+                - {"status": "ok", "message": "Email updated successfully"}:
+                If the email is updated successfully.
+                - {"status": "error", "message": <error_message>}:
+                If an error occurs or the admin is not found.
+
+        Raises:
+            SQLAlchemyError: If a database-related error occurs.
+            Exception: If an unexpected error occurs during the operation.
         """
         if session is None:
             session = Session(self.db_client.engine)
@@ -324,17 +419,26 @@ class AdminController:
 
     def updateAdminName(self, idAdmin: int, new_name: str, session=None):
         """
-        Actualiza la contraseña de un administrador.
+        Updates the name of an admin.
+
+        This method searches for an admin by their ID and updates their name to the provided new value.
 
         Args:
-            idAdmin (int): El ID del administrador cuyo password se va a actualizar.
-            new_password (str): La nueva contraseña que se asignará.
-            session (Session, optional): Sesión SQLAlchemy para interacción con la base de datos.
+            idAdmin (int): The unique identifier of the admin whose name will be updated.
+            new_name (str): The new name to assign to the admin.
+            session (Session, optional): SQLAlchemy session object for database interaction.
+                If not provided, a new session will be created.
 
         Returns:
-            dict: Resultado de la operación.
-                - {"status": "ok", "message": "Contraseña actualizada exitosamente"} : Si la contraseña se actualiza correctamente.
-                - {"status": "error", "message": <error_message>} : Si ocurre algún error.
+            dict: Result of the operation.
+                - {"status": "ok", "message": "Name updated successfully"}:
+                If the name is updated successfully.
+                - {"status": "error", "message": <error_message>}:
+                If an error occurs or the admin is not found.
+
+        Raises:
+            SQLAlchemyError: If a database-related error occurs.
+            Exception: If an unexpected error occurs during the operation.
         """
         if session is None:
             session = Session(self.db_client.engine)

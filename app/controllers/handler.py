@@ -18,13 +18,17 @@ admin_controller = AdminController()
 
 
 class Controllers:
+    """
+    Main controller class that delegates tasks to specific controllers.
+
+    This class serves as an entry point for various operations, handling 
+    tasks related to admins, alarms, families, machines, residents, rooms, shelters
+    and system health by delegating requests to the appropriate specialized controllers.
+    """
     def __init__(self) -> None:
         pass
 
     def healthz(self):
-        """
-        Checks server status
-        """
         return {"status": "ok"}
     
     def create_resident(self, body, session=None):

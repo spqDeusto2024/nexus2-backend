@@ -44,7 +44,31 @@ class AlarmController:
 
     def create_alarm(self, body: AlarmModel, session=None):
         """
-        Crea una nueva alarma en la base de datos.
+        Creates a new alarm in the database.
+
+        This method validates the existence of a room and ensures that no duplicate 
+        alarms exist in the same room before creating a new alarm.
+
+        Args:
+            body (AlarmModel): An object containing the details of the alarm to be created, including:
+                - idAlarm (int): The unique identifier of the alarm.
+                - start (datetime): The start time of the alarm.
+                - end (datetime): The end time of the alarm.
+                - idRoom (int): The unique identifier of the room where the alarm is created.
+                - createDate (datetime): The date when the alarm is created.
+            session (Session, optional): SQLAlchemy session object for database interaction.
+                If not provided, a new session will be created.
+
+        Returns:
+            dict: Result of the operation.
+                - {"status": "ok"}:
+                If the alarm is created successfully.
+                - {"status": "error", "message": <error_message>}:
+                If an error occurs, such as the room not existing or a duplicate alarm.
+
+        Raises:
+            SQLAlchemyError: If a database-related error occurs.
+            Exception: If an unexpected error occurs during the operation.
         """
         if session is None:
             session = Session(self.db_client.engine)
@@ -83,14 +107,29 @@ class AlarmController:
 
     def create_alarmLevel(self, body: AlarmModel, session=None):
         """
-        Crea una nueva alarma con idAlarm generado automáticamente por la base de datos.
-        
-        Parameters:
-            body (AlarmModel): El modelo de datos de la alarma.
-            session (Session, optional): La sesión activa de SQLAlchemy.
-        
+        Creates a new alarm with an automatically generated `idAlarm`.
+
+        This method assigns the alarm to room 3 and validates its existence before creating the alarm. 
+        The `idAlarm` is generated automatically by the database if the column is set as auto-increment.
+
+        Args:
+            body (AlarmModel): An object containing the details of the alarm to be created, including:
+                - start (datetime): The start time of the alarm.
+                - end (datetime, optional): The end time of the alarm (can be None initially).
+                - createDate (datetime): The date when the alarm is created.
+            session (Session, optional): SQLAlchemy session object for database interaction.
+                If not provided, a new session will be created.
+
         Returns:
-            dict: Resultado de la operación (exitoso o error).
+            dict: Result of the operation.
+                - {"status": "ok", "message": "Alarm <idAlarm> created successfully in room 3.", "idAlarm": <idAlarm>}:
+                If the alarm is created successfully. Includes the generated `idAlarm`.
+                - {"status": "error", "message": <error_message>}:
+                If an error occurs, such as room 3 not existing or a database issue.
+
+        Raises:
+            SQLAlchemyError: If a database-related error occurs.
+            Exception: If an unexpected error occurs during the operation.
         """
         if session is None:
             session = Session(self.db_client.engine)
@@ -124,6 +163,31 @@ class AlarmController:
 
 
     def updateAlarmEndDate(self, idAlarm: int, new_enddate: datetime, session=None):
+
+        """
+        Updates the end date of an alarm.
+
+        This method searches for an alarm by its ID and updates its `enddate` field 
+        to the specified new value.
+
+        Args:
+            idAlarm (int): The unique identifier of the alarm to update.
+            new_enddate (datetime): The new end date to assign to the alarm.
+            session (Session, optional): SQLAlchemy session object for database interaction.
+                If not provided, a new session will be created.
+
+        Returns:
+            dict: Result of the operation.
+                - {"status": "ok", "message": "Alarm end date updated successfully"}:
+                If the end date is updated successfully.
+                - {"status": "error", "message": <error_message>}:
+                If an error occurs or the alarm is not found.
+
+        Raises:
+            SQLAlchemyError: If a database-related error occurs.
+            Exception: If an unexpected error occurs during the operation.
+        """
+
         if session is None:
             session = Session(self.db_client.engine)
 
@@ -159,15 +223,31 @@ class AlarmController:
 
     def list_alarms(self, session=None):
         """
-        List all alarms in the database.
+        Lists all alarms in the database.
+
+        This method retrieves all alarms from the database and returns their details 
+        as a list of dictionaries.
 
         Args:
-            session (Session, optional): SQLAlchemy session for database interaction.
+            session (Session, optional): SQLAlchemy session object for database interaction.
+                If not provided, a new session will be created.
 
         Returns:
-            dict: A dictionary with the list of all alarms or an error message.
-                - {"status": "ok", "alarms": [list of alarms]}
-                - {"status": "error", "message": <error message>}
+            dict: Result of the operation.
+                - {"status": "ok", "alarms": [<list_of_alarms>]}:
+                If the alarms are successfully retrieved. Each alarm in the list contains:
+                    - idAlarm (int): The unique identifier of the alarm.
+                    - start (str, optional): The start time of the alarm in ISO 8601 format.
+                    - end (str, optional): The end time of the alarm in ISO 8601 format.
+                    - idRoom (int): The unique identifier of the room associated with the alarm.
+                    - createDate (str, optional): The creation date of the alarm in ISO 8601 format.
+                - {"status": "ok", "alarms": []}:
+                If no alarms are found in the database.
+                - {"status": "error", "message": <error_message>}:
+                If an error occurs during the operation.
+
+        Raises:
+            Exception: If an unexpected error occurs while querying the database.
         """
         if session is None:
             session = Session(self.db_client.engine)

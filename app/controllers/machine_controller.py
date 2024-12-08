@@ -44,25 +44,36 @@ class MachineController:
     
     def create_machine(self, body: MachineModel, session=None):
         """
-        Creates a new machine entry in the database. Ensures that the machine is assigned to an 
-        existing room and that there is no other machine with the same name in the same room. 
-        Prevents duplication of machines in the same room.
+        Creates a new machine entry in the database.
 
-        Steps:
-            1. Verifies if the room exists in the database.
-            2. Ensures no duplication of machines with the same name in a specific room.
-            3. Adds the new machine to the database and associates it with the correct room.
+        This method ensures the following:
+        - The machine is assigned to an existing room.
+        - No other machine with the same name exists in the same room.
+        - Prevents duplication of machines within the same room.
 
         Args:
-            body (MachineModel): The machine data to be added to the database. This includes information such as
-                                 the machine's id, name, status (on/off), room, creator, and timestamps.
-            session (Session, optional): The database session to use for the transaction. If not provided, a new session
-                                         will be created.
+            body (MachineModel): The data of the machine to be added, including:
+                - idMachine (int): The unique identifier of the machine.
+                - machineName (str): The name of the machine.
+                - on (bool): The initial status of the machine (on/off).
+                - idRoom (int): The ID of the room where the machine is located.
+                - createdBy (int): The ID of the admin who created the machine.
+                - createDate (datetime): The creation timestamp of the machine.
+                - update (datetime): The last update timestamp of the machine.
+            session (Session, optional): SQLAlchemy session object for database interaction.
+                If not provided, a new session will be created.
 
         Returns:
-            dict: A dictionary indicating the result of the operation.
-                - Success: {"status": "ok"}
-                - Failure: {"status": "error", "message": <Error message>}
+            dict: Result of the operation.
+                - {"status": "ok"}:
+                If the machine is created successfully.
+                - {"status": "error", "message": <error_message>}:
+                If an error occurs, such as the room or admin not existing, 
+                or a duplicate machine name in the same room.
+
+        Raises:
+            SQLAlchemyError: If a database-related error occurs.
+            Exception: If an unexpected error occurs during the operation.
         """
         if session is None:
             db = DatabaseClient(gb.MYSQL_URL)
@@ -111,16 +122,26 @@ class MachineController:
 
     def updateMachineStatus(self, machine_name: str, session=None):
         """
-        Actualiza el estado 'on' de una máquina específica a False.
+        Updates the status of a specific machine to `False`.
+
+        This method searches for a machine by its name and sets its `on` status to `False` 
+        to indicate that the machine is turned off.
 
         Args:
-            machine_name (str): El nombre de la máquina que se va a actualizar.
-            session (Session, optional): Sesión SQLAlchemy para interacción con la base de datos.
+            machine_name (str): The name of the machine to update.
+            session (Session, optional): SQLAlchemy session object for database interaction.
+                If not provided, a new session will be created.
 
         Returns:
-            dict: Resultado de la operación.
-                - {"status": "ok", "message": "Estado de la máquina actualizado exitosamente"} : Si se actualiza correctamente.
-                - {"status": "error", "message": <error_message>} : Si ocurre algún error.
+            dict: Result of the operation.
+                - {"status": "ok", "message": "Machine status updated successfully"}:
+                If the machine's status is updated successfully.
+                - {"status": "error", "message": <error_message>}:
+                If an error occurs, such as the machine not being found or a database issue.
+
+        Raises:
+            SQLAlchemyError: If a database-related error occurs.
+            Exception: If an unexpected error occurs during the operation.
         """
         if session is None:
             session = Session(self.db_client.engine)
@@ -156,16 +177,7 @@ class MachineController:
     
     def updateMachineStatusOn(self, machine_name: str, session=None):
         """
-        Actualiza el estado 'on' de una máquina específica a False.
-
-        Args:
-            machine_name (str): El nombre de la máquina que se va a actualizar.
-            session (Session, optional): Sesión SQLAlchemy para interacción con la base de datos.
-
-        Returns:
-            dict: Resultado de la operación.
-                - {"status": "ok", "message": "Estado de la máquina actualizado exitosamente"} : Si se actualiza correctamente.
-                - {"status": "error", "message": <error_message>} : Si ocurre algún error.
+        REVISARRRR!!!! Es igual que el de arriba, mirar a ver cual de los dos utilizamos
         """
         if session is None:
             session = Session(self.db_client.engine)
@@ -201,15 +213,33 @@ class MachineController:
             
     def list_machines(self, session=None):
         """
-        List all machines in the database.
+        Lists all machines in the database.
+
+        This method retrieves all machines from the database and formats their details 
+        into a list of dictionaries.
 
         Args:
-            session (Session, optional): SQLAlchemy session for database interaction.
+            session (Session, optional): SQLAlchemy session object for database interaction.
+                If not provided, a new session will be created.
 
         Returns:
-            dict: A dictionary with the list of all machines or an error message.
-                - {"status": "ok", "machines": [list of machines]}
-                - {"status": "error", "message": <error message>}
+            dict: Result of the operation.
+                - {"status": "ok", "machines": [<list_of_machines>]}:
+                If the machines are successfully retrieved. Each machine in the list contains:
+                    - idMachine (int): The unique identifier of the machine.
+                    - machineName (str): The name of the machine.
+                    - on (bool): The current status of the machine (True for on, False for off).
+                    - idRoom (int): The unique identifier of the room where the machine is located.
+                    - createdBy (int): The ID of the admin who created the machine.
+                    - createDate (str, optional): The creation date of the machine, in ISO 8601 format.
+                    - update (str, optional): The last update timestamp of the machine, in ISO 8601 format.
+                - {"status": "ok", "machines": []}:
+                If no machines are found in the database.
+                - {"status": "error", "message": <error_message>}:
+                If an error occurs during the operation.
+
+        Raises:
+            Exception: If an unexpected error occurs while querying the database.
         """
         if session is None:
             session = Session(self.db_client.engine)
@@ -242,19 +272,29 @@ class MachineController:
         finally:
             if session:
                 session.close()
-            
+
+
+  
     def deleteMachine(self, machine_id: int, session=None):
         """
-        Elimina una máquina de la base de datos usando su ID.
+        Deletes a machine from the database using its ID.
+
+        This method searches for a machine by its unique ID and deletes it if found.
 
         Args:
-            machine_id (int): ID de la máquina que se desea eliminar.
-            session (Session, optional): Sesión SQLAlchemy para interacción con la base de datos.
+            machine_id (int): The unique identifier of the machine to delete.
+            session (Session, optional): SQLAlchemy session object for database interaction.
+                If not provided, a new session will be created.
 
         Returns:
-            dict: Resultado de la operación.
-                - {"status": "ok", "message": "Machine deleted successfully"}: Si la eliminación es exitosa.
-                - {"status": "error", "message": <error_message>}: Si ocurre algún error.
+            dict: Result of the operation.
+                - {"status": "ok", "message": "Machine deleted successfully"}:
+                If the machine is successfully deleted.
+                - {"status": "error", "message": <error_message>}:
+                If an error occurs, such as the machine not being found.
+
+        Raises:
+            Exception: If an unexpected error occurs during the operation.
         """
         if session is None:
             session = Session(self.db_client.engine)
@@ -286,16 +326,26 @@ class MachineController:
 
     def updateMachineDate(self, machine_name: str, session=None):
         """
-        Actualiza la fecha del campo 'update' de una máquina específica con la fecha actual.
+        Updates the `update` field of a specific machine with the current date.
+
+        This method searches for a machine by its name and updates its `update` field 
+        to the current date.
 
         Args:
-            machine_name (str): El nombre de la máquina que se va a actualizar.
-            session (Session, optional): Sesión SQLAlchemy para interacción con la base de datos.
+            machine_name (str): The name of the machine to update.
+            session (Session, optional): SQLAlchemy session object for database interaction.
+                If not provided, a new session will be created.
 
         Returns:
-            dict: Resultado de la operación.
-                - {"status": "ok", "message": "Fecha de la máquina actualizada exitosamente"} : Si se actualiza correctamente.
-                - {"status": "error", "message": <error_message>} : Si ocurre algún error.
+            dict: Result of the operation.
+                - {"status": "ok", "message": "Machine date updated successfully"}:
+                If the machine's date is updated successfully.
+                - {"status": "error", "message": <error_message>}:
+                If an error occurs, such as the machine not being found.
+
+        Raises:
+            SQLAlchemyError: If a database-related error occurs.
+            Exception: If an unexpected error occurs during the operation.
         """
         if session is None:
             session = Session(self.db_client.engine)

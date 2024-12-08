@@ -43,7 +43,34 @@ class FamilyController:
 
     def create_family(self, body: FamilyModel, session=None):
         """
-        Crea una nueva familia en la base de datos y verifica las condiciones previas.
+        Creates a new family in the database and validates preconditions.
+
+        This method verifies that the room, shelter, and admin associated with the family exist, 
+        and ensures no duplicate family with the same name exists in the specified room before 
+        creating a new family.
+
+        Args:
+            body (FamilyModel): An object containing the details of the family to be created, including:
+                - idFamily (int): The unique identifier of the family.
+                - familyName (str): The name of the family.
+                - idRoom (int): The unique identifier of the room where the family resides.
+                - idShelter (int): The unique identifier of the shelter associated with the family.
+                - createdBy (int): The ID of the admin who creates the family record.
+                - createDate (datetime): The date when the family record is created.
+            session (Session, optional): SQLAlchemy session object for database interaction.
+                If not provided, a new session will be created.
+
+        Returns:
+            dict: Result of the operation.
+                - {"status": "ok"}:
+                If the family is created successfully.
+                - {"status": "error", "message": <error_message>}:
+                If an error occurs, such as missing entities (room, shelter, admin) 
+                or duplicate family names in the same room.
+
+        Raises:
+            SQLAlchemyError: If a database-related error occurs.
+            Exception: If an unexpected error occurs during the operation.
         """
         if session is None:
             session = Session(self.db_client.engine)
@@ -90,18 +117,29 @@ class FamilyController:
         finally:
             session.close()
 
+
+
     def deleteFamily(self, family_id: int, session=None):
         """
-        Elimina una familia de la base de datos usando su ID, si no tiene miembros asociados.
+        Deletes a family from the database using its ID, if no members are associated with it.
+
+        This method first verifies that the family exists and that no residents are linked 
+        to the family. If there are associated members, the deletion is not allowed.
 
         Args:
-            family_id (int): ID de la familia que se desea eliminar.
-            session (Session, optional): Sesión SQLAlchemy para interacción con la base de datos.
+            family_id (int): The unique identifier of the family to delete.
+            session (Session, optional): SQLAlchemy session object for database interaction.
+                If not provided, a new session will be created.
 
         Returns:
-            dict: Resultado de la operación.
-                - {"status": "ok", "message": "Family deleted successfully"}: Si la eliminación es exitosa.
-                - {"status": "error", "message": <error_message>}: Si ocurre algún error.
+            dict: Result of the operation.
+                - {"status": "ok", "message": "Family deleted successfully"}:
+                If the family is successfully deleted.
+                - {"status": "error", "message": <error_message>}:
+                If an error occurs, such as the family not being found or members being associated with it.
+
+        Raises:
+            Exception: If an unexpected error occurs during the operation.
         """
         if session is None:
             session = Session(self.db_client.engine)
@@ -139,15 +177,30 @@ class FamilyController:
     
     def listFamilies(self, session=None):
         """
-        Lista todas las familias registradas en la base de datos.
+        Lists all families registered in the database.
+
+        This method retrieves all families from the database and formats their details 
+        into a list of dictionaries.
 
         Args:
-            session (Session, optional): Sesión SQLAlchemy para interacción con la base de datos.
+            session (Session, optional): SQLAlchemy session object for database interaction.
+                If not provided, a new session will be created.
 
         Returns:
-            dict: Resultado de la operación.
-                - {"status": "ok", "families": [<listado_de_familias>]}: Si se encuentran familias.
-                - {"status": "error", "message": <error_message>}: Si ocurre algún error.
+            dict: Result of the operation.
+                - {"status": "ok", "families": [<list_of_families>]}:
+                If the families are successfully retrieved. Each family in the list contains:
+                    - idFamily (int): The unique identifier of the family.
+                    - familyName (str): The name of the family.
+                    - idRoom (int): The unique identifier of the room associated with the family.
+                    - idShelter (int): The unique identifier of the shelter associated with the family.
+                    - createdBy (int): The ID of the admin who created the family.
+                    - createDate (str, optional): The date the family was created, in ISO 8601 format.
+                - {"status": "error", "message": <error_message>}:
+                If an error occurs during the operation.
+
+        Raises:
+            Exception: If an unexpected error occurs while querying the database.
         """
         if session is None:
             session = Session(self.db_client.engine)
