@@ -220,3 +220,58 @@ def test_delete_admin_database_error(setup_database, mocker):
 
     remaining_admin = session.query(Admin).filter_by(idAdmin=2).first()
     assert remaining_admin is not None
+
+def test_login_admin_success(setup_database):
+    """
+    Test: Successfully log in an admin with correct credentials.
+
+    Expected Outcome:
+        - The login should be successful, returning the admin's details.
+    """
+    session = setup_database
+    controller = AdminController()
+
+    # Add a test admin
+    admin = Admin(email="login@example.com", name="Login Admin", password="correctpassword")
+    session.add(admin)
+    session.commit()
+
+    response = controller.loginAdmin(email="login@example.com", password="correctpassword", session=session)
+
+    assert response["status"] == "ok"
+    assert response["user"]["email"] == "login@example.com"
+
+def test_login_admin_invalid_credentials(setup_database):
+    """
+    Test: Attempt to log in with invalid credentials.
+
+    Expected Outcome:
+        - The operation should fail, returning an error message.
+    """
+    session = setup_database
+    controller = AdminController()
+
+    # Add a test admin
+    admin = Admin(email="login@example.com", name="Login Admin", password="correctpassword")
+    session.add(admin)
+    session.commit()
+
+    # Attempt login with incorrect password
+    response = controller.loginAdmin(email="login@example.com", password="wrongpassword", session=session)
+
+    assert response == {"status": "error", "message": "Invalid credentials"}
+
+def test_login_admin_not_found(setup_database):
+    """
+    Test: Attempt to log in with an email not in the database.
+
+    Expected Outcome:
+        - The operation should fail, returning an error message.
+    """
+    session = setup_database
+    controller = AdminController()
+
+    response = controller.loginAdmin(email="nonexistent@example.com", password="password", session=session)
+
+    assert response == {"status": "error", "message": "Invalid credentials"}
+
