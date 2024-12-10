@@ -275,3 +275,39 @@ def test_login_admin_not_found(setup_database):
 
     assert response == {"status": "error", "message": "Invalid credentials"}
 
+def test_list_admins_success(setup_database):
+    """
+    Test: List all admins successfully.
+
+    Expected Outcome:
+        - All admins in the database should be returned in the response.
+    """
+    session = setup_database
+    controller = AdminController()
+
+    # Add test admins
+    admin1 = Admin(email="admin1@example.com", name="Admin 1", password="password1")
+    admin2 = Admin(email="admin2@example.com", name="Admin 2", password="password2")
+    session.add_all([admin1, admin2])
+    session.commit()
+
+    response = controller.listAdmins(session=session)
+
+    assert response["status"] == "ok"
+    assert len(response["admins"]) == 2
+    assert response["admins"][0]["email"] == "admin1@example.com"
+    assert response["admins"][1]["email"] == "admin2@example.com"
+
+def test_list_admins_empty(setup_database):
+    """
+    Test: List admins when no admins exist in the database.
+
+    Expected Outcome:
+        - The response should indicate success with an empty list of admins.
+    """
+    session = setup_database
+    controller = AdminController()
+
+    response = controller.listAdmins(session=session)
+
+    assert response == {"status": "ok", "admins": []}
