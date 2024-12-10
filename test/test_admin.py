@@ -311,3 +311,41 @@ def test_list_admins_empty(setup_database):
     response = controller.listAdmins(session=session)
 
     assert response == {"status": "ok", "admins": []}
+
+def test_update_admin_password_success(setup_database):
+    """
+    Test: Successfully update an admin's password.
+
+    Expected Outcome:
+        - The password should be updated in the database.
+    """
+    session = setup_database
+    controller = AdminController()
+
+    # Add a test admin
+    admin = Admin(idAdmin=1, email="password@example.com", name="Password Admin", password="oldpassword")
+    session.add(admin)
+    session.commit()
+
+    response = controller.updateAdminPassword(idAdmin=1, new_password="newpassword", session=session)
+
+    assert response == {"status": "ok", "message": "Contraseña actualizada exitosamente"}
+    updated_admin = session.query(Admin).filter_by(idAdmin=1).first()
+    assert updated_admin.password == "newpassword"
+
+
+def test_update_admin_password_not_found(setup_database):
+    """
+    Test: Attempt to update the password of a non-existent admin.
+
+    Expected Outcome:
+        - The operation should fail, returning an error message.
+    """
+    session = setup_database
+    controller = AdminController()
+
+    response = controller.updateAdminPassword(idAdmin=999, new_password="newpassword", session=session)
+
+    assert response == {"status": "error", "message": "Administrador no encontrado"}
+
+
