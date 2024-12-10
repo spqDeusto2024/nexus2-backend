@@ -478,4 +478,29 @@ def test_get_admin_by_id_database_error(setup_database, mocker):
     assert "Database error" in response["message"]
 
 
+def test_list_admins_with_pagination(setup_database):
+    """
+    Test: List admins with a simulated pagination scenario.
+
+    Expected Outcome:
+        - Only the requested number of admins should be returned.
+    """
+    session = setup_database
+    controller = AdminController()
+
+    # Add multiple test admins
+    admins = [
+        Admin(email=f"admin{i}@example.com", name=f"Admin {i}", password="password123")
+        for i in range(10)
+    ]
+    session.add_all(admins)
+    session.commit()
+
+    # Simulate pagination (e.g., return the first 5)
+    all_admins = controller.listAdmins(session=session)
+    paginated_admins = all_admins["admins"][:5]
+
+    assert len(paginated_admins) == 5
+    assert paginated_admins[0]["email"] == "admin0@example.com"
+    assert paginated_admins[-1]["email"] == "admin4@example.com"
 
