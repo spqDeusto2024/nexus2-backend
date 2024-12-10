@@ -385,3 +385,41 @@ def test_update_admin_email_not_found(setup_database):
     assert response == {"status": "error", "message": "Administrador no encontrado"}
 
 
+def test_update_admin_name_success(setup_database):
+    """
+    Test: Successfully update an admin's name.
+
+    Expected Outcome:
+        - The name should be updated in the database.
+    """
+    session = setup_database
+    controller = AdminController()
+
+    # Add a test admin
+    admin = Admin(idAdmin=1, email="name@example.com", name="Old Name", password="password")
+    session.add(admin)
+    session.commit()
+
+    response = controller.updateAdminName(idAdmin=1, new_name="New Name", session=session)
+
+    assert response == {"status": "ok", "message": "Nombre actualizado exitosamente"}
+    updated_admin = session.query(Admin).filter_by(idAdmin=1).first()
+    assert updated_admin.name == "New Name"
+
+
+def test_update_admin_name_not_found(setup_database):
+    """
+    Test: Attempt to update the name of a non-existent admin.
+
+    Expected Outcome:
+        - The operation should fail, returning an error message.
+    """
+    session = setup_database
+    controller = AdminController()
+
+    response = controller.updateAdminName(idAdmin=999, new_name="New Name", session=session)
+
+    assert response == {"status": "error", "message": "Administrador no encontrado"}
+
+
+
