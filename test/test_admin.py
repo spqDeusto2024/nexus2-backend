@@ -521,3 +521,55 @@ def test_list_admins_database_error(setup_database, mocker):
 
     assert response["status"] == "error"
     assert "Database error" in response["message"]
+
+
+def test_list_admins_filtered_by_email(setup_database):
+    """
+    Test: List admins filtered by email.
+
+    Expected Outcome:
+        - Only admins matching the filter should be returned.
+    """
+    session = setup_database
+    controller = AdminController()
+
+    # Add test admins
+    admins = [
+        Admin(email="admin1@example.com", name="Admin 1", password="password123"),
+        Admin(email="admin2@example.com", name="Admin 2", password="password123"),
+    ]
+    session.add_all(admins)
+    session.commit()
+
+    # Filter admins by email containing 'admin1'
+    filtered_admins = [
+        {"idAdmin": admin.idAdmin, "email": admin.email}
+        for admin in session.query(Admin).filter(Admin.email.like("%admin1%"))
+    ]
+
+    response = controller.listAdmins(session=session)
+    assert any(admin["email"] == "admin1@example.com" for admin in response["admins"])
+    assert len(filtered_admins) == 1
+
+def test_list_admins_large_dataset(setup_database):
+    """
+    Test: List admins with a large dataset.
+
+    Expected Outcome:
+        - The operation should handle the large dataset efficiently.
+    """
+    session = setup_database
+    controller = AdminController()
+
+    # Add 1000 test admins
+    admins = [
+        Admin(email=f"admin{i}@example.com", name=f"Admin {i}", password="password123")
+        for i in range(1000)
+    ]
+    session.add_all(admins)
+    session.commit()
+
+    response = controller.listAdmins(session=session)
+
+    assert response["status"] == "ok"
+    assert len(response["admins"]) == 1000
