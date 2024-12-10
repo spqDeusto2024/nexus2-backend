@@ -2,6 +2,8 @@ import pytest
 from app.controllers.admin_controller import AdminController
 from app.models.admin import Admin as AdminModel
 from app.mysql.admin import Admin
+from sqlalchemy.exc import SQLAlchemyError 
+
 
 def test_create_admin_success(setup_database):
     """
@@ -384,6 +386,32 @@ def test_update_admin_email_not_found(setup_database):
 
     assert response == {"status": "error", "message": "Administrador no encontrado"}
 
+def test_update_admin_email_database_error(setup_database, mocker):
+    """
+    Test: Simulate a database error during email update.
+
+    Expected Outcome:
+        - The operation should fail, returning the database error message.
+    """
+    session = setup_database
+    controller = AdminController()
+
+    # Add a test admin
+    admin = Admin(idAdmin=1, email="oldemail@example.com", name="Email Admin", password="password")
+    session.add(admin)
+    session.commit()
+
+    # Mock the session's commit method to raise an exception
+    mocker.patch.object(session, "commit", side_effect=Exception("Database error"))
+
+    # Attempt to update the admin's email
+    response = controller.updateAdminEmail(idAdmin=1, new_email="newemail@example.com", session=session)
+
+    assert response["status"] == "error"
+    assert "Database error" in response["message"]
+
+
+
 
 def test_update_admin_name_success(setup_database):
     """
@@ -573,3 +601,28 @@ def test_list_admins_large_dataset(setup_database):
 
     assert response["status"] == "ok"
     assert len(response["admins"]) == 1000
+
+def test_sql_injection_attempt(setup_database):
+    """
+    Test: Attempt an SQL injection attack during login.
+
+    Expected Outcome:
+        - The operation should fail, returning an invalid credentials error.
+    """
+    session = setup_database
+    controller = AdminController()
+
+    # Add a test admin
+    admin = Admin(email="admin@example.com", name="Secure Admin", password="securepassword")
+    session.add(admin)
+    session.commit()
+
+    # Attempt SQL injection
+    response = controller.loginAdmin(
+        email="' OR '1'='1",
+        password="anything",
+        session=session
+    )
+
+    assert response["status"] == "error"
+    assert response["message"] == "Invalid credentials"

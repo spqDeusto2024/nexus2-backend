@@ -200,3 +200,125 @@ def test_list_rooms_with_resident_count(setup_database):
     assert response[1]["roomName"] == "Room B"
     assert response[1]["resident_count"] == 1
 
+def test_create_room_duplicate_name_different_shelter(setup_database):
+    """
+    Test: Successfully create a room with a duplicate name in a different shelter.
+
+    Expected Outcome:
+        - The operation should succeed.
+    """
+    session = setup_database
+    controller = RoomController()
+
+    # Add required admin, shelters, and room
+    admin = Admin(idAdmin=1, email="admin@example.com", name="Admin Name", password="password")
+    shelter1 = Shelter(idShelter=1, shelterName="Shelter 1")
+    shelter2 = Shelter(idShelter=2, shelterName="Shelter 2")
+    room = Room(idRoom=1, roomName="Room A", createdBy=1, createDate=date.today(), idShelter=1, maxPeople=4)
+    session.add_all([admin, shelter1, shelter2, room])
+    session.commit()
+
+    # Room data for a different shelter
+    room_data = RoomModel(
+        idRoom=2,
+        roomName="Room A",  # Same name
+        createdBy=1,
+        createDate=date.today(),
+        idShelter=2,  # Different shelter
+        maxPeople=4
+    )
+
+    response = controller.create_room(room_data, session=session)
+
+    assert response == {"status": "ok"}
+
+def test_list_rooms_Room_no_matches(setup_database):
+    """
+    Test: List rooms starting with 'Room' when no rooms match.
+
+    Expected Outcome:
+        - The response should be an empty list.
+    """
+    session = setup_database
+    controller = RoomController()
+
+    # Add rooms that do not match the pattern
+    room1 = Room(idRoom=1, roomName="Kitchen", maxPeople=4, idShelter=1)
+    room2 = Room(idRoom=2, roomName="Living Area", maxPeople=3, idShelter=1)
+    session.add_all([room1, room2])
+    session.commit()
+
+    response = controller.list_rooms_Room(session=session)
+
+    assert response == []
+
+def test_list_rooms_unexpected_error(setup_database, mocker):
+    """
+    Test: Simulate an unexpected error during listing rooms.
+
+    Expected Outcome:
+        - The operation should return an error message.
+    """
+    session = setup_database
+    controller = RoomController()
+
+    # Mock session.query to raise an exception
+    mocker.patch("sqlalchemy.orm.Session.query", side_effect=Exception("Unexpected error"))
+
+    response = controller.list_rooms(session=session)
+
+    assert response == {"status": "error", "message": "Unexpected error"}
+
+def test_access_room_resident_not_found(setup_database):
+    """
+    Test: Attempt to access a room when the resident does not exist.
+
+    Expected Outcome:
+        - The operation should return "Resident not found."
+    """
+    session = setup_database
+    controller = RoomController()
+
+    # Add room
+    room = Room(idRoom=1, roomName="Room A", maxPeople=4, idShelter=1)
+    session.add(room)
+    session.commit()
+
+    # Attempt to access the room with a nonexistent resident
+    response = controller.access_room(idResident=999, idRoom=1, session=session)
+
+    assert response == "Resident not found."
+
+def test_list_rooms_with_resident_count_unexpected_error(setup_database, mocker):
+    """
+    Test: Simulate an unexpected error during listing rooms with resident count.
+
+    Steps:
+        1. Mock the session's `query` method to raise an exception.
+        2. Verify the response indicates an error.
+    """
+    session = setup_database
+    controller = RoomController()
+
+    # Mock session.query to raise an exception
+    mocker.patch("sqlalchemy.orm.Session.query", side_effect=Exception("Unexpected error"))
+
+    response = controller.list_rooms_with_resident_count(session=session)
+
+    assert response["status"] == "error"
+    assert "Unexpected error" in response["message"]
+
+def test_list_rooms_with_resident_count_empty(setup_database):
+    """
+    Test: List rooms when no rooms exist in the database.
+
+    Expected Outcome:
+        - The response should be an empty list.
+    """
+    session = setup_database
+    controller = RoomController()
+
+    # Call the method without adding any rooms
+    response = controller.list_rooms_with_resident_count(session=session)
+
+    assert response == []

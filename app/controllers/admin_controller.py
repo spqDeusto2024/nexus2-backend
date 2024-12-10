@@ -16,6 +16,7 @@ import app.mysql.shelter as shelterMysql
 import app.mysql.resident as residentMysql
 import app.mysql.admin as adminMysql
 import app.mysql.machine as machineMysql
+from sqlalchemy.exc import SQLAlchemyError
 from app.mysql.mysql import DatabaseClient
 from app.mysql.resident import Resident
 from app.mysql.room import Room

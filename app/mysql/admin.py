@@ -18,3 +18,5 @@ class Admin(Base):
     email = Column(String (50), nullable=False)
     name = Column(String (50), nullable=False)
     password = Column(String (20), nullable=False)
+
+    
