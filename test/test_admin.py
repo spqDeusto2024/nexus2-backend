@@ -421,5 +421,61 @@ def test_update_admin_name_not_found(setup_database):
 
     assert response == {"status": "error", "message": "Administrador no encontrado"}
 
+def test_get_admin_by_id_success(setup_database):
+    """
+    Test: Successfully retrieve an admin by ID.
+
+    Expected Outcome:
+        - The admin's details should be returned correctly.
+    """
+    session = setup_database
+    controller = AdminController()
+
+    # Add a test admin
+    admin = Admin(idAdmin=1, email="admin@example.com", name="Test Admin", password="password123")
+    session.add(admin)
+    session.commit()
+
+    response = controller.getAdminById(idAdmin=1, session=session)
+
+    assert response["status"] == "ok"
+    assert response["admin"]["email"] == "admin@example.com"
+    assert response["admin"]["name"] == "Test Admin"
+    assert response["admin"]["password"] == "password123"
+
+
+def test_get_admin_by_id_not_found(setup_database):
+    """
+    Test: Attempt to retrieve an admin with a non-existent ID.
+
+    Expected Outcome:
+        - The operation should fail, returning an error message.
+    """
+    session = setup_database
+    controller = AdminController()
+
+    response = controller.getAdminById(idAdmin=999, session=session)
+
+    assert response == {"status": "error", "message": "Administrador no encontrado"}
+
+
+def test_get_admin_by_id_database_error(setup_database, mocker):
+    """
+    Test: Simulate a database error during admin retrieval.
+
+    Expected Outcome:
+        - The operation should fail, returning the database error message.
+    """
+    session = setup_database
+    controller = AdminController()
+
+    # Mock session.query to raise an exception
+    mocker.patch("sqlalchemy.orm.Session.query", side_effect=Exception("Database error"))
+
+    response = controller.getAdminById(idAdmin=1, session=session)
+
+    assert response["status"] == "error"
+    assert "Database error" in response["message"]
+
 
 
