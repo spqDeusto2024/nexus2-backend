@@ -4,6 +4,8 @@ from app.models.admin import Admin as AdminModel  # Pydantic model for request v
 from sqlalchemy.orm import Session
 import app.utils.vars as gb
 from fastapi import HTTPException
+import jwt
+from datetime import datetime, timedelta
 
 import app.models.resident as resident
 import app.models.family as family
@@ -38,6 +40,8 @@ class AdminController:
         if not self.db_url:
             raise ValueError("MYSQL_URL environment variable is not set.")
         self.db_client = DatabaseClient(self.db_url)
+
+    
 
     def create_admin(self, admin_data: AdminModel, session=None):
         """
@@ -90,26 +94,19 @@ class AdminController:
         """
         Verifies the login credentials of an admin using their email and password.
 
-        This method queries the database for an admin with the provided email and compares 
-        the given password with the one stored in the database.
-
         Args:
             email (str): The admin's email address.
             password (str): The admin's plain text password.
             session (Session, optional): SQLAlchemy session object for database interaction.
-                If not provided, a new session will be created.
 
         Returns:
             dict: Result of the login attempt.
-                - {"status": "ok", "user": {"idAdmin": <idAdmin>, "email": <email>}}: 
+                - {"status": "ok", "token": <JWT token>, "user": {"idAdmin": <idAdmin>, "email": <email>}}: 
                 If the login is successful.
                 - {"status": "error", "message": <error_message>}: 
                 If an error occurs or the credentials are invalid.
-
-        Raises:
-            Exception: If any unexpected error occurs during the process.
-
         """
+        SECRET_KEY = "mi_clave_secreta" 
         if session is None:
             session = Session(self.db_client.engine)
 
@@ -125,20 +122,27 @@ class AdminController:
             if user.password != password:
                 return {"status": "error", "message": "Invalid credentials"}
 
+            # Generar el JWT token
+            payload = {
+                "idAdmin": user.idAdmin,  # ID del admin
+                "email": user.email,      # Email del admin
+                "exp": datetime.utcnow() + timedelta(hours=1)  # Expira en 1 hora
+            }
+            token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
+
             return {
                 "status": "ok",
+                "token": token,  # El JWT token generado
                 "user": {
-                    "idAdmin": user.idAdmin,  # Asegúrate de que el atributo sea correcto
+                    "idAdmin": user.idAdmin,
                     "email": user.email,
                 },
             }
 
         except Exception as e:
-            # Aquí se captura cualquier otra excepción que pueda ocurrir
             return {"status": "error", "message": str(e)}
 
         finally:
-            # Asegúrate de cerrar la sesión para evitar problemas de conexiones abiertas
             if session:
                 session.close()
 

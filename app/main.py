@@ -27,6 +27,7 @@ controllers = Controllers()
 # Execute database initialization
 initialize()
 
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000"],  # gePermitir solicitudes desde localhost:3000
@@ -308,22 +309,23 @@ async def login(name: str, surname: str):
 @app.get("/loginAdmin")
 async def loginAdmin(email: str, password: str):
     """
-    Login endpoint to verify resident credentials.
-
-    Args:
-        name (str): Resident's first name.
-        surname (str): Resident's surname.
-
-    Returns:
-        dict: Status of the login attempt and user details if successful.
+    Endpoint para realizar el login de un administrador y generar un token JWT.
     """
-    # Llamada al controlador para realizar el login, pasando name y surname
+    # Llamada al controlador para realizar el login, pasando email y password
     result = controllers.loginAdmin(email, password)
-    
-    if result["status"] == "error":
-        raise HTTPException(status_code=401, detail=result["message"])
-    
-    return result
+
+    if result['status'] == 'ok':
+        return {
+            "status": result["status"],
+            "token": result["token"],  # El token JWT
+            "user": result["user"]
+        }
+    else:
+        return {
+            "status": result["status"],
+            "message": result["message"]
+        }
+
 
 @app.get("/listRooms")
 async def list_rooms():

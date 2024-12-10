@@ -7,3 +7,5 @@ pydantic==1.10.2
 httpx==0.23.0
 mysqlclient
 uvicorn
+pyjwt==2.7.0
+
