@@ -118,3 +118,105 @@ def test_create_admin_database_error(setup_database, mocker):
 
     added_admin = session.query(Admin).filter_by(email="admin2@example.com").first()
     assert added_admin is None
+
+def test_delete_admin_success(setup_database):
+    """
+    Test: Successfully delete an existing admin.
+
+    Steps:
+        1. Add an admin to the database.
+        2. Delete the admin using its ID.
+        3. Verify the response indicates success.
+        4. Confirm the admin is no longer in the database.
+
+    Expected Outcome:
+        - The admin should be deleted successfully.
+        - The admin should no longer exist in the database.
+
+    Arguments:
+        setup_database (fixture): The database session used for test setup.
+    """
+    session = setup_database
+    controller = AdminController()
+
+    # Add an admin to delete
+    admin_to_delete = Admin(
+        idAdmin=1,
+        email="delete@example.com",
+        name="Admin to Delete",
+        password="password123"
+    )
+    session.add(admin_to_delete)
+    session.commit()
+
+    # Delete the admin
+    response = controller.deleteAdmin(admin_id=1, session=session)
+
+    assert response == {"status": "ok", "message": "Admin deleted successfully"}
+
+    deleted_admin = session.query(Admin).filter_by(idAdmin=1).first()
+    assert deleted_admin is None
+
+
+def test_delete_admin_not_found(setup_database):
+    """
+    Test: Attempt to delete a non-existent admin.
+
+    Steps:
+        1. Attempt to delete an admin with an ID that doesn't exist.
+        2. Verify the response indicates the admin was not found.
+
+    Expected Outcome:
+        - The operation should return an error indicating the admin was not found.
+
+    Arguments:
+        setup_database (fixture): The database session used for test setup.
+    """
+    session = setup_database
+    controller = AdminController()
+
+    # Attempt to delete a non-existent admin
+    response = controller.deleteAdmin(admin_id=999, session=session)
+
+    assert response == {"status": "error", "message": "Admin not found"}
+
+
+def test_delete_admin_database_error(setup_database, mocker):
+    """
+    Test: Handle a database error during admin deletion.
+
+    Steps:
+        1. Simulate a database error by mocking the session's commit method.
+        2. Attempt to delete an admin.
+        3. Verify the response indicates a database error.
+
+    Expected Outcome:
+        - The operation should return an error response with the exception message.
+        - No changes should be made to the database.
+
+    Arguments:
+        setup_database (fixture): The database session used for test setup.
+        mocker (pytest-mock): Mocking library for simulating errors.
+    """
+    session = setup_database
+    controller = AdminController()
+
+    # Add an admin to simulate error during deletion
+    admin_to_delete = Admin(
+        idAdmin=2,
+        email="error@example.com",
+        name="Error Admin",
+        password="password123"
+    )
+    session.add(admin_to_delete)
+    session.commit()
+
+    # Mock the commit method to raise an exception
+    mocker.patch.object(session, "commit", side_effect=Exception("Database error"))
+
+    response = controller.deleteAdmin(admin_id=2, session=session)
+
+    assert response == {"status": "error", "message": "Database error"}
+
+    remaining_admin = session.query(Admin).filter_by(idAdmin=2).first()
+    assert remaining_admin is not None
