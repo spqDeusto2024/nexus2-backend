@@ -504,3 +504,20 @@ def test_list_admins_with_pagination(setup_database):
     assert paginated_admins[0]["email"] == "admin0@example.com"
     assert paginated_admins[-1]["email"] == "admin4@example.com"
 
+def test_list_admins_database_error(setup_database, mocker):
+    """
+    Test: Simulate a database error during admin listing.
+
+    Expected Outcome:
+        - The operation should fail, returning an error message.
+    """
+    session = setup_database
+    controller = AdminController()
+
+    # Mock session.query to raise an exception
+    mocker.patch("sqlalchemy.orm.Session.query", side_effect=Exception("Database error"))
+
+    response = controller.listAdmins(session=session)
+
+    assert response["status"] == "error"
+    assert "Database error" in response["message"]
