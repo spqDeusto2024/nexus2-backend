@@ -20,12 +20,17 @@ import app.mysql.shelter as shelterMysql
 import app.mysql.resident as residentMysql
 import app.mysql.admin as adminMysql
 import app.mysql.machine as machineMysql
+from sqlalchemy.exc import SQLAlchemyError # type: ignore
+
+
 from app.mysql.mysql import DatabaseClient
 from app.mysql.resident import Resident
 from app.mysql.room import Room
 from app.mysql.shelter import Shelter
 from app.mysql.family import Family
 from app.mysql.admin import Admin
+
+
 
 
 from datetime import date
@@ -199,7 +204,7 @@ class AlarmController:
                 return {"status": "error", "message": "Alarma no encontrada"}
 
             # Actualizamos el campo enddate
-            alarm.enddate = new_enddate
+            alarm.end = new_enddate
 
             # Guardamos los cambios
             session.commit()
