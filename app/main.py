@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Body
 from app.controllers.handler import Controllers
 from app.mysql.mysql import DatabaseClient
 from app.mysql.base import Base
@@ -528,3 +528,21 @@ async def update_resident_gender(idResident: int, new_gender: str):
 @app.get("/resident/search")
 async def search_residents(name: str, surname: str):
     return controllers.getResidentRoomByNameAndSurname(name, surname)
+
+@app.post("/refreshToken")
+async def refresh_token_endpoint(refresh_token: str = Body(...)):
+    """
+    Endpoint to refresh an access token using a refresh token.
+
+    Args:
+        refresh_token (str): The refresh token to generate a new access token.
+
+    Returns:
+        dict: A dictionary with the new access token or an error message.
+    """
+    result = refreshAccessToken(refresh_token)
+
+    if result["status"] == "error":
+        raise HTTPException(status_code=401, detail=result["message"])
+
+    return result

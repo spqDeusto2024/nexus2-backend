@@ -106,7 +106,7 @@ class AdminController:
                 - {"status": "error", "message": <error_message>}: 
                 If an error occurs or the credentials are invalid.
         """
-        SECRET_KEY = "mi_clave_secreta" 
+        SECRET_KEY = "nexus2" 
         if session is None:
             session = Session(self.db_client.engine)
 
@@ -303,6 +303,28 @@ class AdminController:
             # Cerramos la sesión
             if session:
                 session.close()
+
+    
+    def refreshAccessToken(self, refresh_token: str):
+        SECRET_KEY = "nexus2"
+        REFRESH_SECRET_KEY = "nexus2"
+
+        try:
+            payload = jwt.decode(refresh_token, REFRESH_SECRET_KEY, algorithms=["HS256"])
+            new_access_token = jwt.encode(
+                {
+                    "idAdmin": payload["idAdmin"],
+                    "email": payload["email"],
+                    "exp": datetime.utcnow() + timedelta(hours=1),
+                },
+                SECRET_KEY,
+                algorithm="HS256",
+            )
+            return {"status": "ok", "accessToken": new_access_token}
+        except jwt.ExpiredSignatureError:
+            return {"status": "error", "message": "Refresh token has expired"}
+        except jwt.InvalidTokenError:
+            return {"status": "error", "message": "Invalid refresh token"}
 
 
 
