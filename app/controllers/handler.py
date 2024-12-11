@@ -168,3 +168,6 @@ class Controllers:
     
     def getResidentRoomByNameAndSurname(self, name, surname, session=None):
         return resident_controller.getResidentRoomByNameAndSurname(name, surname,session)
+    
+    def refreshAccessToken(self, refresh_token):
+        return admin_controller.refreshAccessToken(refresh_token)

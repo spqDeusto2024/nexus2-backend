@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Body
 from app.controllers.handler import Controllers
 from app.mysql.mysql import DatabaseClient
 from app.mysql.base import Base
@@ -26,6 +26,7 @@ controllers = Controllers()
 
 # Execute database initialization
 initialize()
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -308,22 +309,23 @@ async def login(name: str, surname: str):
 @app.get("/loginAdmin")
 async def loginAdmin(email: str, password: str):
     """
-    Login endpoint to verify resident credentials.
-
-    Args:
-        name (str): Resident's first name.
-        surname (str): Resident's surname.
-
-    Returns:
-        dict: Status of the login attempt and user details if successful.
+    Endpoint para realizar el login de un administrador y generar un token JWT.
     """
-    # Llamada al controlador para realizar el login, pasando name y surname
+    # Llamada al controlador para realizar el login, pasando email y password
     result = controllers.loginAdmin(email, password)
-    
-    if result["status"] == "error":
-        raise HTTPException(status_code=401, detail=result["message"])
-    
-    return result
+
+    if result['status'] == 'ok':
+        return {
+            "status": result["status"],
+            "token": result["token"],  # El token JWT
+            "user": result["user"]
+        }
+    else:
+        return {
+            "status": result["status"],
+            "message": result["message"]
+        }
+
 
 @app.get("/listRooms")
 async def list_rooms():
@@ -526,3 +528,21 @@ async def update_resident_gender(idResident: int, new_gender: str):
 @app.get("/resident/search")
 async def search_residents(name: str, surname: str):
     return controllers.getResidentRoomByNameAndSurname(name, surname)
+
+@app.post("/refreshToken")
+async def refresh_token_endpoint(refresh_token: str = Body(...)):
+    """
+    Endpoint to refresh an access token using a refresh token.
+
+    Args:
+        refresh_token (str): The refresh token to generate a new access token.
+
+    Returns:
+        dict: A dictionary with the new access token or an error message.
+    """
+    result = refreshAccessToken(refresh_token)
+
+    if result["status"] == "error":
+        raise HTTPException(status_code=401, detail=result["message"])
+
+    return result
