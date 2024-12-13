@@ -616,4 +616,101 @@ def test_update_resident_surname_not_found(setup_database):
     assert response == {"status": "error", "message": "Residente no encontrado"}
 
 
+def test_login_success(setup_database):
+    """
+    Test: Successfully log in with valid credentials.
 
+    Expected Outcome:
+        - Returns the resident's details.
+    """
+    session = setup_database
+    controller = ResidentController()
+
+    # Add a test resident
+    resident = Resident(
+        idResident=1,
+        name="John",
+        surname="Doe",
+        birthDate=date(1990, 1, 1),
+        gender="M",
+        createDate=date(2024, 12, 1)
+    )
+    session.add(resident)
+    session.commit()
+
+    # Call the method
+    response = controller.login(name="John", surname="Doe", session=session)
+
+    # Assert the response
+    assert response["status"] == "ok"
+    assert response["user"] == {
+        "idResident": 1,
+        "name": "John",
+        "surname": "Doe"
+    }
+
+
+def test_login_invalid_credentials(setup_database):
+    """
+    Test: Attempt to log in with invalid credentials.
+
+    Expected Outcome:
+        - Returns an error indicating invalid credentials.
+    """
+    session = setup_database
+    controller = ResidentController()
+
+    # Add a test resident
+    resident = Resident(
+        idResident=1,
+        name="John",
+        surname="Doe",
+        birthDate=date(1990, 1, 1),
+        gender="M",
+        createDate=date(2024, 12, 1)
+    )
+    session.add(resident)
+    session.commit()
+
+    # Call the method with incorrect credentials
+    response = controller.login(name="Jane", surname="Smith", session=session)
+
+    # Assert the response
+    assert response == {"status": "error", "message": "Invalid credentials"}
+
+
+def test_login_no_residents(setup_database):
+    """
+    Test: Attempt to log in when there are no residents in the database.
+
+    Expected Outcome:
+        - Returns an error indicating invalid credentials.
+    """
+    session = setup_database
+    controller = ResidentController()
+
+    # Call the method
+    response = controller.login(name="John", surname="Doe", session=session)
+
+    # Assert the response
+    assert response == {"status": "error", "message": "Invalid credentials"}
+
+def test_login_unexpected_error(setup_database, mocker):
+    """
+    Test: Simulate an unexpected error during login.
+
+    Expected Outcome:
+        - Returns an error message indicating an unexpected error.
+    """
+    session = setup_database
+    controller = ResidentController()
+
+    # Mock session.query to raise an exception
+    mocker.patch("sqlalchemy.orm.Session.query", side_effect=Exception("Unexpected error"))
+
+    # Call the method
+    response = controller.login(name="John", surname="Doe", session=session)
+
+    # Assert the response
+    assert response["status"] == "error"
+    assert "Unexpected error" in response["message"]
