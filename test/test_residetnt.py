@@ -562,3 +562,55 @@ def test_update_resident_name_not_found(setup_database):
     # Assert the response
     assert response == {"status": "error", "message": "Residente no encontrado"}
 
+def test_update_resident_surname_success(setup_database):
+    """
+    Test: Successfully update the surname of a resident.
+
+    Expected Outcome:
+        - The resident's surname is updated successfully in the database.
+    """
+    session = setup_database
+    controller = ResidentController()
+
+    # Add a test resident
+    resident = Resident(
+        idResident=1,
+        name="John",
+        surname="Doe",
+        birthDate=date(1990, 1, 1),
+        gender="M",
+        createDate=date(2024, 12, 1)
+    )
+    session.add(resident)
+    session.commit()
+
+    # New surname
+    new_surname = "Smith"
+
+    # Call the method
+    response = controller.updateResidentSurname(idResident=1, new_surname=new_surname, session=session)
+
+    # Assert the response
+    assert response == {"status": "ok", "message": "Apellido actualizado exitosamente"}
+
+    # Verify the surname is updated in the database
+    updated_resident = session.query(Resident).filter_by(idResident=1).first()
+    assert updated_resident is not None
+    assert updated_resident.surname == new_surname
+
+def test_update_resident_surname_not_found(setup_database):
+    """
+    Test: Attempt to update the surname of a non-existent resident.
+
+    Expected Outcome:
+        - Returns an error indicating the resident was not found.
+    """
+    session = setup_database
+    controller = ResidentController()
+
+    # Call the method for a non-existent resident
+    response = controller.updateResidentSurname(idResident=999, new_surname="Smith", session=session)
+
+    # Assert the response
+    assert response == {"status": "error", "message": "Residente no encontrado"}
+
