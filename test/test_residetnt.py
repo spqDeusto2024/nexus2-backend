@@ -8,6 +8,26 @@ from app.mysql.shelter import Shelter
 from datetime import date
 
 def test_create_resident_success(setup_database):
+    """
+    Test the successful creation of a resident in the database.
+
+    This test verifies that a resident can be successfully created in the database
+    given the correct setup and input data. It ensures that all necessary entities 
+    (shelter, room, family) are added and linked correctly, and that the `create_resident` 
+    method of the `ResidentController` functions as expected.
+
+    Parameters:
+    ----------
+    setup_database : Session
+        A pytest fixture that sets up an in-memory SQLite database session 
+        for testing purposes.
+
+    Returns:
+    -------
+    None
+        The test asserts various conditions to ensure correctness and does not 
+        return any value.
+    """
     session = setup_database
     controller = ResidentController()
 
@@ -42,6 +62,25 @@ def test_create_resident_success(setup_database):
 
 
 def test_create_resident_family_not_exist(setup_database):
+    """
+    Test the behavior when trying to create a resident with a nonexistent family.
+
+    This test verifies that the `create_resident` method of the `ResidentController` 
+    returns an error response if the specified family ID does not exist in the database. 
+    It also ensures that no new resident is added to the database in this scenario.
+
+    Parameters:
+    ----------
+    setup_database : Session
+        A pytest fixture that sets up an in-memory SQLite database session 
+        for testing purposes.
+
+    Returns:
+    -------
+    None
+        The test asserts various conditions to ensure correctness and does not 
+        return any value.
+    """
     session = setup_database
     controller = ResidentController()
 
@@ -67,6 +106,26 @@ def test_create_resident_family_not_exist(setup_database):
 
 
 def test_create_resident_family_no_room(setup_database):
+    """
+    Test the behavior when trying to create a resident whose family does not have an assigned room.
+
+    This test verifies that the `create_resident` method of the `ResidentController` 
+    returns an error response if the family associated with the resident does not 
+    have an assigned room. It also ensures that no new resident is added to the database 
+    in this scenario.
+
+    Parameters:
+    ----------
+    setup_database : Session
+        A pytest fixture that sets up an in-memory SQLite database session 
+        for testing purposes.
+
+    Returns:
+    -------
+    None
+        The test asserts various conditions to ensure correctness and does not 
+        return any value.
+    """
     session = setup_database
     controller = ResidentController()
 
@@ -98,6 +157,26 @@ def test_create_resident_family_no_room(setup_database):
 
 
 def test_create_resident_duplicate(setup_database):
+    """
+    Test the behavior when attempting to create a duplicate resident in the same room.
+
+    This test verifies that the `create_resident` method of the `ResidentController` 
+    returns an error response when trying to create a resident with the same name, 
+    surname, and birth date as an existing resident in the same room. It also ensures 
+    that no duplicate resident is added to the database.
+
+    Parameters:
+    ----------
+    setup_database : Session
+        A pytest fixture that sets up an in-memory SQLite database session 
+        for testing purposes.
+
+    Returns:
+    -------
+    None
+        The test asserts various conditions to ensure correctness and does not 
+        return any value.
+    """
     session = setup_database
     controller = ResidentController()
 
@@ -131,6 +210,25 @@ def test_create_resident_duplicate(setup_database):
 
 
 def test_create_resident_shelter_full(setup_database):
+    """
+    Test the behavior when attempting to create a resident in a shelter that has reached its maximum capacity.
+
+    This test verifies that the `create_resident` method of the `ResidentController` 
+    returns an error response when the shelter's `maxPeople` limit has been reached. 
+    It ensures no additional residents are added to the database when the shelter is full.
+
+    Parameters:
+    ----------
+    setup_database : Session
+        A pytest fixture that sets up an in-memory SQLite database session 
+        for testing purposes.
+
+    Returns:
+    -------
+    None
+        The test asserts various conditions to ensure correctness and does not 
+        return any value.
+    """
     session = setup_database
     controller = ResidentController()
 
@@ -165,16 +263,29 @@ def test_create_resident_shelter_full(setup_database):
 
 def test_list_residents_in_room(setup_database):
     """
-    Test: Verify that the method returns all residents in a specific room.
+    Test the `list_residents_in_room` method to ensure it retrieves all residents in a specified room.
+
+    This test verifies that the `list_residents_in_room` method of the `ResidentController` 
+    correctly returns a list of residents assigned to a given room, and that residents in other rooms 
+    are not included in the response.
 
     Steps:
-        1. Add residents to multiple rooms in the database.
-        2. Call the `list_residents_in_room` method for a specific room.
-        3. Verify the response includes the correct residents for the given room.
+    ------
+    1. Add multiple rooms and residents to the database.
+    2. Call the `list_residents_in_room` method with the ID of a specific room.
+    3. Verify that the returned data includes only the residents assigned to that room.
 
-    Expected Outcome:
-        - The returned list contains only the residents assigned to the specified room.
+    Parameters:
+    ----------
+    setup_database : Session
+        A pytest fixture providing an in-memory SQLite database session for testing.
+
+    Returns:
+    -------
+    None
+        The test asserts various conditions to ensure correctness and does not return any value.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -199,16 +310,29 @@ def test_list_residents_in_room(setup_database):
 
 def test_list_residents_in_room_no_residents(setup_database):
     """
-    Test: Verify that the method returns an empty list when no residents are in the specified room.
+    Test the `list_residents_in_room` method to ensure it returns an empty list when no residents 
+    are assigned to the specified room.
+
+    This test checks that the method correctly handles the case where a room exists, but no residents 
+    are associated with it.
 
     Steps:
-        1. Add rooms without residents to the database.
-        2. Call the `list_residents_in_room` method for a specific room.
-        3. Verify the response is an empty list.
+    ------
+    1. Add a room to the database without any associated residents.
+    2. Call the `list_residents_in_room` method with the ID of the room.
+    3. Verify that the response contains an empty list of residents.
 
-    Expected Outcome:
-        - The returned list is empty.
+    Parameters:
+    ----------
+    setup_database : Session
+        A pytest fixture providing an in-memory SQLite database session for testing.
+
+    Returns:
+    -------
+    None
+        The test asserts the expected behavior and does not return any value.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -227,16 +351,28 @@ def test_list_residents_in_room_no_residents(setup_database):
 
 def test_list_residents(setup_database):
     """
-    Test: Verify that the method returns all residents in the database.
+    Test the `list_residents` method to ensure it returns all residents in the database.
+
+    This test checks that the method retrieves the correct list of all residents 
+    stored in the database.
 
     Steps:
-        1. Add multiple residents to the database.
-        2. Call the `list_residents` method.
-        3. Verify the response includes all residents.
+    ------
+    1. Add multiple residents to the database.
+    2. Call the `list_residents` method to retrieve the list of residents.
+    3. Verify that the response contains all added residents with the correct details.
 
-    Expected Outcome:
-        - The returned list contains all residents in the database.
+    Parameters:
+    ----------
+    setup_database : Session
+        A pytest fixture providing an in-memory SQLite database session for testing.
+
+    Returns:
+    -------
+    None
+        The test asserts the expected behavior and does not return any value.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -258,16 +394,27 @@ def test_list_residents(setup_database):
 
 def test_list_residents_no_residents(setup_database):
     """
-    Test: Verify that the method returns an empty list when there are no residents in the database.
+    Test the `list_residents` method to ensure it returns an empty list when no residents are present in the database.
+
+    This test verifies the behavior of the method when the database contains no resident records.
 
     Steps:
-        1. Ensure no residents are added to the database.
-        2. Call the `list_residents` method.
-        3. Verify the response is an empty list.
+    ------
+    1. Ensure the database is empty with no residents added.
+    2. Call the `list_residents` method to retrieve the list of residents.
+    3. Verify that the response contains an empty list.
 
-    Expected Outcome:
-        - The returned list is empty.
+    Parameters:
+    ----------
+    setup_database : Session
+        A pytest fixture providing an in-memory SQLite database session for testing.
+
+    Returns:
+    -------
+    None
+        The test asserts the expected behavior and does not return any value.
     """
+
     session = setup_database
     controller = ResidentController()
 

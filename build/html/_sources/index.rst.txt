@@ -14,8 +14,9 @@ Bunker Management System - NEXUS 2 documentation
    app.models
    app.mysql
    test
+   
 
-Indices and tables
+Indices 
 ==================
 
 * :ref:`modindex`

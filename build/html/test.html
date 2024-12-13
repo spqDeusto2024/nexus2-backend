@@ -1,0 +1,897 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>test package &mdash; Bunker Management System - NEXUS 2 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="mysql package" href="app.mysql.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Bunker Management System - NEXUS 2
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="app.controllers.html">controllers package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app.models.html">models package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app.mysql.html">mysql package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">test package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-test.conftest">conftest module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#test.conftest.setup_database"><code class="docutils literal notranslate"><span class="pre">setup_database()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-test.test_admin">test_admin module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#test.test_admin.test_create_admin_database_error"><code class="docutils literal notranslate"><span class="pre">test_create_admin_database_error()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#test.test_admin.test_create_admin_duplicate_email"><code class="docutils literal notranslate"><span class="pre">test_create_admin_duplicate_email()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#test.test_admin.test_create_admin_success"><code class="docutils literal notranslate"><span class="pre">test_create_admin_success()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-test.test_alarm">test_alarm module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#test.test_alarm.test_create_alarm_room_not_exist"><code class="docutils literal notranslate"><span class="pre">test_create_alarm_room_not_exist()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-test.test_family">test_family module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#test.test_family.test_create_family_duplicate"><code class="docutils literal notranslate"><span class="pre">test_create_family_duplicate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#test.test_family.test_create_family_room_not_exist"><code class="docutils literal notranslate"><span class="pre">test_create_family_room_not_exist()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#test.test_family.test_create_family_shelter_not_exist"><code class="docutils literal notranslate"><span class="pre">test_create_family_shelter_not_exist()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#test.test_family.test_create_family_success"><code class="docutils literal notranslate"><span class="pre">test_create_family_success()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-test.test_machine">test_machine module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#test.test_machine.test_create_machine_admin_not_exist"><code class="docutils literal notranslate"><span class="pre">test_create_machine_admin_not_exist()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#test.test_machine.test_create_machine_duplicate"><code class="docutils literal notranslate"><span class="pre">test_create_machine_duplicate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#test.test_machine.test_create_machine_room_not_exist"><code class="docutils literal notranslate"><span class="pre">test_create_machine_room_not_exist()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#test.test_machine.test_create_machine_success"><code class="docutils literal notranslate"><span class="pre">test_create_machine_success()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-test.test_residetnt">test_residetnt module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#test.test_residetnt.test_create_resident_duplicate"><code class="docutils literal notranslate"><span class="pre">test_create_resident_duplicate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#test.test_residetnt.test_create_resident_family_no_room"><code class="docutils literal notranslate"><span class="pre">test_create_resident_family_no_room()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#test.test_residetnt.test_create_resident_family_not_exist"><code class="docutils literal notranslate"><span class="pre">test_create_resident_family_not_exist()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#test.test_residetnt.test_create_resident_shelter_full"><code class="docutils literal notranslate"><span class="pre">test_create_resident_shelter_full()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#test.test_residetnt.test_create_resident_success"><code class="docutils literal notranslate"><span class="pre">test_create_resident_success()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#test.test_residetnt.test_list_residents"><code class="docutils literal notranslate"><span class="pre">test_list_residents()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#test.test_residetnt.test_list_residents_in_room"><code class="docutils literal notranslate"><span class="pre">test_list_residents_in_room()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#test.test_residetnt.test_list_residents_in_room_no_residents"><code class="docutils literal notranslate"><span class="pre">test_list_residents_in_room_no_residents()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#test.test_residetnt.test_list_residents_no_residents"><code class="docutils literal notranslate"><span class="pre">test_list_residents_no_residents()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-test.test_room">test_room module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#test.test_room.test_create_room_admin_not_exist"><code class="docutils literal notranslate"><span class="pre">test_create_room_admin_not_exist()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#test.test_room.test_create_room_duplicate"><code class="docutils literal notranslate"><span class="pre">test_create_room_duplicate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#test.test_room.test_create_room_shelter_not_exist"><code class="docutils literal notranslate"><span class="pre">test_create_room_shelter_not_exist()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#test.test_room.test_create_room_success"><code class="docutils literal notranslate"><span class="pre">test_create_room_success()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#test.test_room.test_list_rooms_with_resident_count"><code class="docutils literal notranslate"><span class="pre">test_list_rooms_with_resident_count()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-test.test_shelter">test_shelter module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#test.test_shelter.test_get_shelter_energy_level_success"><code class="docutils literal notranslate"><span class="pre">test_get_shelter_energy_level_success()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#test.test_shelter.test_get_shelter_no_shelter_found"><code class="docutils literal notranslate"><span class="pre">test_get_shelter_no_shelter_found()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#test.test_shelter.test_get_shelter_radiation_level_success"><code class="docutils literal notranslate"><span class="pre">test_get_shelter_radiation_level_success()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#test.test_shelter.test_get_shelter_water_level_success"><code class="docutils literal notranslate"><span class="pre">test_get_shelter_water_level_success()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Bunker Management System - NEXUS 2</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">test package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/test.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="test-package">
+<h1>test package<a class="headerlink" href="#test-package" title="Link to this heading"></a></h1>
+<section id="module-test.conftest">
+<span id="conftest-module"></span><h2>conftest module<a class="headerlink" href="#module-test.conftest" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="test.conftest.setup_database">
+<span class="sig-prename descclassname"><span class="pre">test.conftest.</span></span><span class="sig-name descname"><span class="pre">setup_database</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.conftest.setup_database" title="Link to this definition"></a></dt>
+<dd><p>Fixture to create an SQLite in-memory database for testing.</p>
+</dd></dl>
+
+</section>
+<section id="module-test.test_admin">
+<span id="test-admin-module"></span><h2>test_admin module<a class="headerlink" href="#module-test.test_admin" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="test.test_admin.test_create_admin_database_error">
+<span class="sig-prename descclassname"><span class="pre">test.test_admin.</span></span><span class="sig-name descname"><span class="pre">test_create_admin_database_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">setup_database</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mocker</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_admin.test_create_admin_database_error" title="Link to this definition"></a></dt>
+<dd><p>Test: Handle a database error during admin creation.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Simulate a database error by mocking the session’s commit method.</p></li>
+<li><p>Attempt to create a new admin.</p></li>
+<li><p>Verify the response indicates a database error.</p></li>
+</ol>
+</dd>
+<dt>Expected Outcome:</dt><dd><ul class="simple">
+<li><p>The operation should return an error response with the exception message.</p></li>
+<li><p>No admin should be added to the database.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>setup_database</strong> (<em>fixture</em>) – The database session used for test setup.</p></li>
+<li><p><strong>mocker</strong> (<em>pytest-mock</em>) – Mocking library for simulating errors.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="test.test_admin.test_create_admin_duplicate_email">
+<span class="sig-prename descclassname"><span class="pre">test.test_admin.</span></span><span class="sig-name descname"><span class="pre">test_create_admin_duplicate_email</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">setup_database</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_admin.test_create_admin_duplicate_email" title="Link to this definition"></a></dt>
+<dd><p>Test: Prevent creating an admin with a duplicate email.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Add an admin with a specific email to the database.</p></li>
+<li><p>Attempt to create another admin with the same email.</p></li>
+<li><p>Verify the response indicates an error.</p></li>
+</ol>
+</dd>
+<dt>Expected Outcome:</dt><dd><ul class="simple">
+<li><p>The second attempt should fail with a duplicate email error.</p></li>
+<li><p>The database should only contain one admin with the given email.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>setup_database</strong> (<em>fixture</em>) – The database session used for test setup.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="test.test_admin.test_create_admin_success">
+<span class="sig-prename descclassname"><span class="pre">test.test_admin.</span></span><span class="sig-name descname"><span class="pre">test_create_admin_success</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">setup_database</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_admin.test_create_admin_success" title="Link to this definition"></a></dt>
+<dd><p>Test: Successfully create a new admin.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Create a new admin with valid details.</p></li>
+<li><p>Verify the response is successful.</p></li>
+<li><p>Confirm the admin is added to the database with the correct details.</p></li>
+</ol>
+</dd>
+<dt>Expected Outcome:</dt><dd><ul class="simple">
+<li><p>The admin should be successfully created.</p></li>
+<li><p>The admin should exist in the database with the provided details.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>setup_database</strong> (<em>fixture</em>) – The database session used for test setup.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-test.test_alarm">
+<span id="test-alarm-module"></span><h2>test_alarm module<a class="headerlink" href="#module-test.test_alarm" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="test.test_alarm.test_create_alarm_room_not_exist">
+<span class="sig-prename descclassname"><span class="pre">test.test_alarm.</span></span><span class="sig-name descname"><span class="pre">test_create_alarm_room_not_exist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">setup_database</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_alarm.test_create_alarm_room_not_exist" title="Link to this definition"></a></dt>
+<dd><p>Test: Prevent creating an alarm when the room does not exist.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Call the <cite>create_alarm</cite> method with a nonexistent room ID.</p></li>
+<li><p>Verify the response indicates that the room does not exist.</p></li>
+</ol>
+</dd>
+<dt>Expected Outcome:</dt><dd><ul class="simple">
+<li><p>The operation should fail with an error message about the room.</p></li>
+<li><p>No alarm should be added to the database.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>setup_database</strong> (<em>fixture</em>) – The database session used for test setup.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-test.test_family">
+<span id="test-family-module"></span><h2>test_family module<a class="headerlink" href="#module-test.test_family" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="test.test_family.test_create_family_duplicate">
+<span class="sig-prename descclassname"><span class="pre">test.test_family.</span></span><span class="sig-name descname"><span class="pre">test_create_family_duplicate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">setup_database</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_family.test_create_family_duplicate" title="Link to this definition"></a></dt>
+<dd><p>Test: Prevent creating a duplicate family in the same room.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Add a room, shelter, admin, and an existing family to the database.</p></li>
+<li><p>Call the <cite>create_family</cite> method with the same family name and room ID.</p></li>
+<li><p>Verify the response indicates that the family already exists.</p></li>
+</ol>
+</dd>
+<dt>Expected Outcome:</dt><dd><ul class="simple">
+<li><p>The operation should fail with an error message about the duplicate family.</p></li>
+<li><p>No duplicate family should be added to the database.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>setup_database</strong> (<em>fixture</em>) – The database session used for test setup.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="test.test_family.test_create_family_room_not_exist">
+<span class="sig-prename descclassname"><span class="pre">test.test_family.</span></span><span class="sig-name descname"><span class="pre">test_create_family_room_not_exist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">setup_database</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_family.test_create_family_room_not_exist" title="Link to this definition"></a></dt>
+<dd><p>Test: Prevent creating a family when the room does not exist.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Call the <cite>create_family</cite> method with a nonexistent room ID.</p></li>
+<li><p>Verify the response indicates that the room does not exist.</p></li>
+</ol>
+</dd>
+<dt>Expected Outcome:</dt><dd><ul class="simple">
+<li><p>The operation should fail with an error message about the room.</p></li>
+<li><p>No family should be added to the database.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>setup_database</strong> (<em>fixture</em>) – The database session used for test setup.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="test.test_family.test_create_family_shelter_not_exist">
+<span class="sig-prename descclassname"><span class="pre">test.test_family.</span></span><span class="sig-name descname"><span class="pre">test_create_family_shelter_not_exist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">setup_database</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_family.test_create_family_shelter_not_exist" title="Link to this definition"></a></dt>
+<dd><p>Test: Prevent creating a family when the shelter does not exist.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Add a room and admin to the database.</p></li>
+<li><p>Call the <cite>create_family</cite> method with a nonexistent shelter ID.</p></li>
+<li><p>Verify the response indicates that the shelter does not exist.</p></li>
+</ol>
+</dd>
+<dt>Expected Outcome:</dt><dd><ul class="simple">
+<li><p>The operation should fail with an error message about the shelter.</p></li>
+<li><p>No family should be added to the database.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>setup_database</strong> (<em>fixture</em>) – The database session used for test setup.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="test.test_family.test_create_family_success">
+<span class="sig-prename descclassname"><span class="pre">test.test_family.</span></span><span class="sig-name descname"><span class="pre">test_create_family_success</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">setup_database</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_family.test_create_family_success" title="Link to this definition"></a></dt>
+<dd><p>Test: Successfully create a new family.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Add a room, shelter, and admin to the database.</p></li>
+<li><p>Call the <cite>create_family</cite> method with valid data.</p></li>
+<li><p>Verify the response is successful.</p></li>
+<li><p>Confirm the family is added to the database with the correct details.</p></li>
+</ol>
+</dd>
+<dt>Expected Outcome:</dt><dd><ul class="simple">
+<li><p>The family should be successfully created.</p></li>
+<li><p>The family should exist in the database with the provided details.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>setup_database</strong> (<em>fixture</em>) – The database session used for test setup.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-test.test_machine">
+<span id="test-machine-module"></span><h2>test_machine module<a class="headerlink" href="#module-test.test_machine" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="test.test_machine.test_create_machine_admin_not_exist">
+<span class="sig-prename descclassname"><span class="pre">test.test_machine.</span></span><span class="sig-name descname"><span class="pre">test_create_machine_admin_not_exist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">setup_database</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_machine.test_create_machine_admin_not_exist" title="Link to this definition"></a></dt>
+<dd><p>Test: Prevent creating a machine when the admin does not exist.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Add a room to the database.</p></li>
+<li><p>Call the <cite>create_machine</cite> method with a nonexistent admin ID.</p></li>
+<li><p>Verify the response indicates that the admin does not exist.</p></li>
+</ol>
+</dd>
+<dt>Expected Outcome:</dt><dd><ul class="simple">
+<li><p>The operation should fail with an error message about the admin.</p></li>
+<li><p>No machine should be added to the database.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>setup_database</strong> (<em>fixture</em>) – The database session used for test setup.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="test.test_machine.test_create_machine_duplicate">
+<span class="sig-prename descclassname"><span class="pre">test.test_machine.</span></span><span class="sig-name descname"><span class="pre">test_create_machine_duplicate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">setup_database</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_machine.test_create_machine_duplicate" title="Link to this definition"></a></dt>
+<dd><p>Test: Prevent creating a duplicate machine in the same room.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Add a room, admin, and an existing machine to the database.</p></li>
+<li><p>Call the <cite>create_machine</cite> method with the same machine name and room ID.</p></li>
+<li><p>Verify the response indicates that the machine already exists.</p></li>
+</ol>
+</dd>
+<dt>Expected Outcome:</dt><dd><ul class="simple">
+<li><p>The operation should fail with an error message about the duplicate machine.</p></li>
+<li><p>No duplicate machine should be added to the database.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>setup_database</strong> (<em>fixture</em>) – The database session used for test setup.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="test.test_machine.test_create_machine_room_not_exist">
+<span class="sig-prename descclassname"><span class="pre">test.test_machine.</span></span><span class="sig-name descname"><span class="pre">test_create_machine_room_not_exist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">setup_database</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_machine.test_create_machine_room_not_exist" title="Link to this definition"></a></dt>
+<dd><p>Test: Prevent creating a machine when the room does not exist.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Call the <cite>create_machine</cite> method with a nonexistent room ID.</p></li>
+<li><p>Verify the response indicates that the room does not exist.</p></li>
+</ol>
+</dd>
+<dt>Expected Outcome:</dt><dd><ul class="simple">
+<li><p>The operation should fail with an error message about the room.</p></li>
+<li><p>No machine should be added to the database.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>setup_database</strong> (<em>fixture</em>) – The database session used for test setup.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="test.test_machine.test_create_machine_success">
+<span class="sig-prename descclassname"><span class="pre">test.test_machine.</span></span><span class="sig-name descname"><span class="pre">test_create_machine_success</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">setup_database</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_machine.test_create_machine_success" title="Link to this definition"></a></dt>
+<dd><p>Test: Successfully create a new machine.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Add a room and admin to the database.</p></li>
+<li><p>Call the <cite>create_machine</cite> method with valid data.</p></li>
+<li><p>Verify the response is successful.</p></li>
+<li><p>Confirm the machine is added to the database with the correct details.</p></li>
+</ol>
+</dd>
+<dt>Expected Outcome:</dt><dd><ul class="simple">
+<li><p>The machine should be successfully created.</p></li>
+<li><p>The machine should exist in the database with the provided details.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>setup_database</strong> (<em>fixture</em>) – The database session used for test setup.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-test.test_residetnt">
+<span id="test-residetnt-module"></span><h2>test_residetnt module<a class="headerlink" href="#module-test.test_residetnt" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="test.test_residetnt.test_create_resident_duplicate">
+<span class="sig-prename descclassname"><span class="pre">test.test_residetnt.</span></span><span class="sig-name descname"><span class="pre">test_create_resident_duplicate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">setup_database</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_residetnt.test_create_resident_duplicate" title="Link to this definition"></a></dt>
+<dd><p>Test the behavior when attempting to create a duplicate resident in the same room.</p>
+<p>This test verifies that the <cite>create_resident</cite> method of the <cite>ResidentController</cite>
+returns an error response when trying to create a resident with the same name,
+surname, and birth date as an existing resident in the same room. It also ensures
+that no duplicate resident is added to the database.</p>
+<section id="parameters">
+<h3>Parameters:<a class="headerlink" href="#parameters" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>setup_database<span class="classifier">Session</span></dt><dd><p>A pytest fixture that sets up an in-memory SQLite database session
+for testing purposes.</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h3>Returns:<a class="headerlink" href="#returns" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>None</dt><dd><p>The test asserts various conditions to ensure correctness and does not
+return any value.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="test.test_residetnt.test_create_resident_family_no_room">
+<span class="sig-prename descclassname"><span class="pre">test.test_residetnt.</span></span><span class="sig-name descname"><span class="pre">test_create_resident_family_no_room</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">setup_database</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_residetnt.test_create_resident_family_no_room" title="Link to this definition"></a></dt>
+<dd><p>Test the behavior when trying to create a resident whose family does not have an assigned room.</p>
+<p>This test verifies that the <cite>create_resident</cite> method of the <cite>ResidentController</cite>
+returns an error response if the family associated with the resident does not
+have an assigned room. It also ensures that no new resident is added to the database
+in this scenario.</p>
+<section id="id1">
+<h3>Parameters:<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>setup_database<span class="classifier">Session</span></dt><dd><p>A pytest fixture that sets up an in-memory SQLite database session
+for testing purposes.</p>
+</dd>
+</dl>
+</section>
+<section id="id2">
+<h3>Returns:<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>None</dt><dd><p>The test asserts various conditions to ensure correctness and does not
+return any value.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="test.test_residetnt.test_create_resident_family_not_exist">
+<span class="sig-prename descclassname"><span class="pre">test.test_residetnt.</span></span><span class="sig-name descname"><span class="pre">test_create_resident_family_not_exist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">setup_database</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_residetnt.test_create_resident_family_not_exist" title="Link to this definition"></a></dt>
+<dd><p>Test the behavior when trying to create a resident with a nonexistent family.</p>
+<p>This test verifies that the <cite>create_resident</cite> method of the <cite>ResidentController</cite>
+returns an error response if the specified family ID does not exist in the database.
+It also ensures that no new resident is added to the database in this scenario.</p>
+<section id="id3">
+<h3>Parameters:<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>setup_database<span class="classifier">Session</span></dt><dd><p>A pytest fixture that sets up an in-memory SQLite database session
+for testing purposes.</p>
+</dd>
+</dl>
+</section>
+<section id="id4">
+<h3>Returns:<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>None</dt><dd><p>The test asserts various conditions to ensure correctness and does not
+return any value.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="test.test_residetnt.test_create_resident_shelter_full">
+<span class="sig-prename descclassname"><span class="pre">test.test_residetnt.</span></span><span class="sig-name descname"><span class="pre">test_create_resident_shelter_full</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">setup_database</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_residetnt.test_create_resident_shelter_full" title="Link to this definition"></a></dt>
+<dd><p>Test the behavior when attempting to create a resident in a shelter that has reached its maximum capacity.</p>
+<p>This test verifies that the <cite>create_resident</cite> method of the <cite>ResidentController</cite>
+returns an error response when the shelter’s <cite>maxPeople</cite> limit has been reached.
+It ensures no additional residents are added to the database when the shelter is full.</p>
+<section id="id5">
+<h3>Parameters:<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>setup_database<span class="classifier">Session</span></dt><dd><p>A pytest fixture that sets up an in-memory SQLite database session
+for testing purposes.</p>
+</dd>
+</dl>
+</section>
+<section id="id6">
+<h3>Returns:<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>None</dt><dd><p>The test asserts various conditions to ensure correctness and does not
+return any value.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="test.test_residetnt.test_create_resident_success">
+<span class="sig-prename descclassname"><span class="pre">test.test_residetnt.</span></span><span class="sig-name descname"><span class="pre">test_create_resident_success</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">setup_database</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_residetnt.test_create_resident_success" title="Link to this definition"></a></dt>
+<dd><p>Test the successful creation of a resident in the database.</p>
+<p>This test verifies that a resident can be successfully created in the database
+given the correct setup and input data. It ensures that all necessary entities
+(shelter, room, family) are added and linked correctly, and that the <cite>create_resident</cite>
+method of the <cite>ResidentController</cite> functions as expected.</p>
+<section id="id7">
+<h3>Parameters:<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>setup_database<span class="classifier">Session</span></dt><dd><p>A pytest fixture that sets up an in-memory SQLite database session
+for testing purposes.</p>
+</dd>
+</dl>
+</section>
+<section id="id8">
+<h3>Returns:<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>None</dt><dd><p>The test asserts various conditions to ensure correctness and does not
+return any value.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="test.test_residetnt.test_list_residents">
+<span class="sig-prename descclassname"><span class="pre">test.test_residetnt.</span></span><span class="sig-name descname"><span class="pre">test_list_residents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">setup_database</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_residetnt.test_list_residents" title="Link to this definition"></a></dt>
+<dd><p>Test the <cite>list_residents</cite> method to ensure it returns all residents in the database.</p>
+<p>This test checks that the method retrieves the correct list of all residents
+stored in the database.</p>
+<section id="steps">
+<h3>Steps:<a class="headerlink" href="#steps" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Add multiple residents to the database.</p></li>
+<li><p>Call the <cite>list_residents</cite> method to retrieve the list of residents.</p></li>
+<li><p>Verify that the response contains all added residents with the correct details.</p></li>
+</ol>
+</section>
+<section id="id9">
+<h3>Parameters:<a class="headerlink" href="#id9" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>setup_database<span class="classifier">Session</span></dt><dd><p>A pytest fixture providing an in-memory SQLite database session for testing.</p>
+</dd>
+</dl>
+</section>
+<section id="id10">
+<h3>Returns:<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>None</dt><dd><p>The test asserts the expected behavior and does not return any value.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="test.test_residetnt.test_list_residents_in_room">
+<span class="sig-prename descclassname"><span class="pre">test.test_residetnt.</span></span><span class="sig-name descname"><span class="pre">test_list_residents_in_room</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">setup_database</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_residetnt.test_list_residents_in_room" title="Link to this definition"></a></dt>
+<dd><p>Test the <cite>list_residents_in_room</cite> method to ensure it retrieves all residents in a specified room.</p>
+<p>This test verifies that the <cite>list_residents_in_room</cite> method of the <cite>ResidentController</cite>
+correctly returns a list of residents assigned to a given room, and that residents in other rooms
+are not included in the response.</p>
+<section id="id11">
+<h3>Steps:<a class="headerlink" href="#id11" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Add multiple rooms and residents to the database.</p></li>
+<li><p>Call the <cite>list_residents_in_room</cite> method with the ID of a specific room.</p></li>
+<li><p>Verify that the returned data includes only the residents assigned to that room.</p></li>
+</ol>
+</section>
+<section id="id12">
+<h3>Parameters:<a class="headerlink" href="#id12" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>setup_database<span class="classifier">Session</span></dt><dd><p>A pytest fixture providing an in-memory SQLite database session for testing.</p>
+</dd>
+</dl>
+</section>
+<section id="id13">
+<h3>Returns:<a class="headerlink" href="#id13" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>None</dt><dd><p>The test asserts various conditions to ensure correctness and does not return any value.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="test.test_residetnt.test_list_residents_in_room_no_residents">
+<span class="sig-prename descclassname"><span class="pre">test.test_residetnt.</span></span><span class="sig-name descname"><span class="pre">test_list_residents_in_room_no_residents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">setup_database</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_residetnt.test_list_residents_in_room_no_residents" title="Link to this definition"></a></dt>
+<dd><p>Test the <cite>list_residents_in_room</cite> method to ensure it returns an empty list when no residents
+are assigned to the specified room.</p>
+<p>This test checks that the method correctly handles the case where a room exists, but no residents
+are associated with it.</p>
+<section id="id14">
+<h3>Steps:<a class="headerlink" href="#id14" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Add a room to the database without any associated residents.</p></li>
+<li><p>Call the <cite>list_residents_in_room</cite> method with the ID of the room.</p></li>
+<li><p>Verify that the response contains an empty list of residents.</p></li>
+</ol>
+</section>
+<section id="id15">
+<h3>Parameters:<a class="headerlink" href="#id15" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>setup_database<span class="classifier">Session</span></dt><dd><p>A pytest fixture providing an in-memory SQLite database session for testing.</p>
+</dd>
+</dl>
+</section>
+<section id="id16">
+<h3>Returns:<a class="headerlink" href="#id16" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>None</dt><dd><p>The test asserts the expected behavior and does not return any value.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="test.test_residetnt.test_list_residents_no_residents">
+<span class="sig-prename descclassname"><span class="pre">test.test_residetnt.</span></span><span class="sig-name descname"><span class="pre">test_list_residents_no_residents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">setup_database</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_residetnt.test_list_residents_no_residents" title="Link to this definition"></a></dt>
+<dd><p>Test the <cite>list_residents</cite> method to ensure it returns an empty list when no residents are present in the database.</p>
+<p>This test verifies the behavior of the method when the database contains no resident records.</p>
+<section id="id17">
+<h3>Steps:<a class="headerlink" href="#id17" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Ensure the database is empty with no residents added.</p></li>
+<li><p>Call the <cite>list_residents</cite> method to retrieve the list of residents.</p></li>
+<li><p>Verify that the response contains an empty list.</p></li>
+</ol>
+</section>
+<section id="id18">
+<h3>Parameters:<a class="headerlink" href="#id18" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>setup_database<span class="classifier">Session</span></dt><dd><p>A pytest fixture providing an in-memory SQLite database session for testing.</p>
+</dd>
+</dl>
+</section>
+<section id="id19">
+<h3>Returns:<a class="headerlink" href="#id19" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>None</dt><dd><p>The test asserts the expected behavior and does not return any value.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+<section id="module-test.test_room">
+<span id="test-room-module"></span><h2>test_room module<a class="headerlink" href="#module-test.test_room" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="test.test_room.test_create_room_admin_not_exist">
+<span class="sig-prename descclassname"><span class="pre">test.test_room.</span></span><span class="sig-name descname"><span class="pre">test_create_room_admin_not_exist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">setup_database</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_room.test_create_room_admin_not_exist" title="Link to this definition"></a></dt>
+<dd><p>Test: Prevent creating a room when the admin does not exist.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Call the <cite>create_room</cite> method with a nonexistent admin ID.</p></li>
+<li><p>Verify the response indicates the admin does not exist.</p></li>
+</ol>
+</dd>
+<dt>Expected Outcome:</dt><dd><ul class="simple">
+<li><p>The operation should fail with an error message about the admin.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="test.test_room.test_create_room_duplicate">
+<span class="sig-prename descclassname"><span class="pre">test.test_room.</span></span><span class="sig-name descname"><span class="pre">test_create_room_duplicate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">setup_database</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_room.test_create_room_duplicate" title="Link to this definition"></a></dt>
+<dd><p>Test: Prevent creating a duplicate room in the same shelter.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Add a room to the database.</p></li>
+<li><p>Attempt to add another room with the same name in the same shelter.</p></li>
+<li><p>Verify the response indicates duplication.</p></li>
+</ol>
+</dd>
+<dt>Expected Outcome:</dt><dd><ul class="simple">
+<li><p>The operation should fail with an error message about the duplicate room.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="test.test_room.test_create_room_shelter_not_exist">
+<span class="sig-prename descclassname"><span class="pre">test.test_room.</span></span><span class="sig-name descname"><span class="pre">test_create_room_shelter_not_exist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">setup_database</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_room.test_create_room_shelter_not_exist" title="Link to this definition"></a></dt>
+<dd><p>Test: Prevent creating a room when the shelter does not exist.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Call the <cite>create_room</cite> method with a nonexistent shelter ID.</p></li>
+<li><p>Verify the response indicates the shelter does not exist.</p></li>
+</ol>
+</dd>
+<dt>Expected Outcome:</dt><dd><ul class="simple">
+<li><p>The operation should fail with an error message about the shelter.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="test.test_room.test_create_room_success">
+<span class="sig-prename descclassname"><span class="pre">test.test_room.</span></span><span class="sig-name descname"><span class="pre">test_create_room_success</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">setup_database</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_room.test_create_room_success" title="Link to this definition"></a></dt>
+<dd><p>Test: Successfully create a new room.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Add an admin and shelter to the database.</p></li>
+<li><p>Call the <cite>create_room</cite> method with valid data.</p></li>
+<li><p>Verify the response indicates success.</p></li>
+<li><p>Confirm the room exists in the database with correct details.</p></li>
+</ol>
+</dd>
+<dt>Expected Outcome:</dt><dd><ul class="simple">
+<li><p>The room should be successfully created and associated with the shelter.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="test.test_room.test_list_rooms_with_resident_count">
+<span class="sig-prename descclassname"><span class="pre">test.test_room.</span></span><span class="sig-name descname"><span class="pre">test_list_rooms_with_resident_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">setup_database</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_room.test_list_rooms_with_resident_count" title="Link to this definition"></a></dt>
+<dd><p>Test: List all rooms along with the count of residents in each room.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Add rooms and residents to the database.</p></li>
+<li><p>Call the <cite>list_rooms_with_resident_count</cite> method.</p></li>
+<li><p>Verify the returned data matches the database records.</p></li>
+</ol>
+</dd>
+<dt>Expected Outcome:</dt><dd><ul class="simple">
+<li><p>The room list should include the correct count of residents for each room.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-test.test_shelter">
+<span id="test-shelter-module"></span><h2>test_shelter module<a class="headerlink" href="#module-test.test_shelter" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="test.test_shelter.test_get_shelter_energy_level_success">
+<span class="sig-prename descclassname"><span class="pre">test.test_shelter.</span></span><span class="sig-name descname"><span class="pre">test_get_shelter_energy_level_success</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">setup_database</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_shelter.test_get_shelter_energy_level_success" title="Link to this definition"></a></dt>
+<dd><p>Test: Retrieve the energy level of a shelter.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Add a shelter with specific energy level to the database.</p></li>
+<li><p>Call the <cite>get_shelter_energy_level</cite> method.</p></li>
+<li><p>Verify the returned energy level matches the database record.</p></li>
+</ol>
+</dd>
+<dt>Expected Outcome:</dt><dd><ul class="simple">
+<li><p>The energy level should be correctly retrieved.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="test.test_shelter.test_get_shelter_no_shelter_found">
+<span class="sig-prename descclassname"><span class="pre">test.test_shelter.</span></span><span class="sig-name descname"><span class="pre">test_get_shelter_no_shelter_found</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">setup_database</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_shelter.test_get_shelter_no_shelter_found" title="Link to this definition"></a></dt>
+<dd><p>Test: Handle the case where no shelter is found in the database.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Ensure the shelter table is empty.</p></li>
+<li><p>Call any of the methods (<cite>get_shelter_energy_level</cite>, <cite>get_shelter_water_level</cite>, or <cite>get_shelter_radiation_level</cite>).</p></li>
+<li><p>Verify that the method raises a <cite>ValueError</cite>.</p></li>
+</ol>
+</dd>
+<dt>Expected Outcome:</dt><dd><ul class="simple">
+<li><p>A <cite>ValueError</cite> should be raised with the appropriate message.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="test.test_shelter.test_get_shelter_radiation_level_success">
+<span class="sig-prename descclassname"><span class="pre">test.test_shelter.</span></span><span class="sig-name descname"><span class="pre">test_get_shelter_radiation_level_success</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">setup_database</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_shelter.test_get_shelter_radiation_level_success" title="Link to this definition"></a></dt>
+<dd><p>Test: Retrieve the radiation level of a shelter.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Add a shelter with specific radiation level to the database.</p></li>
+<li><p>Call the <cite>get_shelter_radiation_level</cite> method.</p></li>
+<li><p>Verify the returned radiation level matches the database record.</p></li>
+</ol>
+</dd>
+<dt>Expected Outcome:</dt><dd><ul class="simple">
+<li><p>The radiation level should be correctly retrieved.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="test.test_shelter.test_get_shelter_water_level_success">
+<span class="sig-prename descclassname"><span class="pre">test.test_shelter.</span></span><span class="sig-name descname"><span class="pre">test_get_shelter_water_level_success</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">setup_database</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_shelter.test_get_shelter_water_level_success" title="Link to this definition"></a></dt>
+<dd><p>Test: Retrieve the water level of a shelter.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Add a shelter with specific water level to the database.</p></li>
+<li><p>Call the <cite>get_shelter_water_level</cite> method.</p></li>
+<li><p>Verify the returned water level matches the database record.</p></li>
+</ol>
+</dd>
+<dt>Expected Outcome:</dt><dd><ul class="simple">
+<li><p>The water level should be correctly retrieved.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="app.mysql.html" class="btn btn-neutral float-left" title="mysql package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, NEXUS 2.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
