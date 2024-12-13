@@ -174,3 +174,21 @@ def test_create_family_duplicate(setup_database):
 
     family_count = session.query(Family).count()
     assert family_count == 1
+
+
+def test_list_families_empty(setup_database):
+    """
+    Test: Attempt to list families when none exist.
+
+    Expected Outcome:
+        - Returns an empty list of families.
+    """
+    session = setup_database
+    controller = FamilyController()
+
+    # Call the method
+    response = controller.listFamilies(session=session)
+
+    # Assert the response
+    assert response["status"] == "ok"
+    assert response["families"] == []

@@ -5,6 +5,7 @@ from app.mysql.machine import Machine
 from app.mysql.room import Room
 from app.mysql.admin import Admin
 from datetime import datetime
+from datetime import date
 
 
 def test_create_machine_success(setup_database):
@@ -178,3 +179,59 @@ def test_create_machine_duplicate(setup_database):
 
     machine_count = session.query(Machine).count()
     assert machine_count == 1
+
+
+
+
+
+
+
+
+def test_delete_machine_not_found(setup_database):
+    """
+    Test: Attempt to delete a machine that does not exist.
+
+    Expected Outcome:
+        - Returns an error indicating the machine was not found.
+    """
+    session = setup_database
+    controller = MachineController()
+
+    # Call the method for a non-existent machine
+    response = controller.deleteMachine(machine_id=999, session=session)
+
+    # Assert the response
+    assert response == {"status": "error", "message": "Machine not found"}
+
+def test_delete_machine_success(setup_database):
+    """
+    Test: Successfully delete a machine from the database.
+
+    Expected Outcome:
+        - The machine is deleted successfully.
+    """
+    session = setup_database
+    controller = MachineController()
+
+    # Add a test machine
+    machine = Machine(
+        idMachine=1,
+        machineName="Machine A",
+        on=True,
+        idRoom=1,
+        createdBy=1,
+        createDate=date(2024, 12, 1)  # Convertimos a un objeto datetime.date
+    )
+    session.add(machine)
+    session.commit()
+
+    # Call the method
+    response = controller.deleteMachine(machine_id=1, session=session)
+
+    # Assert the response
+    assert response == {"status": "ok", "message": "Machine deleted successfully"}
+
+    # Verify the machine is deleted
+    deleted_machine = session.query(Machine).filter_by(idMachine=1).first()
+    assert deleted_machine is None
+
