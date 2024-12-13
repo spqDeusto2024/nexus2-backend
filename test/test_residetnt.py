@@ -277,3 +277,162 @@ def test_list_residents_no_residents(setup_database):
     # Verify the response
     assert response["status"] == "ok"
     assert len(response["residents"]) == 0
+
+def test_delete_resident_success(setup_database):
+    """
+    Test: Successfully delete an existing resident.
+
+    Expected Outcome:
+        - The resident is removed from the database.
+    """
+    session = setup_database
+    controller = ResidentController()
+
+    # Add a test resident
+    resident = Resident(
+        idResident=1,
+        name="John",
+        surname="Doe",
+        birthDate=date(1990, 1, 1),
+        gender="M",
+        createdBy=1,
+        createDate=date.today(),
+        idFamily=None,
+        idRoom=None
+    )
+    session.add(resident)
+    session.commit()
+
+    # Call the method
+    response = controller.delete_resident(idResident=1, session=session)
+
+    # Assert the response
+    assert response == {"status": "ok"}
+
+    # Verify the resident is deleted from the database
+    deleted_resident = session.query(Resident).filter_by(idResident=1).first()
+    assert deleted_resident is None
+
+
+def test_delete_resident_not_found(setup_database):
+    """
+    Test: Attempt to delete a non-existent resident.
+
+    Expected Outcome:
+        - Returns a "not found" status.
+    """
+    session = setup_database
+    controller = ResidentController()
+
+    # Call the method with a non-existent resident ID
+    response = controller.delete_resident(idResident=999, session=session)
+
+    # Assert the response
+    assert response == {"status": "not found"}
+
+def test_update_resident_success(setup_database):
+    """
+    Test: Successfully update an existing resident's details.
+
+    Expected Outcome:
+        - The resident's details are updated in the database.
+    """
+    session = setup_database
+    controller = ResidentController()
+
+    # Add a test resident
+    resident = Resident(
+        idResident=1,
+        name="John",
+        surname="Doe",
+        birthDate=date(1990, 1, 1),
+        idRoom=1,
+        createDate=date.today()
+    )
+    session.add(resident)
+    session.commit()
+
+    # Updates to apply
+    updates = {
+        "name": "Jane",
+        "surname": "Smith",
+        "idRoom": 2,
+        "update": date(2024, 12, 10)
+    }
+
+    # Call the method
+    response = controller.update_resident(idResident=1, updates=updates, session=session)
+
+    # Assert response
+    assert response == {"status": "ok"}
+
+    # Verify updates in the database
+    updated_resident = session.query(Resident).filter_by(idResident=1).first()
+    assert updated_resident is not None
+    assert updated_resident.name == "Jane"
+    assert updated_resident.surname == "Smith"
+    assert updated_resident.idRoom == 2
+    assert updated_resident.update == date(2024, 12, 10)
+
+
+def test_update_resident_not_found(setup_database):
+    """
+    Test: Attempt to update a non-existent resident.
+
+    Expected Outcome:
+        - Returns a "not found" status.
+    """
+    session = setup_database
+    controller = ResidentController()
+
+    # Updates to apply
+    updates = {"name": "Jane", "surname": "Smith"}
+
+    # Call the method
+    response = controller.update_resident(idResident=999, updates=updates, session=session)
+
+    # Assert response
+    assert response == {"status": "not found"}
+
+
+def test_update_resident_no_valid_fields(setup_database):
+    """
+    Test: Attempt to update a resident with invalid fields.
+
+    Expected Outcome:
+        - The update skips invalid fields, and the valid ones are applied.
+    """
+    session = setup_database
+    controller = ResidentController()
+
+    # Add a test resident
+    resident = Resident(
+        idResident=1,
+        name="John",
+        surname="Doe",
+        idRoom=1,
+        createDate=date.today()
+    )
+    session.add(resident)
+    session.commit()
+
+    # Updates with invalid fields
+    updates = {
+        "nonexistent_field": "value",
+        "name": "Jane"
+    }
+
+    # Call the method
+    response = controller.update_resident(idResident=1, updates=updates, session=session)
+
+    # Assert response
+    assert response == {"status": "ok"}
+
+    # Verify updates in the database
+    updated_resident = session.query(Resident).filter_by(idResident=1).first()
+    assert updated_resident is not None
+    assert updated_resident.name == "Jane"
+    assert updated_resident.surname == "Doe"  # Not changed
+    assert not hasattr(updated_resident, "nonexistent_field")
+
+    
