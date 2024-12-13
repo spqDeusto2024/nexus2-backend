@@ -435,4 +435,79 @@ def test_update_resident_no_valid_fields(setup_database):
     assert updated_resident.surname == "Doe"  # Not changed
     assert not hasattr(updated_resident, "nonexistent_field")
 
-    
+def test_get_resident_by_id_success(setup_database):
+    """
+    Test: Successfully retrieve a resident by their ID.
+
+    Expected Outcome:
+        - The resident's details are returned with a success status.
+    """
+    session = setup_database
+    controller = ResidentController()
+
+    # Add a test resident
+    resident = Resident(
+        idResident=1,
+        name="John",
+        surname="Doe",
+        birthDate=date(1990, 1, 1),
+        gender="M",
+        idFamily=101,
+        createDate=date(2024, 12, 1)
+    )
+    session.add(resident)
+    session.commit()
+
+    # Call the method
+    response = controller.getResidentById(idResident=1, session=session)
+
+    # Assert the response
+    assert response == {
+        "status": "ok",
+        "resident": {
+            "idResident": 1,
+            "name": "John",
+            "surname": "Doe",
+            "birthDate": date(1990, 1, 1),
+            "gender": "M",
+            "idFamily": 101,
+        },
+    }
+
+
+def test_get_resident_by_id_not_found(setup_database):
+    """
+    Test: Attempt to retrieve a resident with an ID that does not exist.
+
+    Expected Outcome:
+        - Returns an error indicating the resident was not found.
+    """
+    session = setup_database
+    controller = ResidentController()
+
+    # Call the method with a non-existent ID
+    response = controller.getResidentById(idResident=999, session=session)
+
+    # Assert the response
+    assert response == {"status": "error", "message": "Residente no encontrado"}
+
+
+def test_get_resident_by_id_database_error(setup_database, mocker):
+    """
+    Test: Simulate a database error when retrieving a resident.
+
+    Expected Outcome:
+        - Returns an error indicating a database issue.
+    """
+    session = setup_database
+    controller = ResidentController()
+
+    # Mock session.query to raise an exception
+    mocker.patch("sqlalchemy.orm.Session.query", side_effect=Exception("Database error"))
+
+    # Call the method
+    response = controller.getResidentById(idResident=1, session=session)
+
+    # Assert the response
+    assert response["status"] == "error"
+    assert "Database error" in response["message"]
