@@ -1,0 +1,1976 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CONTROLLERS package &mdash; Bunker Management System - NEXUS 2 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="app.models package" href="app.models.html" />
+    <link rel="prev" title="Bunker Management System - NEXUS 2 documentation" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Bunker Management System - NEXUS 2
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">CONTROLLERS package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#admin-controller-module">admin_controller module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-app.controllers.alarm_controller">alarm_controller module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#app.controllers.alarm_controller.AlarmController"><code class="docutils literal notranslate"><span class="pre">AlarmController</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.alarm_controller.AlarmController.create_alarm"><code class="docutils literal notranslate"><span class="pre">AlarmController.create_alarm()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.alarm_controller.AlarmController.create_alarmLevel"><code class="docutils literal notranslate"><span class="pre">AlarmController.create_alarmLevel()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.alarm_controller.AlarmController.list_alarms"><code class="docutils literal notranslate"><span class="pre">AlarmController.list_alarms()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.alarm_controller.AlarmController.updateAlarmEndDate"><code class="docutils literal notranslate"><span class="pre">AlarmController.updateAlarmEndDate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-app.controllers.family_controller">family_controller module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#app.controllers.family_controller.FamilyController"><code class="docutils literal notranslate"><span class="pre">FamilyController</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.family_controller.FamilyController.create_family"><code class="docutils literal notranslate"><span class="pre">FamilyController.create_family()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.family_controller.FamilyController.deleteFamily"><code class="docutils literal notranslate"><span class="pre">FamilyController.deleteFamily()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.family_controller.FamilyController.listFamilies"><code class="docutils literal notranslate"><span class="pre">FamilyController.listFamilies()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#handler-module">handler module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-app.controllers.machine_controller">machine_controller module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#app.controllers.machine_controller.MachineController"><code class="docutils literal notranslate"><span class="pre">MachineController</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.machine_controller.MachineController.create_machine"><code class="docutils literal notranslate"><span class="pre">MachineController.create_machine()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.machine_controller.MachineController.deleteMachine"><code class="docutils literal notranslate"><span class="pre">MachineController.deleteMachine()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.machine_controller.MachineController.list_machines"><code class="docutils literal notranslate"><span class="pre">MachineController.list_machines()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.machine_controller.MachineController.updateMachineDate"><code class="docutils literal notranslate"><span class="pre">MachineController.updateMachineDate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.machine_controller.MachineController.updateMachineStatus"><code class="docutils literal notranslate"><span class="pre">MachineController.updateMachineStatus()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.machine_controller.MachineController.updateMachineStatusOn"><code class="docutils literal notranslate"><span class="pre">MachineController.updateMachineStatusOn()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-app.controllers.resident_controller">resident_controller module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#app.controllers.resident_controller.ResidentController"><code class="docutils literal notranslate"><span class="pre">ResidentController</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.resident_controller.ResidentController.create_resident"><code class="docutils literal notranslate"><span class="pre">ResidentController.create_resident()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.resident_controller.ResidentController.delete_resident"><code class="docutils literal notranslate"><span class="pre">ResidentController.delete_resident()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.resident_controller.ResidentController.getResidentById"><code class="docutils literal notranslate"><span class="pre">ResidentController.getResidentById()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.resident_controller.ResidentController.getResidentRoomByNameAndSurname"><code class="docutils literal notranslate"><span class="pre">ResidentController.getResidentRoomByNameAndSurname()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.resident_controller.ResidentController.list_residents"><code class="docutils literal notranslate"><span class="pre">ResidentController.list_residents()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.resident_controller.ResidentController.list_residents_in_room"><code class="docutils literal notranslate"><span class="pre">ResidentController.list_residents_in_room()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.resident_controller.ResidentController.login"><code class="docutils literal notranslate"><span class="pre">ResidentController.login()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.resident_controller.ResidentController.updateResidentBirthDate"><code class="docutils literal notranslate"><span class="pre">ResidentController.updateResidentBirthDate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.resident_controller.ResidentController.updateResidentGender"><code class="docutils literal notranslate"><span class="pre">ResidentController.updateResidentGender()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.resident_controller.ResidentController.updateResidentName"><code class="docutils literal notranslate"><span class="pre">ResidentController.updateResidentName()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.resident_controller.ResidentController.updateResidentRoom"><code class="docutils literal notranslate"><span class="pre">ResidentController.updateResidentRoom()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.resident_controller.ResidentController.updateResidentSurname"><code class="docutils literal notranslate"><span class="pre">ResidentController.updateResidentSurname()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.resident_controller.ResidentController.update_resident"><code class="docutils literal notranslate"><span class="pre">ResidentController.update_resident()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-app.controllers.room_controller">room_controller module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#app.controllers.room_controller.RoomController"><code class="docutils literal notranslate"><span class="pre">RoomController</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.room_controller.RoomController.access_room"><code class="docutils literal notranslate"><span class="pre">RoomController.access_room()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.room_controller.RoomController.create_room"><code class="docutils literal notranslate"><span class="pre">RoomController.create_room()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.room_controller.RoomController.list_rooms"><code class="docutils literal notranslate"><span class="pre">RoomController.list_rooms()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.room_controller.RoomController.list_rooms_Room"><code class="docutils literal notranslate"><span class="pre">RoomController.list_rooms_Room()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.room_controller.RoomController.list_rooms_with_resident_count"><code class="docutils literal notranslate"><span class="pre">RoomController.list_rooms_with_resident_count()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.room_controller.RoomController.updateRoomName"><code class="docutils literal notranslate"><span class="pre">RoomController.updateRoomName()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-app.controllers.shelter_controller">shelter_controller module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#app.controllers.shelter_controller.ShelterController"><code class="docutils literal notranslate"><span class="pre">ShelterController</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.shelter_controller.ShelterController.get_shelter_energy_level"><code class="docutils literal notranslate"><span class="pre">ShelterController.get_shelter_energy_level()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.shelter_controller.ShelterController.get_shelter_radiation_level"><code class="docutils literal notranslate"><span class="pre">ShelterController.get_shelter_radiation_level()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.shelter_controller.ShelterController.get_shelter_water_level"><code class="docutils literal notranslate"><span class="pre">ShelterController.get_shelter_water_level()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.shelter_controller.ShelterController.updateShelterEnergyLevel"><code class="docutils literal notranslate"><span class="pre">ShelterController.updateShelterEnergyLevel()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.shelter_controller.ShelterController.updateShelterRadiationLevel"><code class="docutils literal notranslate"><span class="pre">ShelterController.updateShelterRadiationLevel()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.shelter_controller.ShelterController.updateShelterWaterLevel"><code class="docutils literal notranslate"><span class="pre">ShelterController.updateShelterWaterLevel()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="app.models.html">app.models package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app.mysql.html">app.mysql package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Bunker Management System - NEXUS 2</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">CONTROLLERS package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/app.controllers.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="controllers-package">
+<h1>CONTROLLERS package<a class="headerlink" href="#controllers-package" title="Link to this heading"></a></h1>
+<section id="admin-controller-module">
+<h2>admin_controller module<a class="headerlink" href="#admin-controller-module" title="Link to this heading"></a></h2>
+</section>
+<section id="module-app.controllers.alarm_controller">
+<span id="alarm-controller-module"></span><h2>alarm_controller module<a class="headerlink" href="#module-app.controllers.alarm_controller" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="app.controllers.alarm_controller.AlarmController">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.controllers.alarm_controller.</span></span><span class="sig-name descname"><span class="pre">AlarmController</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.alarm_controller.AlarmController" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.alarm_controller.AlarmController.create_alarm">
+<span class="sig-name descname"><span class="pre">create_alarm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="app.models.html#app.models.alarm.Alarm" title="app.models.alarm.Alarm"><span class="pre">Alarm</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.alarm_controller.AlarmController.create_alarm" title="Link to this definition"></a></dt>
+<dd><p>Creates a new alarm in the database.</p>
+<p>This method validates the existence of a room and ensures that no duplicate
+alarms exist in the same room before creating a new alarm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>body</strong> (<em>AlarmModel</em>) – An object containing the details of the alarm to be created, including:
+- idAlarm (int): The unique identifier of the alarm.
+- start (datetime): The start time of the alarm.
+- end (datetime): The end time of the alarm.
+- idRoom (int): The unique identifier of the room where the alarm is created.
+- createDate (datetime): The date when the alarm is created.</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”}:</p></li>
+</ul>
+<p>If the alarm is created successfully.
+- {“status”: “error”, “message”: &lt;error_message&gt;}:
+If an error occurs, such as the room not existing or a duplicate alarm.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>SQLAlchemyError</strong> – If a database-related error occurs.</p></li>
+<li><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.alarm_controller.AlarmController.create_alarmLevel">
+<span class="sig-name descname"><span class="pre">create_alarmLevel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="app.models.html#app.models.alarm.Alarm" title="app.models.alarm.Alarm"><span class="pre">Alarm</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.alarm_controller.AlarmController.create_alarmLevel" title="Link to this definition"></a></dt>
+<dd><p>Creates a new alarm with an automatically generated <cite>idAlarm</cite>.</p>
+<p>This method assigns the alarm to room 3 and validates its existence before creating the alarm.
+The <cite>idAlarm</cite> is generated automatically by the database if the column is set as auto-increment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>body</strong> (<em>AlarmModel</em>) – An object containing the details of the alarm to be created, including:
+- start (datetime): The start time of the alarm.
+- end (datetime, optional): The end time of the alarm (can be None initially).
+- createDate (datetime): The date when the alarm is created.</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”, “message”: “Alarm &lt;idAlarm&gt; created successfully in room 3.”, “idAlarm”: &lt;idAlarm&gt;}:</p></li>
+</ul>
+<p>If the alarm is created successfully. Includes the generated <cite>idAlarm</cite>.
+- {“status”: “error”, “message”: &lt;error_message&gt;}:
+If an error occurs, such as room 3 not existing or a database issue.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>SQLAlchemyError</strong> – If a database-related error occurs.</p></li>
+<li><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.alarm_controller.AlarmController.list_alarms">
+<span class="sig-name descname"><span class="pre">list_alarms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.alarm_controller.AlarmController.list_alarms" title="Link to this definition"></a></dt>
+<dd><p>Lists all alarms in the database.</p>
+<p>This method retrieves all alarms from the database and returns their details
+as a list of dictionaries.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”, “alarms”: [&lt;list_of_alarms&gt;]}:</p></li>
+</ul>
+<dl class="simple">
+<dt>If the alarms are successfully retrieved. Each alarm in the list contains:</dt><dd><ul class="simple">
+<li><p>idAlarm (int): The unique identifier of the alarm.</p></li>
+<li><p>start (str, optional): The start time of the alarm in ISO 8601 format.</p></li>
+<li><p>end (str, optional): The end time of the alarm in ISO 8601 format.</p></li>
+<li><p>idRoom (int): The unique identifier of the room associated with the alarm.</p></li>
+<li><p>createDate (str, optional): The creation date of the alarm in ISO 8601 format.</p></li>
+</ul>
+</dd>
+</dl>
+<ul class="simple">
+<li><p>{“status”: “ok”, “alarms”: []}:</p></li>
+</ul>
+<p>If no alarms are found in the database.
+- {“status”: “error”, “message”: &lt;error_message&gt;}:
+If an error occurs during the operation.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If an unexpected error occurs while querying the database.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.alarm_controller.AlarmController.updateAlarmEndDate">
+<span class="sig-name descname"><span class="pre">updateAlarmEndDate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idAlarm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_enddate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.alarm_controller.AlarmController.updateAlarmEndDate" title="Link to this definition"></a></dt>
+<dd><p>Updates the end date of an alarm.</p>
+<p>This method searches for an alarm by its ID and updates its <cite>enddate</cite> field
+to the specified new value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>idAlarm</strong> (<em>int</em>) – The unique identifier of the alarm to update.</p></li>
+<li><p><strong>new_enddate</strong> (<em>datetime</em>) – The new end date to assign to the alarm.</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”, “message”: “Alarm end date updated successfully”}:</p></li>
+</ul>
+<p>If the end date is updated successfully.
+- {“status”: “error”, “message”: &lt;error_message&gt;}:
+If an error occurs or the alarm is not found.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>SQLAlchemyError</strong> – If a database-related error occurs.</p></li>
+<li><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-app.controllers.family_controller">
+<span id="family-controller-module"></span><h2>family_controller module<a class="headerlink" href="#module-app.controllers.family_controller" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="app.controllers.family_controller.FamilyController">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.controllers.family_controller.</span></span><span class="sig-name descname"><span class="pre">FamilyController</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.family_controller.FamilyController" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.family_controller.FamilyController.create_family">
+<span class="sig-name descname"><span class="pre">create_family</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="app.models.html#app.models.family.Family" title="app.models.family.Family"><span class="pre">Family</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.family_controller.FamilyController.create_family" title="Link to this definition"></a></dt>
+<dd><p>Creates a new family in the database and validates preconditions.</p>
+<p>This method verifies that the room, shelter, and admin associated with the family exist,
+and ensures no duplicate family with the same name exists in the specified room before
+creating a new family.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>body</strong> (<em>FamilyModel</em>) – An object containing the details of the family to be created, including:
+- idFamily (int): The unique identifier of the family.
+- familyName (str): The name of the family.
+- idRoom (int): The unique identifier of the room where the family resides.
+- idShelter (int): The unique identifier of the shelter associated with the family.
+- createdBy (int): The ID of the admin who creates the family record.
+- createDate (datetime): The date when the family record is created.</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”}:</p></li>
+</ul>
+<p>If the family is created successfully.
+- {“status”: “error”, “message”: &lt;error_message&gt;}:
+If an error occurs, such as missing entities (room, shelter, admin)
+or duplicate family names in the same room.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>SQLAlchemyError</strong> – If a database-related error occurs.</p></li>
+<li><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.family_controller.FamilyController.deleteFamily">
+<span class="sig-name descname"><span class="pre">deleteFamily</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">family_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.family_controller.FamilyController.deleteFamily" title="Link to this definition"></a></dt>
+<dd><p>Deletes a family from the database using its ID, if no members are associated with it.</p>
+<p>This method first verifies that the family exists and that no residents are linked
+to the family. If there are associated members, the deletion is not allowed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>family_id</strong> (<em>int</em>) – The unique identifier of the family to delete.</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”, “message”: “Family deleted successfully”}:</p></li>
+</ul>
+<p>If the family is successfully deleted.
+- {“status”: “error”, “message”: &lt;error_message&gt;}:
+If an error occurs, such as the family not being found or members being associated with it.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.family_controller.FamilyController.listFamilies">
+<span class="sig-name descname"><span class="pre">listFamilies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.family_controller.FamilyController.listFamilies" title="Link to this definition"></a></dt>
+<dd><p>Lists all families registered in the database.</p>
+<p>This method retrieves all families from the database and formats their details
+into a list of dictionaries.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”, “families”: [&lt;list_of_families&gt;]}:</p></li>
+</ul>
+<dl class="simple">
+<dt>If the families are successfully retrieved. Each family in the list contains:</dt><dd><ul class="simple">
+<li><p>idFamily (int): The unique identifier of the family.</p></li>
+<li><p>familyName (str): The name of the family.</p></li>
+<li><p>idRoom (int): The unique identifier of the room associated with the family.</p></li>
+<li><p>idShelter (int): The unique identifier of the shelter associated with the family.</p></li>
+<li><p>createdBy (int): The ID of the admin who created the family.</p></li>
+<li><p>createDate (str, optional): The date the family was created, in ISO 8601 format.</p></li>
+</ul>
+</dd>
+</dl>
+<ul class="simple">
+<li><p>{“status”: “error”, “message”: &lt;error_message&gt;}:</p></li>
+</ul>
+<p>If an error occurs during the operation.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If an unexpected error occurs while querying the database.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="handler-module">
+<h2>handler module<a class="headerlink" href="#handler-module" title="Link to this heading"></a></h2>
+</section>
+<section id="module-app.controllers.machine_controller">
+<span id="machine-controller-module"></span><h2>machine_controller module<a class="headerlink" href="#module-app.controllers.machine_controller" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="app.controllers.machine_controller.MachineController">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.controllers.machine_controller.</span></span><span class="sig-name descname"><span class="pre">MachineController</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.machine_controller.MachineController" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.machine_controller.MachineController.create_machine">
+<span class="sig-name descname"><span class="pre">create_machine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="app.models.html#app.models.machine.Machine" title="app.models.machine.Machine"><span class="pre">Machine</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.machine_controller.MachineController.create_machine" title="Link to this definition"></a></dt>
+<dd><p>Creates a new machine entry in the database.</p>
+<p>This method ensures the following:
+- The machine is assigned to an existing room.
+- No other machine with the same name exists in the same room.
+- Prevents duplication of machines within the same room.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>body</strong> (<em>MachineModel</em>) – The data of the machine to be added, including:
+- idMachine (int): The unique identifier of the machine.
+- machineName (str): The name of the machine.
+- on (bool): The initial status of the machine (on/off).
+- idRoom (int): The ID of the room where the machine is located.
+- createdBy (int): The ID of the admin who created the machine.
+- createDate (datetime): The creation timestamp of the machine.
+- update (datetime): The last update timestamp of the machine.</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”}:</p></li>
+</ul>
+<p>If the machine is created successfully.
+- {“status”: “error”, “message”: &lt;error_message&gt;}:
+If an error occurs, such as the room or admin not existing,
+or a duplicate machine name in the same room.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>SQLAlchemyError</strong> – If a database-related error occurs.</p></li>
+<li><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.machine_controller.MachineController.deleteMachine">
+<span class="sig-name descname"><span class="pre">deleteMachine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">machine_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.machine_controller.MachineController.deleteMachine" title="Link to this definition"></a></dt>
+<dd><p>Deletes a machine from the database using its ID.</p>
+<p>This method searches for a machine by its unique ID and deletes it if found.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>machine_id</strong> (<em>int</em>) – The unique identifier of the machine to delete.</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”, “message”: “Machine deleted successfully”}:</p></li>
+</ul>
+<p>If the machine is successfully deleted.
+- {“status”: “error”, “message”: &lt;error_message&gt;}:
+If an error occurs, such as the machine not being found.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.machine_controller.MachineController.list_machines">
+<span class="sig-name descname"><span class="pre">list_machines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.machine_controller.MachineController.list_machines" title="Link to this definition"></a></dt>
+<dd><p>Lists all machines in the database.</p>
+<p>This method retrieves all machines from the database and formats their details
+into a list of dictionaries.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”, “machines”: [&lt;list_of_machines&gt;]}:</p></li>
+</ul>
+<dl class="simple">
+<dt>If the machines are successfully retrieved. Each machine in the list contains:</dt><dd><ul class="simple">
+<li><p>idMachine (int): The unique identifier of the machine.</p></li>
+<li><p>machineName (str): The name of the machine.</p></li>
+<li><p>on (bool): The current status of the machine (True for on, False for off).</p></li>
+<li><p>idRoom (int): The unique identifier of the room where the machine is located.</p></li>
+<li><p>createdBy (int): The ID of the admin who created the machine.</p></li>
+<li><p>createDate (str, optional): The creation date of the machine, in ISO 8601 format.</p></li>
+<li><p>update (str, optional): The last update timestamp of the machine, in ISO 8601 format.</p></li>
+</ul>
+</dd>
+</dl>
+<ul class="simple">
+<li><p>{“status”: “ok”, “machines”: []}:</p></li>
+</ul>
+<p>If no machines are found in the database.
+- {“status”: “error”, “message”: &lt;error_message&gt;}:
+If an error occurs during the operation.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If an unexpected error occurs while querying the database.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.machine_controller.MachineController.updateMachineDate">
+<span class="sig-name descname"><span class="pre">updateMachineDate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">machine_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.machine_controller.MachineController.updateMachineDate" title="Link to this definition"></a></dt>
+<dd><p>Updates the <cite>update</cite> field of a specific machine with the current date.</p>
+<p>This method searches for a machine by its name and updates its <cite>update</cite> field
+to the current date.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>machine_name</strong> (<em>str</em>) – The name of the machine to update.</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”, “message”: “Machine date updated successfully”}:</p></li>
+</ul>
+<p>If the machine’s date is updated successfully.
+- {“status”: “error”, “message”: &lt;error_message&gt;}:
+If an error occurs, such as the machine not being found.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>SQLAlchemyError</strong> – If a database-related error occurs.</p></li>
+<li><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.machine_controller.MachineController.updateMachineStatus">
+<span class="sig-name descname"><span class="pre">updateMachineStatus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">machine_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.machine_controller.MachineController.updateMachineStatus" title="Link to this definition"></a></dt>
+<dd><p>Updates the status of a specific machine to <cite>False</cite>.</p>
+<p>This method searches for a machine by its name and sets its <cite>on</cite> status to <cite>False</cite>
+to indicate that the machine is turned off.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>machine_name</strong> (<em>str</em>) – The name of the machine to update.</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”, “message”: “Machine status updated successfully”}:</p></li>
+</ul>
+<p>If the machine’s status is updated successfully.
+- {“status”: “error”, “message”: &lt;error_message&gt;}:
+If an error occurs, such as the machine not being found or a database issue.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>SQLAlchemyError</strong> – If a database-related error occurs.</p></li>
+<li><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.machine_controller.MachineController.updateMachineStatusOn">
+<span class="sig-name descname"><span class="pre">updateMachineStatusOn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">machine_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.machine_controller.MachineController.updateMachineStatusOn" title="Link to this definition"></a></dt>
+<dd><p>REVISARRRR!!!! Es igual que el de arriba, mirar a ver cual de los dos utilizamos</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-app.controllers.resident_controller">
+<span id="resident-controller-module"></span><h2>resident_controller module<a class="headerlink" href="#module-app.controllers.resident_controller" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="app.controllers.resident_controller.ResidentController">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.controllers.resident_controller.</span></span><span class="sig-name descname"><span class="pre">ResidentController</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.resident_controller.ResidentController" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.resident_controller.ResidentController.create_resident">
+<span class="sig-name descname"><span class="pre">create_resident</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="app.models.html#app.models.resident.Resident" title="app.models.resident.Resident"><span class="pre">Resident</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#app.controllers.resident_controller.ResidentController.create_resident" title="Link to this definition"></a></dt>
+<dd><p>Creates a new resident in the database.</p>
+<p>This method verifies that the associated family, room, and shelter exist
+and have sufficient capacity before creating a new resident. If the room is full,
+a new room is created automatically and assigned to the family.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>body</strong> (<em>ResidentModel</em>) – The resident data to be added, including:
+- name (str): The first name of the resident.
+- surname (str): The last name of the resident.
+- birthDate (date): The birthdate of the resident.
+- gender (str): The gender of the resident.
+- createdBy (int): The ID of the admin who created the resident record.
+- idFamily (int): The ID of the family the resident belongs to.</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”}:</p></li>
+</ul>
+<p>If the resident is successfully created.
+- {“status”: “error”, “message”: &lt;error_message&gt;}:
+If an error occurs, such as missing entities, room or shelter capacity issues,
+or duplicate residents.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>If the family does not have an assigned room or the room is full, a new room is created</p></li>
+</ul>
+<p>and assigned to the family.
+- The shelter and room capacities are validated to prevent exceeding their maximum limits.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.resident_controller.ResidentController.delete_resident">
+<span class="sig-name descname"><span class="pre">delete_resident</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idResident</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.resident_controller.ResidentController.delete_resident" title="Link to this definition"></a></dt>
+<dd><p>Deletes a resident entry from the database.</p>
+<p>This method searches for a resident by their unique ID and deletes the record if found.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>idResident</strong> (<em>int</em>) – The unique identifier of the resident to delete.</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”}:</p></li>
+</ul>
+<p>If the resident is successfully deleted.
+- {“status”: “not found”}:
+If no resident is found with the provided ID.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Process:</dt><dd><ol class="arabic simple">
+<li><p>Check if a database session is provided; if not, create a new session.</p></li>
+<li><p>Query the database for a resident matching the provided <cite>idResident</cite>.</p></li>
+<li><dl class="simple">
+<dt>If the resident exists:</dt><dd><ul class="simple">
+<li><p>Delete the resident record.</p></li>
+<li><p>Commit the transaction to save changes.</p></li>
+<li><p>Return a success status.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>If the resident does not exist, return a “not found” status.</p></li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.resident_controller.ResidentController.getResidentById">
+<span class="sig-name descname"><span class="pre">getResidentById</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idResident</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.resident_controller.ResidentController.getResidentById" title="Link to this definition"></a></dt>
+<dd><p>Retrieves a resident by their ID.</p>
+<p>This method searches for a resident using their unique ID and returns their details
+if found.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>idResident</strong> (<em>int</em>) – The unique identifier of the resident to retrieve.</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”, “resident”: &lt;resident_info&gt;}:</p></li>
+</ul>
+<dl class="simple">
+<dt>If the resident is found. <cite>resident_info</cite> contains:</dt><dd><ul class="simple">
+<li><p>idResident (int): The unique identifier of the resident.</p></li>
+<li><p>name (str): The first name of the resident.</p></li>
+<li><p>surname (str): The last name of the resident.</p></li>
+<li><p>birthDate (date): The birth date of the resident.</p></li>
+<li><p>gender (str): The gender of the resident.</p></li>
+<li><p>idFamily (int): The ID of the family the resident belongs to.</p></li>
+</ul>
+</dd>
+</dl>
+<ul class="simple">
+<li><p>{“status”: “error”, “message”: &lt;error_message&gt;}:</p></li>
+</ul>
+<p>If an error occurs or the resident is not found.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.resident_controller.ResidentController.getResidentRoomByNameAndSurname">
+<span class="sig-name descname"><span class="pre">getResidentRoomByNameAndSurname</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surname</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.resident_controller.ResidentController.getResidentRoomByNameAndSurname" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the room where a resident is located based on their name and surname.</p>
+<p>This method searches for a resident using their name and surname, then retrieves
+the details of the room they are assigned to, if available.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The first name of the resident to search for.</p></li>
+<li><p><strong>surname</strong> (<em>str</em>) – The last name of the resident to search for.</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”, “room”: &lt;room_info&gt;}:</p></li>
+</ul>
+<dl class="simple">
+<dt>If the resident and their room are successfully found. <cite>room_info</cite> contains:</dt><dd><ul class="simple">
+<li><p>roomName (str): The name of the room.</p></li>
+<li><p>maxPeople (int): The maximum capacity of the room.</p></li>
+<li><p>idShelter (int): The ID of the shelter the room belongs to.</p></li>
+<li><p>createDate (datetime): The creation date of the room.</p></li>
+<li><p>createdBy (int): The ID of the admin who created the room.</p></li>
+</ul>
+</dd>
+</dl>
+<ul class="simple">
+<li><p>{“status”: “error”, “message”: “Resident not found”}:</p></li>
+</ul>
+<p>If the resident is not found in the database.
+- {“status”: “error”, “message”: “Resident has no assigned room”}:
+If the resident does not have a room assigned.
+- {“status”: “error”, “message”: “Room not found”}:
+If the room assigned to the resident does not exist in the database.
+- {“status”: “error”, “message”: &lt;error_message&gt;}:
+If any other error occurs during the operation.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.resident_controller.ResidentController.list_residents">
+<span class="sig-name descname"><span class="pre">list_residents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.resident_controller.ResidentController.list_residents" title="Link to this definition"></a></dt>
+<dd><p>Lists all residents in the database.</p>
+<p>This method retrieves all residents from the database and returns their details
+in a structured format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”, “residents”: [&lt;list_of_residents&gt;]}:</p></li>
+</ul>
+<dl class="simple">
+<dt>If residents are successfully retrieved. Each resident in the list contains:</dt><dd><ul class="simple">
+<li><p>idResident (int): The unique identifier of the resident.</p></li>
+<li><p>name (str): The first name of the resident.</p></li>
+<li><p>surname (str): The last name of the resident.</p></li>
+<li><p>birthDate (str, optional): The birthdate of the resident in ISO 8601 format.</p></li>
+<li><p>gender (str): The gender of the resident.</p></li>
+<li><p>idFamily (int): The ID of the family the resident belongs to.</p></li>
+<li><p>idRoom (int): The ID of the room the resident is assigned to.</p></li>
+</ul>
+</dd>
+</dl>
+<ul class="simple">
+<li><p>{“status”: “ok”, “residents”: []}:</p></li>
+</ul>
+<p>If no residents are found in the database.
+- {“status”: “error”, “message”: &lt;error_message&gt;}:
+If an error occurs during the operation.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If an unexpected error occurs while querying the database.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.resident_controller.ResidentController.list_residents_in_room">
+<span class="sig-name descname"><span class="pre">list_residents_in_room</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idRoom</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.resident_controller.ResidentController.list_residents_in_room" title="Link to this definition"></a></dt>
+<dd><p>Lists all residents in a specific room.</p>
+<p>This method retrieves all residents assigned to a given room and returns their details
+in a structured format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>idRoom</strong> (<em>int</em>) – The unique identifier of the room to list residents for.</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”, “residents”: [&lt;list_of_residents&gt;]}:</p></li>
+</ul>
+<dl class="simple">
+<dt>If residents are successfully retrieved. Each resident in the list contains:</dt><dd><ul class="simple">
+<li><p>idResident (int): The unique identifier of the resident.</p></li>
+<li><p>name (str): The first name of the resident.</p></li>
+<li><p>surname (str): The last name of the resident.</p></li>
+<li><p>birthDate (str, optional): The birthdate of the resident in ISO 8601 format.</p></li>
+<li><p>gender (str): The gender of the resident.</p></li>
+<li><p>idFamily (int): The ID of the family the resident belongs to.</p></li>
+<li><p>idRoom (int): The ID of the room the resident is assigned to.</p></li>
+</ul>
+</dd>
+</dl>
+<ul class="simple">
+<li><p>{“status”: “ok”, “residents”: []}:</p></li>
+</ul>
+<p>If no residents are found in the specified room.
+- {“status”: “error”, “message”: &lt;error_message&gt;}:
+If an error occurs during the operation.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If an unexpected error occurs while querying the database.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.resident_controller.ResidentController.login">
+<span class="sig-name descname"><span class="pre">login</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surname</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.resident_controller.ResidentController.login" title="Link to this definition"></a></dt>
+<dd><p>Verifies the login credentials using the resident’s name and surname.</p>
+<p>This method checks if a resident with the provided name and surname exists
+in the database and returns their details if the login is successful.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The first name of the resident.</p></li>
+<li><p><strong>surname</strong> (<em>str</em>) – The last name of the resident.</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”, “user”: {“idResident”: &lt;id&gt;, “name”: &lt;name&gt;, “surname”: &lt;surname&gt;}}:</p></li>
+</ul>
+<p>If the login is successful. Contains the resident’s ID, name, and surname.
+- {“status”: “error”, “message”: “Invalid credentials”}:
+If the provided credentials do not match any resident in the database.
+- {“status”: “error”, “message”: &lt;error_message&gt;}:
+If an unexpected error occurs.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.resident_controller.ResidentController.updateResidentBirthDate">
+<span class="sig-name descname"><span class="pre">updateResidentBirthDate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idResident</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_birthDate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.resident_controller.ResidentController.updateResidentBirthDate" title="Link to this definition"></a></dt>
+<dd><p>Updates the birth date of a specific resident.</p>
+<p>This method searches for a resident by their unique ID and updates their <cite>birthDate</cite> field
+with the provided new birth date.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>idResident</strong> (<em>int</em>) – The unique identifier of the resident whose birth date will be updated.</p></li>
+<li><p><strong>new_birthDate</strong> (<em>str</em>) – The new birth date to assign to the resident in the format ‘YYYY-MM-DD’.</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”, “message”: “Birth date updated successfully”}:</p></li>
+</ul>
+<p>If the birth date is successfully updated.
+- {“status”: “error”, “message”: &lt;error_message&gt;}:
+If an error occurs, such as the resident not being found or a database issue.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>SQLAlchemyError</strong> – If a database-related error occurs.</p></li>
+<li><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>The method automatically converts the <cite>new_birthDate</cite> string into a <cite>date</cite> object if required.</p></li>
+<li><p>Ensure the <cite>new_birthDate</cite> is in the format ‘YYYY-MM-DD’ to avoid conversion errors.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.resident_controller.ResidentController.updateResidentGender">
+<span class="sig-name descname"><span class="pre">updateResidentGender</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idResident</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_gender</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.resident_controller.ResidentController.updateResidentGender" title="Link to this definition"></a></dt>
+<dd><p>Updates the gender of a specific resident.</p>
+<p>This method searches for a resident by their unique ID and updates their <cite>gender</cite> field
+with the provided new gender. It validates that the new gender is one of the allowed values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>idResident</strong> (<em>int</em>) – The unique identifier of the resident whose gender will be updated.</p></li>
+<li><p><strong>new_gender</strong> (<em>str</em>) – The new gender to assign to the resident. Accepted values are “M”, “F”, or “Otro”.</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”, “message”: “Gender updated successfully”}:</p></li>
+</ul>
+<p>If the gender is successfully updated.
+- {“status”: “error”, “message”: “Invalid gender. Allowed values are ‘M’, ‘F’, or ‘Otro’”}:
+If the provided gender is not valid.
+- {“status”: “error”, “message”: &lt;error_message&gt;}:
+If an error occurs, such as the resident not being found or a database issue.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>SQLAlchemyError</strong> – If a database-related error occurs.</p></li>
+<li><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>Valid gender values are “M”, “F”, or “Otro”. Any other value will result in an error.</p></li>
+<li><p>Ensure that the new gender conforms to these accepted values to avoid validation errors.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.resident_controller.ResidentController.updateResidentName">
+<span class="sig-name descname"><span class="pre">updateResidentName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idResident</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.resident_controller.ResidentController.updateResidentName" title="Link to this definition"></a></dt>
+<dd><p>Updates the name of a specific resident.</p>
+<p>This method searches for a resident by their unique ID and updates their <cite>name</cite> field
+with the provided new name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>idResident</strong> (<em>int</em>) – The unique identifier of the resident whose name will be updated.</p></li>
+<li><p><strong>new_name</strong> (<em>str</em>) – The new name to assign to the resident.</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”, “message”: “Name updated successfully”}:</p></li>
+</ul>
+<p>If the name is successfully updated.
+- {“status”: “error”, “message”: &lt;error_message&gt;}:
+If an error occurs, such as the resident not being found or a database issue.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>SQLAlchemyError</strong> – If a database-related error occurs.</p></li>
+<li><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.resident_controller.ResidentController.updateResidentRoom">
+<span class="sig-name descname"><span class="pre">updateResidentRoom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resident_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_room_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.resident_controller.ResidentController.updateResidentRoom" title="Link to this definition"></a></dt>
+<dd><p>Updates the room ID (<cite>idRoom</cite>) of a specific resident.</p>
+<p>This method searches for a resident by their ID and assigns them to a new room
+by updating their <cite>idRoom</cite> field.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>resident_id</strong> (<em>int</em>) – The unique identifier of the resident whose room will be updated.</p></li>
+<li><p><strong>new_room_id</strong> (<em>int</em>) – The ID of the new room to assign to the resident.</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”, “message”: “Room updated successfully.”}:</p></li>
+</ul>
+<p>If the room is updated successfully.
+- {“status”: “error”, “message”: &lt;error_message&gt;}:
+If an error occurs, such as the resident not being found or a database issue.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>SQLAlchemyError</strong> – If a database-related error occurs.</p></li>
+<li><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.resident_controller.ResidentController.updateResidentSurname">
+<span class="sig-name descname"><span class="pre">updateResidentSurname</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idResident</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_surname</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.resident_controller.ResidentController.updateResidentSurname" title="Link to this definition"></a></dt>
+<dd><p>Updates the surname of a specific resident.</p>
+<p>This method searches for a resident by their unique ID and updates their <cite>surname</cite> field
+with the provided new surname.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>idResident</strong> (<em>int</em>) – The unique identifier of the resident whose surname will be updated.</p></li>
+<li><p><strong>new_surname</strong> (<em>str</em>) – The new surname to assign to the resident.</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”, “message”: “Surname updated successfully”}:</p></li>
+</ul>
+<p>If the surname is successfully updated.
+- {“status”: “error”, “message”: &lt;error_message&gt;}:
+If an error occurs, such as the resident not being found or a database issue.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>SQLAlchemyError</strong> – If a database-related error occurs.</p></li>
+<li><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.resident_controller.ResidentController.update_resident">
+<span class="sig-name descname"><span class="pre">update_resident</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idResident</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">updates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.resident_controller.ResidentController.update_resident" title="Link to this definition"></a></dt>
+<dd><p>Updates an existing resident’s details in the database.</p>
+<p>This method searches for a resident by their unique ID and applies the specified updates
+to the resident’s record.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>idResident</strong> (<em>int</em>) – The unique identifier of the resident to update.</p></li>
+<li><p><strong>updates</strong> (<em>dict</em>) – <p>A dictionary containing the fields to update and their new values.
+.. rubric:: Example</p>
+<dl class="simple">
+<dt>{</dt><dd><p>“name”: “Jane”,
+“surname”: “Smith”,
+“idRoom”: 102,
+“update”: date(2024, 11, 14)</p>
+</dd>
+</dl>
+<p>}</p>
+</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”}:</p></li>
+</ul>
+<p>If the update is successful.
+- {“status”: “not found”}:
+If no resident with the given ID is found.
+- {“status”: “error”, “message”: &lt;error_message&gt;}:
+If an error occurs during the operation.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If an unexpected error occurs during the update.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Process:</dt><dd><ol class="arabic simple">
+<li><p>Check if a database session is provided; if not, create a new session.</p></li>
+<li><p>Query the database for a resident matching the provided <cite>idResident</cite>.</p></li>
+<li><dl class="simple">
+<dt>If the resident is found:</dt><dd><ul class="simple">
+<li><p>Update the specified fields with the provided values.</p></li>
+<li><p>Commit the changes to the database.</p></li>
+<li><p>Return a success status.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>If the resident is not found, return a “not found” status.</p></li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-app.controllers.room_controller">
+<span id="room-controller-module"></span><h2>room_controller module<a class="headerlink" href="#module-app.controllers.room_controller" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="app.controllers.room_controller.RoomController">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.controllers.room_controller.</span></span><span class="sig-name descname"><span class="pre">RoomController</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.room_controller.RoomController" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.room_controller.RoomController.access_room">
+<span class="sig-name descname"><span class="pre">access_room</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idResident</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idRoom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.room_controller.RoomController.access_room" title="Link to this definition"></a></dt>
+<dd><p>Determines if a resident can access a specific room based on the room’s capacity,
+type, and family assignment.</p>
+<p>This method checks the access rules for a resident attempting to enter a room:
+- Verifies if the resident and room exist.
+- Denies access to restricted rooms like “Maintenance.”
+- Ensures the room is not over capacity.
+- Allows access to public or common rooms.
+- Grants access if the room belongs to the resident’s family.
+- Denies access otherwise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>idResident</strong> (<em>int</em>) – The unique identifier of the resident attempting to access the room.</p></li>
+<li><p><strong>idRoom</strong> (<em>int</em>) – The unique identifier of the room the resident is trying to access.</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A message indicating the result of the access attempt:</dt><dd><ul class="simple">
+<li><p>”Resident not found.”: If the resident does not exist.</p></li>
+<li><p>”Room not found.”: If the room does not exist.</p></li>
+<li><p>”Access denied. No puedes entrar a la sala de mantenimiento.”: If the room is restricted (e.g., Maintenance).</p></li>
+<li><p>”Access denied. La sala está llena.”: If the room is at maximum capacity.</p></li>
+<li><p>”Access granted. Welcome to the room.”: If access is granted to public or family-assigned rooms.</p></li>
+<li><p>”Access denied. You are in the wrong room.”: If the resident is not assigned to the room.</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>Public or common rooms (not starting with “Room”) are accessible to all residents.</p></li>
+<li><p>Family-assigned rooms are only accessible to members of the assigned family.</p></li>
+<li><p>The room’s current occupancy is checked against its maximum capacity.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.room_controller.RoomController.create_room">
+<span class="sig-name descname"><span class="pre">create_room</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="app.models.html#app.models.room.Room" title="app.models.room.Room"><span class="pre">Room</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.room_controller.RoomController.create_room" title="Link to this definition"></a></dt>
+<dd><p>Creates a new room in the database.</p>
+<p>This method validates the existence of the admin and shelter before creating a room.
+It also ensures that no duplicate rooms exist in the specified shelter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>body</strong> (<em>RoomModel</em>) – The data of the room to be created, including:
+- idRoom (int, optional): The unique identifier for the room.
+- roomName (str): The name of the room.
+- createdBy (int): The ID of the admin who creates the room.
+- createDate (date): The date the room is created.
+- idShelter (int): The ID of the shelter where the room belongs.
+- maxPeople (int): The maximum capacity of the room.</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”}:</p></li>
+</ul>
+<p>If the room is successfully created.
+- {“status”: “error”, “message”: “The admin does not exist”}:
+If the provided admin ID does not exist in the database.
+- {“status”: “error”, “message”: “The shelter does not exist”}:
+If the provided shelter ID does not exist in the database.
+- {“status”: “error”, “message”: “The room already exists in this shelter”}:
+If a room with the same name already exists in the specified shelter.
+- {“status”: “error”, “message”: &lt;error_message&gt;}:
+If any other error occurs during the operation.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>Ensure the provided <cite>roomName</cite> is unique within the specified shelter.</p></li>
+<li><p>The <cite>createdBy</cite> field must correspond to an existing admin, and <cite>idShelter</cite> must correspond to an existing shelter.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.room_controller.RoomController.list_rooms">
+<span class="sig-name descname"><span class="pre">list_rooms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.room_controller.RoomController.list_rooms" title="Link to this definition"></a></dt>
+<dd><p>Lists all rooms with basic information.</p>
+<p>This method retrieves a list of all rooms in the database, including their
+basic details such as ID, name, capacity, associated shelter, and creation date.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A list of dictionaries, each representing a room with the following details:</dt><dd><ul class="simple">
+<li><p>idRoom (int): The unique identifier of the room.</p></li>
+<li><p>roomName (str): The name of the room.</p></li>
+<li><p>maxPeople (int): The maximum capacity of the room.</p></li>
+<li><p>idShelter (int): The ID of the shelter the room belongs to.</p></li>
+<li><p>createDate (str, optional): The creation date of the room in ISO 8601 format.</p></li>
+</ul>
+</dd>
+<dt>dict: If an error occurs, a dictionary with:</dt><dd><ul class="simple">
+<li><p>{“status”: “error”, “message”: &lt;error_message&gt;}</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p>
+</dd>
+</dl>
+<dl>
+<dt>Example Response:</dt><dd><dl>
+<dt>[</dt><dd><dl class="simple">
+<dt>{</dt><dd><p>“idRoom”: 1,
+“roomName”: “Room A”,
+“maxPeople”: 10,
+“idShelter”: 1,
+“createDate”: “2024-12-01”</p>
+</dd>
+</dl>
+<p>},
+{</p>
+<blockquote>
+<div><p>“idRoom”: 2,
+“roomName”: “Room B”,
+“maxPeople”: 8,
+“idShelter”: 2,
+“createDate”: “2024-12-02”</p>
+</div></blockquote>
+<p>}</p>
+</dd>
+</dl>
+<p>]</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>The creation date (<cite>createDate</cite>) will be formatted in ISO 8601. If not available, it will be <cite>None</cite>.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.room_controller.RoomController.list_rooms_Room">
+<span class="sig-name descname"><span class="pre">list_rooms_Room</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.room_controller.RoomController.list_rooms_Room" title="Link to this definition"></a></dt>
+<dd><p>Lists all rooms whose names start with “Room”.</p>
+<p>This method retrieves a list of rooms from the database where the <cite>roomName</cite> field
+begins with the string “Room”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A list of dictionaries, each representing a room with the following details:</dt><dd><ul class="simple">
+<li><p>idRoom (int): The unique identifier of the room.</p></li>
+<li><p>roomName (str): The name of the room.</p></li>
+<li><p>maxPeople (int): The maximum capacity of the room.</p></li>
+<li><p>idShelter (int): The ID of the shelter the room belongs to.</p></li>
+<li><p>createDate (str, optional): The creation date of the room in ISO 8601 format.</p></li>
+</ul>
+</dd>
+<dt>dict: If an error occurs, a dictionary with:</dt><dd><ul class="simple">
+<li><p>{“status”: “error”, “message”: &lt;error_message&gt;}</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p>
+</dd>
+</dl>
+<dl>
+<dt>Example Response:</dt><dd><dl>
+<dt>[</dt><dd><dl class="simple">
+<dt>{</dt><dd><p>“idRoom”: 1,
+“roomName”: “Room A”,
+“maxPeople”: 10,
+“idShelter”: 1,
+“createDate”: “2024-12-01”</p>
+</dd>
+</dl>
+<p>},
+{</p>
+<blockquote>
+<div><p>“idRoom”: 2,
+“roomName”: “Room B”,
+“maxPeople”: 8,
+“idShelter”: 1,
+“createDate”: “2024-12-02”</p>
+</div></blockquote>
+<p>}</p>
+</dd>
+</dl>
+<p>]</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>Only rooms whose <cite>roomName</cite> starts with “Room” will be included in the response.</p></li>
+<li><p>The creation date (<cite>createDate</cite>) will be formatted in ISO 8601. If not available, it will be <cite>None</cite>.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.room_controller.RoomController.list_rooms_with_resident_count">
+<span class="sig-name descname"><span class="pre">list_rooms_with_resident_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.room_controller.RoomController.list_rooms_with_resident_count" title="Link to this definition"></a></dt>
+<dd><p>Lists all rooms along with the count of residents in each room.</p>
+<p>This method retrieves a list of all rooms in the database, including their details
+and the number of residents currently assigned to each room.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A list of dictionaries, each representing a room and its resident count.</dt><dd><dl class="simple">
+<dt>Each dictionary contains:</dt><dd><ul class="simple">
+<li><p>idRoom (int): The unique identifier of the room.</p></li>
+<li><p>roomName (str): The name of the room.</p></li>
+<li><p>maxPeople (int): The maximum capacity of the room.</p></li>
+<li><p>resident_count (int): The number of residents currently in the room.</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+<dt>dict: If an error occurs, a dictionary with:</dt><dd><ul class="simple">
+<li><p>{“status”: “error”, “message”: &lt;error_message&gt;}</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p>
+</dd>
+</dl>
+<dl>
+<dt>Example Response:</dt><dd><dl>
+<dt>[</dt><dd><dl class="simple">
+<dt>{</dt><dd><p>“idRoom”: 1,
+“roomName”: “Room A”,
+“maxPeople”: 10,
+“resident_count”: 5</p>
+</dd>
+</dl>
+<p>},
+{</p>
+<blockquote>
+<div><p>“idRoom”: 2,
+“roomName”: “Room B”,
+“maxPeople”: 8,
+“resident_count”: 0</p>
+</div></blockquote>
+<p>}</p>
+</dd>
+</dl>
+<p>]</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>Rooms without residents will still appear in the list with a <cite>resident_count</cite> of 0.</p></li>
+<li><p>The method uses an <cite>outerjoin</cite> to include rooms without any assigned residents.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.room_controller.RoomController.updateRoomName">
+<span class="sig-name descname"><span class="pre">updateRoomName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idRoom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.room_controller.RoomController.updateRoomName" title="Link to this definition"></a></dt>
+<dd><p>Updates the name of a specific room.</p>
+<p>This method searches for a room by its unique ID and updates its <cite>roomName</cite> field
+with the provided new name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>idRoom</strong> (<em>int</em>) – The unique identifier of the room whose name will be updated.</p></li>
+<li><p><strong>new_name</strong> (<em>str</em>) – The new name to assign to the room.</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”, “message”: “Room name updated successfully”}:</p></li>
+</ul>
+<p>If the room name is successfully updated.
+- {“status”: “error”, “message”: “Room not found”}:
+If no room with the given ID is found in the database.
+- {“status”: “error”, “message”: &lt;error_message&gt;}:
+If an error occurs during the operation.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>SQLAlchemyError</strong> – If a database-related error occurs.</p></li>
+<li><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-app.controllers.shelter_controller">
+<span id="shelter-controller-module"></span><h2>shelter_controller module<a class="headerlink" href="#module-app.controllers.shelter_controller" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="app.controllers.shelter_controller.ShelterController">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.controllers.shelter_controller.</span></span><span class="sig-name descname"><span class="pre">ShelterController</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.shelter_controller.ShelterController" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.shelter_controller.ShelterController.get_shelter_energy_level">
+<span class="sig-name descname"><span class="pre">get_shelter_energy_level</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.shelter_controller.ShelterController.get_shelter_energy_level" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the energy level of the first shelter in the database.</p>
+<p>This method fetches the energy level of the first shelter record found in the database.
+If no shelter is found, an error is raised.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>A dictionary containing the energy level of the shelter:</dt><dd><ul class="simple">
+<li><p>{“energyLevel”: &lt;energy_level&gt;}:</p></li>
+</ul>
+<p>Where <cite>&lt;energy_level&gt;</cite> is the current energy level of the shelter.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – If no shelter record is found in the database.</p></li>
+<li><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Example Response:</dt><dd><p>{“energyLevel”: 85}</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>This method assumes there is only one shelter or that the first shelter</p></li>
+</ul>
+<p>record is the one of interest.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.shelter_controller.ShelterController.get_shelter_radiation_level">
+<span class="sig-name descname"><span class="pre">get_shelter_radiation_level</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.shelter_controller.ShelterController.get_shelter_radiation_level" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the radiation level of the first shelter in the database.</p>
+<p>This method fetches the radiation level of the first shelter record found in the database.
+If no shelter is found, an error is raised.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>A dictionary containing the radiation level of the shelter:</dt><dd><ul class="simple">
+<li><p>{“radiationLevel”: &lt;radiation_level&gt;}:</p></li>
+</ul>
+<p>Where <cite>&lt;radiation_level&gt;</cite> is the current radiation level of the shelter.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – If no shelter record is found in the database.</p></li>
+<li><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Example Response:</dt><dd><p>{“radiationLevel”: 15}</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>This method assumes there is only one shelter or that the first shelter</p></li>
+</ul>
+<p>record is the one of interest.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.shelter_controller.ShelterController.get_shelter_water_level">
+<span class="sig-name descname"><span class="pre">get_shelter_water_level</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.shelter_controller.ShelterController.get_shelter_water_level" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the water level of the first shelter in the database.</p>
+<p>This method fetches the water level of the first shelter record found in the database.
+If no shelter is found, an error is raised.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>A dictionary containing the water level of the shelter:</dt><dd><ul class="simple">
+<li><p>{“waterLevel”: &lt;water_level&gt;}:</p></li>
+</ul>
+<p>Where <cite>&lt;water_level&gt;</cite> is the current water level of the shelter.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – If no shelter record is found in the database.</p></li>
+<li><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Example Response:</dt><dd><p>{“waterLevel”: 70}</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>This method assumes there is only one shelter or that the first shelter</p></li>
+</ul>
+<p>record is the one of interest.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.shelter_controller.ShelterController.updateShelterEnergyLevel">
+<span class="sig-name descname"><span class="pre">updateShelterEnergyLevel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_energy_level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.shelter_controller.ShelterController.updateShelterEnergyLevel" title="Link to this definition"></a></dt>
+<dd><p>Updates the energy level of the only available shelter.</p>
+<p>This method retrieves the shelter record with a fixed ID (assumed to be 1) and updates
+its energy level to the provided value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new_energy_level</strong> (<em>int</em>) – The new energy level to assign to the shelter.</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”, “message”: “Energy level updated successfully”}:</p></li>
+</ul>
+<p>If the energy level is successfully updated.
+- {“status”: “error”, “message”: “Shelter not found”}:
+If no shelter with the given ID is found in the database.
+- {“status”: “error”, “message”: &lt;error_message&gt;}:
+If an error occurs during the operation.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>SQLAlchemyError</strong> – If a database-related error occurs.</p></li>
+<li><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>This method assumes there is only one shelter in the system with <cite>idShelter = 1</cite>.</p></li>
+<li><p>Ensure that the <cite>new_energy_level</cite> value is within the acceptable range defined by your application logic.</p></li>
+</ul>
+<dl class="simple">
+<dt>Example Response:</dt><dd><p>{“status”: “ok”, “message”: “Energy level updated successfully”}</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.shelter_controller.ShelterController.updateShelterRadiationLevel">
+<span class="sig-name descname"><span class="pre">updateShelterRadiationLevel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_radiation_level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.shelter_controller.ShelterController.updateShelterRadiationLevel" title="Link to this definition"></a></dt>
+<dd><p>Updates the radiation level of the only available shelter.</p>
+<p>This method retrieves the shelter record with a fixed ID (assumed to be 1) and updates
+its radiation level to the provided value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new_radiation_level</strong> (<em>int</em>) – The new radiation level to assign to the shelter.</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”, “message”: “Radiation level updated successfully”}:</p></li>
+</ul>
+<p>If the radiation level is successfully updated.
+- {“status”: “error”, “message”: “Shelter not found”}:
+If no shelter with the given ID is found in the database.
+- {“status”: “error”, “message”: &lt;error_message&gt;}:
+If an error occurs during the operation.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>SQLAlchemyError</strong> – If a database-related error occurs.</p></li>
+<li><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>This method assumes there is only one shelter in the system with <cite>idShelter = 1</cite>.</p></li>
+<li><p>Ensure that the <cite>new_radiation_level</cite> value is within the acceptable range defined by your application logic.</p></li>
+</ul>
+<dl class="simple">
+<dt>Example Response:</dt><dd><p>{“status”: “ok”, “message”: “Radiation level updated successfully”}</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.shelter_controller.ShelterController.updateShelterWaterLevel">
+<span class="sig-name descname"><span class="pre">updateShelterWaterLevel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_water_level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.shelter_controller.ShelterController.updateShelterWaterLevel" title="Link to this definition"></a></dt>
+<dd><p>Updates the water level of the only available shelter.</p>
+<p>This method retrieves the shelter record with a fixed ID (assumed to be 1) and updates
+its water level to the provided value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new_water_level</strong> (<em>int</em>) – The new water level to assign to the shelter.</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”, “message”: “Water level updated successfully”}:</p></li>
+</ul>
+<p>If the water level is successfully updated.
+- {“status”: “error”, “message”: “Shelter not found”}:
+If no shelter with the given ID is found in the database.
+- {“status”: “error”, “message”: &lt;error_message&gt;}:
+If an error occurs during the operation.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>SQLAlchemyError</strong> – If a database-related error occurs.</p></li>
+<li><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>This method assumes there is only one shelter in the system with <cite>idShelter = 1</cite>.</p></li>
+<li><p>Ensure that the <cite>new_water_level</cite> value is within the acceptable range defined by your application logic.</p></li>
+</ul>
+<dl class="simple">
+<dt>Example Response:</dt><dd><p>{“status”: “ok”, “message”: “Water level updated successfully”}</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Bunker Management System - NEXUS 2 documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="app.models.html" class="btn btn-neutral float-right" title="app.models package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, NEXUS 2.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
