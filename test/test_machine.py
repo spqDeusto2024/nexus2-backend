@@ -235,3 +235,41 @@ def test_delete_machine_success(setup_database):
     deleted_machine = session.query(Machine).filter_by(idMachine=1).first()
     assert deleted_machine is None
 
+
+
+def test_list_machines_empty(setup_database):
+    """
+    Test: No machines are present in the database.
+
+    Expected Outcome:
+        - Returns an empty list.
+    """
+    session = setup_database
+    controller = MachineController()
+
+    # Call the method with no machines in the database
+    response = controller.list_machines(session=session)
+
+    # Assert the response
+    assert response["status"] == "ok"
+    assert response["machines"] == []
+
+def test_list_machines_error(setup_database, mocker):
+    """
+    Test: Simulate an unexpected error during machine retrieval.
+
+    Expected Outcome:
+        - Returns an error message indicating the issue.
+    """
+    session = setup_database
+    controller = MachineController()
+
+    # Mock session.query to raise an exception
+    mocker.patch("sqlalchemy.orm.Session.query", side_effect=Exception("Unexpected error"))
+
+    # Call the method
+    response = controller.list_machines(session=session)
+
+    # Assert the response
+    assert response["status"] == "error"
+    assert "Unexpected error" in response["message"]
