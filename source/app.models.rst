@@ -1,10 +1,8 @@
-app.models package
+models package
 ==================
 
-Submodules
-----------
 
-app.models.admin module
+admin module
 -----------------------
 
 .. automodule:: app.models.admin
@@ -12,7 +10,7 @@ app.models.admin module
    :undoc-members:
    :show-inheritance:
 
-app.models.alarm module
+alarm module
 -----------------------
 
 .. automodule:: app.models.alarm
@@ -20,7 +18,7 @@ app.models.alarm module
    :undoc-members:
    :show-inheritance:
 
-app.models.family module
+family module
 ------------------------
 
 .. automodule:: app.models.family
@@ -28,7 +26,7 @@ app.models.family module
    :undoc-members:
    :show-inheritance:
 
-app.models.machine module
+machine module
 -------------------------
 
 .. automodule:: app.models.machine
@@ -36,7 +34,7 @@ app.models.machine module
    :undoc-members:
    :show-inheritance:
 
-app.models.resident module
+resident module
 --------------------------
 
 .. automodule:: app.models.resident
@@ -44,7 +42,7 @@ app.models.resident module
    :undoc-members:
    :show-inheritance:
 
-app.models.room module
+room module
 ----------------------
 
 .. automodule:: app.models.room
@@ -52,7 +50,7 @@ app.models.room module
    :undoc-members:
    :show-inheritance:
 
-app.models.shelter module
+shelter module
 -------------------------
 
 .. automodule:: app.models.shelter
@@ -60,10 +58,3 @@ app.models.shelter module
    :undoc-members:
    :show-inheritance:
 
-Module contents
----------------
-
-.. automodule:: app.models
-   :members:
-   :undoc-members:
-   :show-inheritance:

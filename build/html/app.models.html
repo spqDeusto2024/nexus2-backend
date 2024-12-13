@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>app.models package &mdash; Bunker Management System - NEXUS 2 1.0 documentation</title>
+  <title>models package &mdash; Bunker Management System - NEXUS 2 1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
@@ -19,8 +19,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="app.mysql package" href="app.mysql.html" />
-    <link rel="prev" title="CONTROLLERS package" href="app.controllers.html" /> 
+    <link rel="next" title="mysql package" href="app.mysql.html" />
+    <link rel="prev" title="controllers package" href="app.controllers.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -44,10 +44,9 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="app.controllers.html">CONTROLLERS package</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">app.models package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-app.models.admin">app.models.admin module</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="app.controllers.html">controllers package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">models package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-app.models.admin">admin module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#app.models.admin.Admin"><code class="docutils literal notranslate"><span class="pre">Admin</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#app.models.admin.Admin.idAdmin"><code class="docutils literal notranslate"><span class="pre">Admin.idAdmin</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#app.models.admin.Admin.email"><code class="docutils literal notranslate"><span class="pre">Admin.email</span></code></a></li>
@@ -61,7 +60,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#module-app.models.alarm">app.models.alarm module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-app.models.alarm">alarm module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#app.models.alarm.Alarm"><code class="docutils literal notranslate"><span class="pre">Alarm</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#app.models.alarm.Alarm.idAlarm"><code class="docutils literal notranslate"><span class="pre">Alarm.idAlarm</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#app.models.alarm.Alarm.start"><code class="docutils literal notranslate"><span class="pre">Alarm.start</span></code></a></li>
@@ -79,7 +78,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#module-app.models.family">app.models.family module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-app.models.family">family module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#app.models.family.Family"><code class="docutils literal notranslate"><span class="pre">Family</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#app.models.family.Family.idFamily"><code class="docutils literal notranslate"><span class="pre">Family.idFamily</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#app.models.family.Family.familyName"><code class="docutils literal notranslate"><span class="pre">Family.familyName</span></code></a></li>
@@ -97,7 +96,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#module-app.models.machine">app.models.machine module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-app.models.machine">machine module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#app.models.machine.Machine"><code class="docutils literal notranslate"><span class="pre">Machine</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#app.models.machine.Machine.idMachine"><code class="docutils literal notranslate"><span class="pre">Machine.idMachine</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#app.models.machine.Machine.machineName"><code class="docutils literal notranslate"><span class="pre">Machine.machineName</span></code></a></li>
@@ -117,7 +116,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#module-app.models.resident">app.models.resident module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-app.models.resident">resident module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#app.models.resident.Resident"><code class="docutils literal notranslate"><span class="pre">Resident</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#app.models.resident.Resident.idResident"><code class="docutils literal notranslate"><span class="pre">Resident.idResident</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#app.models.resident.Resident.name"><code class="docutils literal notranslate"><span class="pre">Resident.name</span></code></a></li>
@@ -143,7 +142,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#module-app.models.room">app.models.room module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-app.models.room">room module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#app.models.room.Room"><code class="docutils literal notranslate"><span class="pre">Room</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#app.models.room.Room.idRoom"><code class="docutils literal notranslate"><span class="pre">Room.idRoom</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#app.models.room.Room.roomName"><code class="docutils literal notranslate"><span class="pre">Room.roomName</span></code></a></li>
@@ -161,7 +160,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#module-app.models.shelter">app.models.shelter module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-app.models.shelter">shelter module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#app.models.shelter.Shelter"><code class="docutils literal notranslate"><span class="pre">Shelter</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#app.models.shelter.Shelter.idShelter"><code class="docutils literal notranslate"><span class="pre">Shelter.idShelter</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#app.models.shelter.Shelter.shelterName"><code class="docutils literal notranslate"><span class="pre">Shelter.shelterName</span></code></a></li>
@@ -185,10 +184,9 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#module-app.models">Module contents</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="app.mysql.html">app.mysql package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app.mysql.html">mysql package</a></li>
 </ul>
 
         </div>
@@ -205,7 +203,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">app.models package</li>
+      <li class="breadcrumb-item active">models package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/app.models.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -215,13 +213,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="app-models-package">
-<h1>app.models package<a class="headerlink" href="#app-models-package" title="Link to this heading"></a></h1>
-<section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
-</section>
+  <section id="models-package">
+<h1>models package<a class="headerlink" href="#models-package" title="Link to this heading"></a></h1>
 <section id="module-app.models.admin">
-<span id="app-models-admin-module"></span><h2>app.models.admin module<a class="headerlink" href="#module-app.models.admin" title="Link to this heading"></a></h2>
+<span id="admin-module"></span><h2>admin module<a class="headerlink" href="#module-app.models.admin" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="app.models.admin.Admin">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.models.admin.</span></span><span class="sig-name descname"><span class="pre">Admin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idAdmin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.models.admin.Admin" title="Link to this definition"></a></dt>
@@ -295,7 +290,7 @@
 
 </section>
 <section id="module-app.models.alarm">
-<span id="app-models-alarm-module"></span><h2>app.models.alarm module<a class="headerlink" href="#module-app.models.alarm" title="Link to this heading"></a></h2>
+<span id="alarm-module"></span><h2>alarm module<a class="headerlink" href="#module-app.models.alarm" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="app.models.alarm.Alarm">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.models.alarm.</span></span><span class="sig-name descname"><span class="pre">Alarm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idAlarm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idRoom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">createDate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.models.alarm.Alarm" title="Link to this definition"></a></dt>
@@ -408,7 +403,7 @@ and associating the alarm with specific room, resident, and admin IDs.</p>
 
 </section>
 <section id="module-app.models.family">
-<span id="app-models-family-module"></span><h2>app.models.family module<a class="headerlink" href="#module-app.models.family" title="Link to this heading"></a></h2>
+<span id="family-module"></span><h2>family module<a class="headerlink" href="#module-app.models.family" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="app.models.family.Family">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.models.family.</span></span><span class="sig-name descname"><span class="pre">Family</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idFamily</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">familyName</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idRoom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idShelter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">createdBy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">createDate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">date</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.models.family.Family" title="Link to this definition"></a></dt>
@@ -515,7 +510,7 @@ their assigned room and shelter.</p>
 
 </section>
 <section id="module-app.models.machine">
-<span id="app-models-machine-module"></span><h2>app.models.machine module<a class="headerlink" href="#module-app.models.machine" title="Link to this heading"></a></h2>
+<span id="machine-module"></span><h2>machine module<a class="headerlink" href="#module-app.models.machine" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="app.models.machine.Machine">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.models.machine.</span></span><span class="sig-name descname"><span class="pre">Machine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idMachine</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">machineName</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idRoom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">createdBy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">createDate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">date</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.models.machine.Machine" title="Link to this definition"></a></dt>
@@ -637,7 +632,7 @@ their assigned room and shelter.</p>
 
 </section>
 <section id="module-app.models.resident">
-<span id="app-models-resident-module"></span><h2>app.models.resident module<a class="headerlink" href="#module-app.models.resident" title="Link to this heading"></a></h2>
+<span id="resident-module"></span><h2>resident module<a class="headerlink" href="#module-app.models.resident" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="app.models.resident.Resident">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.models.resident.</span></span><span class="sig-name descname"><span class="pre">Resident</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idResident</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surname</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">birthDate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gender</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">createdBy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">createDate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">date</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idFamily</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idRoom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.models.resident.Resident" title="Link to this definition"></a></dt>
@@ -808,7 +803,7 @@ and family association.</p>
 
 </section>
 <section id="module-app.models.room">
-<span id="app-models-room-module"></span><h2>app.models.room module<a class="headerlink" href="#module-app.models.room" title="Link to this heading"></a></h2>
+<span id="room-module"></span><h2>room module<a class="headerlink" href="#module-app.models.room" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="app.models.room.Room">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.models.room.</span></span><span class="sig-name descname"><span class="pre">Room</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idRoom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">roomName</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">createdBy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">createDate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idShelter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxPeople</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.models.room.Room" title="Link to this definition"></a></dt>
@@ -914,7 +909,7 @@ and family association.</p>
 
 </section>
 <section id="module-app.models.shelter">
-<span id="app-models-shelter-module"></span><h2>app.models.shelter module<a class="headerlink" href="#module-app.models.shelter" title="Link to this heading"></a></h2>
+<span id="shelter-module"></span><h2>shelter module<a class="headerlink" href="#module-app.models.shelter" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="app.models.shelter.Shelter">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.models.shelter.</span></span><span class="sig-name descname"><span class="pre">Shelter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idShelter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shelterName</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">address</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxPeople</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">energyLevel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">waterLevel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radiationLevel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.models.shelter.Shelter" title="Link to this definition"></a></dt>
@@ -1067,17 +1062,14 @@ and family association.</p>
 </dd></dl>
 
 </section>
-<section id="module-app.models">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-app.models" title="Link to this heading"></a></h2>
-</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="app.controllers.html" class="btn btn-neutral float-left" title="CONTROLLERS package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="app.mysql.html" class="btn btn-neutral float-right" title="app.mysql package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="app.controllers.html" class="btn btn-neutral float-left" title="controllers package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="app.mysql.html" class="btn btn-neutral float-right" title="mysql package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

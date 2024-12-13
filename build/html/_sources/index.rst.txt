@@ -13,6 +13,7 @@ Bunker Management System - NEXUS 2 documentation
    app.controllers
    app.models
    app.mysql
+   test
 
 Indices and tables
 ==================

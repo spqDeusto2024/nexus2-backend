@@ -1,10 +1,8 @@
-app.mysql package
+mysql package
 =================
 
-Submodules
-----------
 
-app.mysql.admin module
+admin module
 ----------------------
 
 .. automodule:: app.mysql.admin
@@ -12,7 +10,7 @@ app.mysql.admin module
    :undoc-members:
    :show-inheritance:
 
-app.mysql.alarm module
+alarm module
 ----------------------
 
 .. automodule:: app.mysql.alarm
@@ -20,7 +18,7 @@ app.mysql.alarm module
    :undoc-members:
    :show-inheritance:
 
-app.mysql.base module
+base module
 ---------------------
 
 .. automodule:: app.mysql.base
@@ -28,7 +26,7 @@ app.mysql.base module
    :undoc-members:
    :show-inheritance:
 
-app.mysql.family module
+family module
 -----------------------
 
 .. automodule:: app.mysql.family
@@ -36,7 +34,7 @@ app.mysql.family module
    :undoc-members:
    :show-inheritance:
 
-app.mysql.initializeData module
+initializeData module
 -------------------------------
 
 .. automodule:: app.mysql.initializeData
@@ -44,7 +42,7 @@ app.mysql.initializeData module
    :undoc-members:
    :show-inheritance:
 
-app.mysql.machine module
+machine module
 ------------------------
 
 .. automodule:: app.mysql.machine
@@ -52,7 +50,7 @@ app.mysql.machine module
    :undoc-members:
    :show-inheritance:
 
-app.mysql.mysql module
+mysql module
 ----------------------
 
 .. automodule:: app.mysql.mysql
@@ -60,7 +58,7 @@ app.mysql.mysql module
    :undoc-members:
    :show-inheritance:
 
-app.mysql.resident module
+resident module
 -------------------------
 
 .. automodule:: app.mysql.resident
@@ -68,7 +66,7 @@ app.mysql.resident module
    :undoc-members:
    :show-inheritance:
 
-app.mysql.room module
+room module
 ---------------------
 
 .. automodule:: app.mysql.room
@@ -76,7 +74,7 @@ app.mysql.room module
    :undoc-members:
    :show-inheritance:
 
-app.mysql.shelter module
+shelter module
 ------------------------
 
 .. automodule:: app.mysql.shelter
@@ -84,10 +82,4 @@ app.mysql.shelter module
    :undoc-members:
    :show-inheritance:
 
-Module contents
----------------
 
-.. automodule:: app.mysql
-   :members:
-   :undoc-members:
-   :show-inheritance:

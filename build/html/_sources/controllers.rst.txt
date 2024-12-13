@@ -1,8 +1,6 @@
 controllers package
 ===================
 
-Submodules
-----------
 
 controllers.admin\_controller module
 ------------------------------------

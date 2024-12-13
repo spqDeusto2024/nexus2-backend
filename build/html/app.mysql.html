@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>app.mysql package &mdash; Bunker Management System - NEXUS 2 1.0 documentation</title>
+  <title>mysql package &mdash; Bunker Management System - NEXUS 2 1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
@@ -19,7 +19,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="app.models package" href="app.models.html" /> 
+    <link rel="prev" title="models package" href="app.models.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -43,11 +43,10 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="app.controllers.html">CONTROLLERS package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="app.models.html">app.models package</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">app.mysql package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-app.mysql.admin">app.mysql.admin module</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="app.controllers.html">controllers package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app.models.html">models package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">mysql package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-app.mysql.admin">admin module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#app.mysql.admin.Admin"><code class="docutils literal notranslate"><span class="pre">Admin</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#app.mysql.admin.Admin.idAdmin"><code class="docutils literal notranslate"><span class="pre">Admin.idAdmin</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#app.mysql.admin.Admin.email"><code class="docutils literal notranslate"><span class="pre">Admin.email</span></code></a></li>
@@ -61,7 +60,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#module-app.mysql.alarm">app.mysql.alarm module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-app.mysql.alarm">alarm module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#app.mysql.alarm.Alarm"><code class="docutils literal notranslate"><span class="pre">Alarm</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#app.mysql.alarm.Alarm.idAlarm"><code class="docutils literal notranslate"><span class="pre">Alarm.idAlarm</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#app.mysql.alarm.Alarm.start"><code class="docutils literal notranslate"><span class="pre">Alarm.start</span></code></a></li>
@@ -79,8 +78,8 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#module-app.mysql.base">app.mysql.base module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-app.mysql.family">app.mysql.family module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-app.mysql.base">base module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-app.mysql.family">family module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#app.mysql.family.Family"><code class="docutils literal notranslate"><span class="pre">Family</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#app.mysql.family.Family.idFamily"><code class="docutils literal notranslate"><span class="pre">Family.idFamily</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#app.mysql.family.Family.familyName"><code class="docutils literal notranslate"><span class="pre">Family.familyName</span></code></a></li>
@@ -98,11 +97,11 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#module-app.mysql.initializeData">app.mysql.initializeData module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-app.mysql.initializeData">initializeData module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#app.mysql.initializeData.initialize_database"><code class="docutils literal notranslate"><span class="pre">initialize_database()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#module-app.mysql.machine">app.mysql.machine module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-app.mysql.machine">machine module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#app.mysql.machine.Machine"><code class="docutils literal notranslate"><span class="pre">Machine</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#app.mysql.machine.Machine.idMachine"><code class="docutils literal notranslate"><span class="pre">Machine.idMachine</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#app.mysql.machine.Machine.machineName"><code class="docutils literal notranslate"><span class="pre">Machine.machineName</span></code></a></li>
@@ -122,14 +121,14 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#module-app.mysql.mysql">app.mysql.mysql module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-app.mysql.mysql">mysql module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#app.mysql.mysql.DatabaseClient"><code class="docutils literal notranslate"><span class="pre">DatabaseClient</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#app.mysql.mysql.DatabaseClient.init_database"><code class="docutils literal notranslate"><span class="pre">DatabaseClient.init_database()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#module-app.mysql.resident">app.mysql.resident module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-app.mysql.resident">resident module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#app.mysql.resident.Resident"><code class="docutils literal notranslate"><span class="pre">Resident</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#app.mysql.resident.Resident.idResident"><code class="docutils literal notranslate"><span class="pre">Resident.idResident</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#app.mysql.resident.Resident.name"><code class="docutils literal notranslate"><span class="pre">Resident.name</span></code></a></li>
@@ -155,7 +154,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#module-app.mysql.room">app.mysql.room module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-app.mysql.room">room module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#app.mysql.room.Room"><code class="docutils literal notranslate"><span class="pre">Room</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#app.mysql.room.Room.idRoom"><code class="docutils literal notranslate"><span class="pre">Room.idRoom</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#app.mysql.room.Room.roomName"><code class="docutils literal notranslate"><span class="pre">Room.roomName</span></code></a></li>
@@ -173,7 +172,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#module-app.mysql.shelter">app.mysql.shelter module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-app.mysql.shelter">shelter module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#app.mysql.shelter.Shelter"><code class="docutils literal notranslate"><span class="pre">Shelter</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#app.mysql.shelter.Shelter.idShelter"><code class="docutils literal notranslate"><span class="pre">Shelter.idShelter</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#app.mysql.shelter.Shelter.shelterName"><code class="docutils literal notranslate"><span class="pre">Shelter.shelterName</span></code></a></li>
@@ -197,7 +196,6 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#module-app.mysql">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -216,7 +214,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">app.mysql package</li>
+      <li class="breadcrumb-item active">mysql package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/app.mysql.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -226,13 +224,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="app-mysql-package">
-<h1>app.mysql package<a class="headerlink" href="#app-mysql-package" title="Link to this heading"></a></h1>
-<section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
-</section>
+  <section id="mysql-package">
+<h1>mysql package<a class="headerlink" href="#mysql-package" title="Link to this heading"></a></h1>
 <section id="module-app.mysql.admin">
-<span id="app-mysql-admin-module"></span><h2>app.mysql.admin module<a class="headerlink" href="#module-app.mysql.admin" title="Link to this heading"></a></h2>
+<span id="admin-module"></span><h2>admin module<a class="headerlink" href="#module-app.mysql.admin" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="app.mysql.admin.Admin">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.mysql.admin.</span></span><span class="sig-name descname"><span class="pre">Admin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.mysql.admin.Admin" title="Link to this definition"></a></dt>
@@ -306,7 +301,7 @@
 
 </section>
 <section id="module-app.mysql.alarm">
-<span id="app-mysql-alarm-module"></span><h2>app.mysql.alarm module<a class="headerlink" href="#module-app.mysql.alarm" title="Link to this heading"></a></h2>
+<span id="alarm-module"></span><h2>alarm module<a class="headerlink" href="#module-app.mysql.alarm" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="app.mysql.alarm.Alarm">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.mysql.alarm.</span></span><span class="sig-name descname"><span class="pre">Alarm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.mysql.alarm.Alarm" title="Link to this definition"></a></dt>
@@ -421,10 +416,10 @@ the event, as well as metadata for auditing.</p>
 
 </section>
 <section id="module-app.mysql.base">
-<span id="app-mysql-base-module"></span><h2>app.mysql.base module<a class="headerlink" href="#module-app.mysql.base" title="Link to this heading"></a></h2>
+<span id="base-module"></span><h2>base module<a class="headerlink" href="#module-app.mysql.base" title="Link to this heading"></a></h2>
 </section>
 <section id="module-app.mysql.family">
-<span id="app-mysql-family-module"></span><h2>app.mysql.family module<a class="headerlink" href="#module-app.mysql.family" title="Link to this heading"></a></h2>
+<span id="family-module"></span><h2>family module<a class="headerlink" href="#module-app.mysql.family" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="app.mysql.family.Family">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.mysql.family.</span></span><span class="sig-name descname"><span class="pre">Family</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.mysql.family.Family" title="Link to this definition"></a></dt>
@@ -532,7 +527,7 @@ and tracks metadata about its creation.</p>
 
 </section>
 <section id="module-app.mysql.initializeData">
-<span id="app-mysql-initializedata-module"></span><h2>app.mysql.initializeData module<a class="headerlink" href="#module-app.mysql.initializeData" title="Link to this heading"></a></h2>
+<span id="initializedata-module"></span><h2>initializeData module<a class="headerlink" href="#module-app.mysql.initializeData" title="Link to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="app.mysql.initializeData.initialize_database">
 <span class="sig-prename descclassname"><span class="pre">app.mysql.initializeData.</span></span><span class="sig-name descname"><span class="pre">initialize_database</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app.mysql.initializeData.initialize_database" title="Link to this definition"></a></dt>
@@ -573,7 +568,7 @@ and resource levels.</p></li>
 
 </section>
 <section id="module-app.mysql.machine">
-<span id="app-mysql-machine-module"></span><h2>app.mysql.machine module<a class="headerlink" href="#module-app.mysql.machine" title="Link to this heading"></a></h2>
+<span id="machine-module"></span><h2>machine module<a class="headerlink" href="#module-app.mysql.machine" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="app.mysql.machine.Machine">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.mysql.machine.</span></span><span class="sig-name descname"><span class="pre">Machine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.mysql.machine.Machine" title="Link to this definition"></a></dt>
@@ -698,7 +693,7 @@ creation and updates.</p>
 
 </section>
 <section id="module-app.mysql.mysql">
-<span id="app-mysql-mysql-module"></span><h2>app.mysql.mysql module<a class="headerlink" href="#module-app.mysql.mysql" title="Link to this heading"></a></h2>
+<span id="mysql-module"></span><h2>mysql module<a class="headerlink" href="#module-app.mysql.mysql" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="app.mysql.mysql.DatabaseClient">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.mysql.mysql.</span></span><span class="sig-name descname"><span class="pre">DatabaseClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.mysql.mysql.DatabaseClient" title="Link to this definition"></a></dt>
@@ -713,7 +708,7 @@ creation and updates.</p>
 
 </section>
 <section id="module-app.mysql.resident">
-<span id="app-mysql-resident-module"></span><h2>app.mysql.resident module<a class="headerlink" href="#module-app.mysql.resident" title="Link to this heading"></a></h2>
+<span id="resident-module"></span><h2>resident module<a class="headerlink" href="#module-app.mysql.resident" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="app.mysql.resident.Resident">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.mysql.resident.</span></span><span class="sig-name descname"><span class="pre">Resident</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.mysql.resident.Resident" title="Link to this definition"></a></dt>
@@ -885,7 +880,7 @@ details, family association, and metadata for auditing purposes.</p>
 
 </section>
 <section id="module-app.mysql.room">
-<span id="app-mysql-room-module"></span><h2>app.mysql.room module<a class="headerlink" href="#module-app.mysql.room" title="Link to this heading"></a></h2>
+<span id="room-module"></span><h2>room module<a class="headerlink" href="#module-app.mysql.room" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="app.mysql.room.Room">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.mysql.room.</span></span><span class="sig-name descname"><span class="pre">Room</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.mysql.room.Room" title="Link to this definition"></a></dt>
@@ -994,7 +989,7 @@ metadata for creation and tracking purposes.</p>
 
 </section>
 <section id="module-app.mysql.shelter">
-<span id="app-mysql-shelter-module"></span><h2>app.mysql.shelter module<a class="headerlink" href="#module-app.mysql.shelter" title="Link to this heading"></a></h2>
+<span id="shelter-module"></span><h2>shelter module<a class="headerlink" href="#module-app.mysql.shelter" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="app.mysql.shelter.Shelter">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.mysql.shelter.</span></span><span class="sig-name descname"><span class="pre">Shelter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.mysql.shelter.Shelter" title="Link to this definition"></a></dt>
@@ -1149,16 +1144,13 @@ address, contact information, and maximum capacity.</p>
 </dd></dl>
 
 </section>
-<section id="module-app.mysql">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-app.mysql" title="Link to this heading"></a></h2>
-</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="app.models.html" class="btn btn-neutral float-left" title="app.models package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="app.models.html" class="btn btn-neutral float-left" title="models package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
