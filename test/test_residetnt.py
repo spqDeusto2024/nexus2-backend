@@ -511,3 +511,54 @@ def test_get_resident_by_id_database_error(setup_database, mocker):
     # Assert the response
     assert response["status"] == "error"
     assert "Database error" in response["message"]
+
+def test_update_resident_name_success(setup_database):
+    """
+    Test: Successfully update the name of a resident.
+
+    Expected Outcome:
+        - The resident's name is updated successfully in the database.
+    """
+    session = setup_database
+    controller = ResidentController()
+
+    # Add a test resident
+    resident = Resident(
+        idResident=1,
+        name="John",
+        surname="Doe",
+        birthDate=date(1990, 1, 1),
+        gender="M",
+        createDate=date(2024, 12, 1)
+    )
+    session.add(resident)
+    session.commit()
+
+    # Call the method to update the name
+    response = controller.updateResidentName(idResident=1, new_name="Jane", session=session)
+
+    # Assert the response
+    assert response == {"status": "ok", "message": "Nombre actualizado exitosamente"}
+
+    # Verify the resident's name is updated in the database
+    updated_resident = session.query(Resident).filter_by(idResident=1).first()
+    assert updated_resident is not None
+    assert updated_resident.name == "Jane"
+
+
+def test_update_resident_name_not_found(setup_database):
+    """
+    Test: Attempt to update the name of a non-existent resident.
+
+    Expected Outcome:
+        - Returns an error indicating the resident was not found.
+    """
+    session = setup_database
+    controller = ResidentController()
+
+    # Call the method with a non-existent ID
+    response = controller.updateResidentName(idResident=999, new_name="Jane", session=session)
+
+    # Assert the response
+    assert response == {"status": "error", "message": "Residente no encontrado"}
+
