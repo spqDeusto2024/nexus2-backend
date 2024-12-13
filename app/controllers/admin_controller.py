@@ -29,6 +29,7 @@ from app.mysql.admin import Admin
 from datetime import date
 import app.utils.vars as gb
 from sqlalchemy.orm import Session
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy import func
 import os
 

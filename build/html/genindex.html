@@ -109,6 +109,8 @@
         <li><a href="app.mysql.html#app.mysql.admin.Admin">(class in app.mysql.admin)</a>
 </li>
       </ul></li>
+      <li><a href="app.controllers.html#app.controllers.admin_controller.AdminController">AdminController (class in app.controllers.admin_controller)</a>
+</li>
       <li><a href="app.models.html#app.models.alarm.Alarm">Alarm (class in app.models.alarm)</a>
 
       <ul>
@@ -122,6 +124,13 @@
 
       <ul>
         <li><a href="app.html#module-app">module</a>
+</li>
+      </ul></li>
+      <li>
+    app.controllers.admin_controller
+
+      <ul>
+        <li><a href="app.controllers.html#module-app.controllers.admin_controller">module</a>
 </li>
       </ul></li>
       <li>
@@ -194,6 +203,8 @@
         <li><a href="app.models.html#module-app.models.family">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     app.models.machine
 
@@ -201,8 +212,6 @@
         <li><a href="app.models.html#module-app.models.machine">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     app.models.resident
 
@@ -333,6 +342,8 @@
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="app.controllers.html#app.controllers.admin_controller.AdminController.create_admin">create_admin() (app.controllers.admin_controller.AdminController method)</a>
+</li>
       <li><a href="app.controllers.html#app.controllers.alarm_controller.AlarmController.create_alarm">create_alarm() (app.controllers.alarm_controller.AlarmController method)</a>
 </li>
       <li><a href="app.controllers.html#app.controllers.alarm_controller.AlarmController.create_alarmLevel">create_alarmLevel() (app.controllers.alarm_controller.AlarmController method)</a>
@@ -399,6 +410,8 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="app.controllers.html#app.controllers.admin_controller.AdminController.deleteAdmin">deleteAdmin() (app.controllers.admin_controller.AdminController method)</a>
+</li>
       <li><a href="app.controllers.html#app.controllers.family_controller.FamilyController.deleteFamily">deleteFamily() (app.controllers.family_controller.FamilyController method)</a>
 </li>
       <li><a href="app.controllers.html#app.controllers.machine_controller.MachineController.deleteMachine">deleteMachine() (app.controllers.machine_controller.MachineController method)</a>
@@ -469,11 +482,13 @@
       </ul></li>
       <li><a href="app.controllers.html#app.controllers.shelter_controller.ShelterController.get_shelter_energy_level">get_shelter_energy_level() (app.controllers.shelter_controller.ShelterController method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="app.controllers.html#app.controllers.shelter_controller.ShelterController.get_shelter_radiation_level">get_shelter_radiation_level() (app.controllers.shelter_controller.ShelterController method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="app.controllers.html#app.controllers.shelter_controller.ShelterController.get_shelter_water_level">get_shelter_water_level() (app.controllers.shelter_controller.ShelterController method)</a>
+</li>
+      <li><a href="app.controllers.html#app.controllers.admin_controller.AdminController.getAdminById">getAdminById() (app.controllers.admin_controller.AdminController method)</a>
 </li>
       <li><a href="app.controllers.html#app.controllers.resident_controller.ResidentController.getResidentById">getResidentById() (app.controllers.resident_controller.ResidentController method)</a>
 </li>
@@ -583,17 +598,21 @@
 </li>
       <li><a href="app.controllers.html#app.controllers.resident_controller.ResidentController.list_residents_in_room">list_residents_in_room() (app.controllers.resident_controller.ResidentController method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="app.controllers.html#app.controllers.room_controller.RoomController.list_rooms">list_rooms() (app.controllers.room_controller.RoomController method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="app.controllers.html#app.controllers.room_controller.RoomController.list_rooms_Room">list_rooms_Room() (app.controllers.room_controller.RoomController method)</a>
 </li>
       <li><a href="app.controllers.html#app.controllers.room_controller.RoomController.list_rooms_with_resident_count">list_rooms_with_resident_count() (app.controllers.room_controller.RoomController method)</a>
 </li>
+      <li><a href="app.controllers.html#app.controllers.admin_controller.AdminController.listAdmins">listAdmins() (app.controllers.admin_controller.AdminController method)</a>
+</li>
       <li><a href="app.controllers.html#app.controllers.family_controller.FamilyController.listFamilies">listFamilies() (app.controllers.family_controller.FamilyController method)</a>
 </li>
       <li><a href="app.controllers.html#app.controllers.resident_controller.ResidentController.login">login() (app.controllers.resident_controller.ResidentController method)</a>
+</li>
+      <li><a href="app.controllers.html#app.controllers.admin_controller.AdminController.loginAdmin">loginAdmin() (app.controllers.admin_controller.AdminController method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -625,61 +644,13 @@
         <li><a href="app.mysql.html#app.mysql.shelter.Shelter.maxPeople">(app.mysql.shelter.Shelter attribute)</a>, <a href="app.mysql.html#id42">[1]</a>
 </li>
       </ul></li>
-      <li><a href="app.models.html#app.models.admin.Admin.model_computed_fields">model_computed_fields (app.models.admin.Admin attribute)</a>
-
-      <ul>
-        <li><a href="app.models.html#app.models.alarm.Alarm.model_computed_fields">(app.models.alarm.Alarm attribute)</a>
-</li>
-        <li><a href="app.models.html#app.models.family.Family.model_computed_fields">(app.models.family.Family attribute)</a>
-</li>
-        <li><a href="app.models.html#app.models.machine.Machine.model_computed_fields">(app.models.machine.Machine attribute)</a>
-</li>
-        <li><a href="app.models.html#app.models.resident.Resident.model_computed_fields">(app.models.resident.Resident attribute)</a>
-</li>
-        <li><a href="app.models.html#app.models.room.Room.model_computed_fields">(app.models.room.Room attribute)</a>
-</li>
-        <li><a href="app.models.html#app.models.shelter.Shelter.model_computed_fields">(app.models.shelter.Shelter attribute)</a>
-</li>
-      </ul></li>
-      <li><a href="app.models.html#app.models.admin.Admin.model_config">model_config (app.models.admin.Admin attribute)</a>
-
-      <ul>
-        <li><a href="app.models.html#app.models.alarm.Alarm.model_config">(app.models.alarm.Alarm attribute)</a>
-</li>
-        <li><a href="app.models.html#app.models.family.Family.model_config">(app.models.family.Family attribute)</a>
-</li>
-        <li><a href="app.models.html#app.models.machine.Machine.model_config">(app.models.machine.Machine attribute)</a>
-</li>
-        <li><a href="app.models.html#app.models.resident.Resident.model_config">(app.models.resident.Resident attribute)</a>
-</li>
-        <li><a href="app.models.html#app.models.room.Room.model_config">(app.models.room.Room attribute)</a>
-</li>
-        <li><a href="app.models.html#app.models.shelter.Shelter.model_config">(app.models.shelter.Shelter attribute)</a>
-</li>
-      </ul></li>
-      <li><a href="app.models.html#app.models.admin.Admin.model_fields">model_fields (app.models.admin.Admin attribute)</a>
-
-      <ul>
-        <li><a href="app.models.html#app.models.alarm.Alarm.model_fields">(app.models.alarm.Alarm attribute)</a>
-</li>
-        <li><a href="app.models.html#app.models.family.Family.model_fields">(app.models.family.Family attribute)</a>
-</li>
-        <li><a href="app.models.html#app.models.machine.Machine.model_fields">(app.models.machine.Machine attribute)</a>
-</li>
-        <li><a href="app.models.html#app.models.resident.Resident.model_fields">(app.models.resident.Resident attribute)</a>
-</li>
-        <li><a href="app.models.html#app.models.room.Room.model_fields">(app.models.room.Room attribute)</a>
-</li>
-        <li><a href="app.models.html#app.models.shelter.Shelter.model_fields">(app.models.shelter.Shelter attribute)</a>
-</li>
-      </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     module
 
       <ul>
         <li><a href="app.html#module-app">app</a>
+</li>
+        <li><a href="app.controllers.html#module-app.controllers.admin_controller">app.controllers.admin_controller</a>
 </li>
         <li><a href="app.controllers.html#module-app.controllers.alarm_controller">app.controllers.alarm_controller</a>
 </li>
@@ -796,16 +767,18 @@
         <li><a href="app.mysql.html#app.mysql.shelter.Shelter.radiationLevel">(app.mysql.shelter.Shelter attribute)</a>, <a href="app.mysql.html#id44">[1]</a>
 </li>
       </ul></li>
+      <li><a href="app.controllers.html#app.controllers.admin_controller.AdminController.refreshAccessToken">refreshAccessToken() (app.controllers.admin_controller.AdminController method)</a>
+</li>
       <li><a href="app.models.html#app.models.resident.Resident">Resident (class in app.models.resident)</a>
 
       <ul>
         <li><a href="app.mysql.html#app.mysql.resident.Resident">(class in app.mysql.resident)</a>
 </li>
       </ul></li>
-      <li><a href="app.controllers.html#app.controllers.resident_controller.ResidentController">ResidentController (class in app.controllers.resident_controller)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="app.controllers.html#app.controllers.resident_controller.ResidentController">ResidentController (class in app.controllers.resident_controller)</a>
+</li>
       <li><a href="app.models.html#app.models.room.Room">Room (class in app.models.room)</a>
 
       <ul>
@@ -872,16 +845,22 @@
       </ul></li>
       <li><a href="app.controllers.html#app.controllers.resident_controller.ResidentController.update_resident">update_resident() (app.controllers.resident_controller.ResidentController method)</a>
 </li>
+      <li><a href="app.controllers.html#app.controllers.admin_controller.AdminController.updateAdminEmail">updateAdminEmail() (app.controllers.admin_controller.AdminController method)</a>
+</li>
+      <li><a href="app.controllers.html#app.controllers.admin_controller.AdminController.updateAdminName">updateAdminName() (app.controllers.admin_controller.AdminController method)</a>
+</li>
+      <li><a href="app.controllers.html#app.controllers.admin_controller.AdminController.updateAdminPassword">updateAdminPassword() (app.controllers.admin_controller.AdminController method)</a>
+</li>
       <li><a href="app.controllers.html#app.controllers.alarm_controller.AlarmController.updateAlarmEndDate">updateAlarmEndDate() (app.controllers.alarm_controller.AlarmController method)</a>
 </li>
       <li><a href="app.controllers.html#app.controllers.machine_controller.MachineController.updateMachineDate">updateMachineDate() (app.controllers.machine_controller.MachineController method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="app.controllers.html#app.controllers.machine_controller.MachineController.updateMachineStatus">updateMachineStatus() (app.controllers.machine_controller.MachineController method)</a>
 </li>
       <li><a href="app.controllers.html#app.controllers.machine_controller.MachineController.updateMachineStatusOn">updateMachineStatusOn() (app.controllers.machine_controller.MachineController method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="app.controllers.html#app.controllers.resident_controller.ResidentController.updateResidentBirthDate">updateResidentBirthDate() (app.controllers.resident_controller.ResidentController method)</a>
 </li>
       <li><a href="app.controllers.html#app.controllers.resident_controller.ResidentController.updateResidentGender">updateResidentGender() (app.controllers.resident_controller.ResidentController method)</a>

@@ -45,7 +45,21 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">CONTROLLERS package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#admin-controller-module">admin_controller module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-app.controllers.admin_controller">admin_controller module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#app.controllers.admin_controller.AdminController"><code class="docutils literal notranslate"><span class="pre">AdminController</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.admin_controller.AdminController.create_admin"><code class="docutils literal notranslate"><span class="pre">AdminController.create_admin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.admin_controller.AdminController.deleteAdmin"><code class="docutils literal notranslate"><span class="pre">AdminController.deleteAdmin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.admin_controller.AdminController.getAdminById"><code class="docutils literal notranslate"><span class="pre">AdminController.getAdminById()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.admin_controller.AdminController.listAdmins"><code class="docutils literal notranslate"><span class="pre">AdminController.listAdmins()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.admin_controller.AdminController.loginAdmin"><code class="docutils literal notranslate"><span class="pre">AdminController.loginAdmin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.admin_controller.AdminController.refreshAccessToken"><code class="docutils literal notranslate"><span class="pre">AdminController.refreshAccessToken()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.admin_controller.AdminController.updateAdminEmail"><code class="docutils literal notranslate"><span class="pre">AdminController.updateAdminEmail()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.admin_controller.AdminController.updateAdminName"><code class="docutils literal notranslate"><span class="pre">AdminController.updateAdminName()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.controllers.admin_controller.AdminController.updateAdminPassword"><code class="docutils literal notranslate"><span class="pre">AdminController.updateAdminPassword()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#module-app.controllers.alarm_controller">alarm_controller module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#app.controllers.alarm_controller.AlarmController"><code class="docutils literal notranslate"><span class="pre">AlarmController</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#app.controllers.alarm_controller.AlarmController.create_alarm"><code class="docutils literal notranslate"><span class="pre">AlarmController.create_alarm()</span></code></a></li>
@@ -153,8 +167,319 @@
              
   <section id="controllers-package">
 <h1>CONTROLLERS package<a class="headerlink" href="#controllers-package" title="Link to this heading"></a></h1>
-<section id="admin-controller-module">
-<h2>admin_controller module<a class="headerlink" href="#admin-controller-module" title="Link to this heading"></a></h2>
+<section id="module-app.controllers.admin_controller">
+<span id="admin-controller-module"></span><h2>admin_controller module<a class="headerlink" href="#module-app.controllers.admin_controller" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="app.controllers.admin_controller.AdminController">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.controllers.admin_controller.</span></span><span class="sig-name descname"><span class="pre">AdminController</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.admin_controller.AdminController" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.admin_controller.AdminController.create_admin">
+<span class="sig-name descname"><span class="pre">create_admin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">admin_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="app.models.html#app.models.admin.Admin" title="app.models.admin.Admin"><span class="pre">Admin</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.admin_controller.AdminController.create_admin" title="Link to this definition"></a></dt>
+<dd><p>Creates a new admin in the system.</p>
+<p>This method checks if an admin with the provided email already exists.
+If not, it creates a new admin record in the database with the provided details.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>admin_data</strong> (<em>AdminModel</em>) – An object containing the admin’s details, including:
+- email (str): The admin’s email address.
+- name (str): The admin’s name.
+- password (str): The admin’s hashed password.</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”, “message”: “Admin created successfully.”} if the admin is created successfully.</p></li>
+<li><p>{“status”: “error”, “message”: &lt;error_message&gt;} if there is an error, such as an existing email or a database issue.</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If any unexpected error occurs during the creation process.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.admin_controller.AdminController.deleteAdmin">
+<span class="sig-name descname"><span class="pre">deleteAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">admin_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.admin_controller.AdminController.deleteAdmin" title="Link to this definition"></a></dt>
+<dd><p>Deletes an admin from the database using their ID.</p>
+<p>This method looks up an admin in the database by their unique ID and deletes
+the corresponding record if it exists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>admin_id</strong> (<em>int</em>) – The unique identifier of the admin to delete.</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”, “message”: “Admin deleted successfully”}:</p></li>
+</ul>
+<p>If the admin is successfully deleted.
+- {“status”: “error”, “message”: &lt;error_message&gt;}:
+If an error occurs or the admin is not found.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If an unexpected error occurs during the deletion process.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.admin_controller.AdminController.getAdminById">
+<span class="sig-name descname"><span class="pre">getAdminById</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idAdmin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.admin_controller.AdminController.getAdminById" title="Link to this definition"></a></dt>
+<dd><p>Retrieves an admin by their ID.</p>
+<p>This method queries the database for an admin with the specified ID and
+returns their details if found.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>idAdmin</strong> (<em>int</em>) – The unique identifier of the admin to retrieve.</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”, “admin”: &lt;admin_info&gt;}:</p></li>
+</ul>
+<dl class="simple">
+<dt>If the admin is found. <cite>admin_info</cite> contains:</dt><dd><ul class="simple">
+<li><p>idAdmin (int): The unique identifier of the admin.</p></li>
+<li><p>email (str): The admin’s email address.</p></li>
+<li><p>name (str): The admin’s name.</p></li>
+<li><p>password (str): The admin’s hashed password.</p></li>
+</ul>
+</dd>
+</dl>
+<ul class="simple">
+<li><p>{“status”: “error”, “message”: &lt;error_message&gt;}:</p></li>
+</ul>
+<p>If an error occurs or the admin is not found.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If an unexpected error occurs while querying the database.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.admin_controller.AdminController.listAdmins">
+<span class="sig-name descname"><span class="pre">listAdmins</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.admin_controller.AdminController.listAdmins" title="Link to this definition"></a></dt>
+<dd><p>Lists all admins registered in the database.</p>
+<p>This method retrieves all admin records from the database and formats them
+into a list of dictionaries containing their ID and email.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”, “admins”: [&lt;list_of_admins&gt;]}:</p></li>
+</ul>
+<dl class="simple">
+<dt>If the admins are successfully retrieved. Each admin in the list contains:</dt><dd><ul class="simple">
+<li><p>idAdmin (int): The unique identifier of the admin.</p></li>
+<li><p>email (str): The email address of the admin.</p></li>
+</ul>
+</dd>
+</dl>
+<ul class="simple">
+<li><p>{“status”: “error”, “message”: &lt;error_message&gt;}:</p></li>
+</ul>
+<p>If an error occurs during the operation.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If an unexpected error occurs while querying the database.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.admin_controller.AdminController.loginAdmin">
+<span class="sig-name descname"><span class="pre">loginAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">email</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.admin_controller.AdminController.loginAdmin" title="Link to this definition"></a></dt>
+<dd><p>Verifies the login credentials of an admin using their email and password.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>email</strong> (<em>str</em>) – The admin’s email address.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The admin’s plain text password.</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the login attempt.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”, “token”: &lt;JWT token&gt;, “user”: {“idAdmin”: &lt;idAdmin&gt;, “email”: &lt;email&gt;}}:</p></li>
+</ul>
+<p>If the login is successful.
+- {“status”: “error”, “message”: &lt;error_message&gt;}:
+If an error occurs or the credentials are invalid.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.admin_controller.AdminController.refreshAccessToken">
+<span class="sig-name descname"><span class="pre">refreshAccessToken</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">refresh_token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.admin_controller.AdminController.refreshAccessToken" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.admin_controller.AdminController.updateAdminEmail">
+<span class="sig-name descname"><span class="pre">updateAdminEmail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idAdmin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_email</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.admin_controller.AdminController.updateAdminEmail" title="Link to this definition"></a></dt>
+<dd><p>Updates the email of an admin.</p>
+<p>This method searches for an admin by their ID and updates their email to the provided new value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>idAdmin</strong> (<em>int</em>) – The unique identifier of the admin whose email will be updated.</p></li>
+<li><p><strong>new_email</strong> (<em>str</em>) – The new email address to assign to the admin.</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”, “message”: “Email updated successfully”}:</p></li>
+</ul>
+<p>If the email is updated successfully.
+- {“status”: “error”, “message”: &lt;error_message&gt;}:
+If an error occurs or the admin is not found.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>SQLAlchemyError</strong> – If a database-related error occurs.</p></li>
+<li><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.admin_controller.AdminController.updateAdminName">
+<span class="sig-name descname"><span class="pre">updateAdminName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idAdmin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.admin_controller.AdminController.updateAdminName" title="Link to this definition"></a></dt>
+<dd><p>Updates the name of an admin.</p>
+<p>This method searches for an admin by their ID and updates their name to the provided new value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>idAdmin</strong> (<em>int</em>) – The unique identifier of the admin whose name will be updated.</p></li>
+<li><p><strong>new_name</strong> (<em>str</em>) – The new name to assign to the admin.</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”, “message”: “Name updated successfully”}:</p></li>
+</ul>
+<p>If the name is updated successfully.
+- {“status”: “error”, “message”: &lt;error_message&gt;}:
+If an error occurs or the admin is not found.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>SQLAlchemyError</strong> – If a database-related error occurs.</p></li>
+<li><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.controllers.admin_controller.AdminController.updateAdminPassword">
+<span class="sig-name descname"><span class="pre">updateAdminPassword</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idAdmin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.admin_controller.AdminController.updateAdminPassword" title="Link to this definition"></a></dt>
+<dd><p>Updates the password of an admin.</p>
+<p>This method searches for an admin by their ID and updates their password to the provided new value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>idAdmin</strong> (<em>int</em>) – The unique identifier of the admin whose password will be updated.</p></li>
+<li><p><strong>new_password</strong> (<em>str</em>) – The new password to assign to the admin.</p></li>
+<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
+If not provided, a new session will be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>Result of the operation.</dt><dd><ul class="simple">
+<li><p>{“status”: “ok”, “message”: “Password updated successfully”}:</p></li>
+</ul>
+<p>If the password is updated successfully.
+- {“status”: “error”, “message”: &lt;error_message&gt;}:
+If an error occurs or the admin is not found.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>SQLAlchemyError</strong> – If a database-related error occurs.</p></li>
+<li><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="module-app.controllers.alarm_controller">
 <span id="alarm-controller-module"></span><h2>alarm_controller module<a class="headerlink" href="#module-app.controllers.alarm_controller" title="Link to this heading"></a></h2>
