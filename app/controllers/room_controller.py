@@ -465,3 +465,94 @@ class RoomController:
             return {"status": "error", "message": str(e)}
         finally:
             session.close()
+
+def test_list_rooms_room_success(setup_database):
+    """
+    Test: Successfully retrieve a list of rooms whose names start with "Room".
+
+    Expected Outcome:
+        - Returns a list of rooms starting with "Room".
+    """
+    session = setup_database
+    controller = RoomController()
+
+    # Add test rooms to the database
+    room1 = Room(
+        idRoom=1,
+        roomName="Room A",
+        maxPeople=10,
+        idShelter=1,
+        createDate=datetime(2024, 12, 1)
+    )
+    room2 = Room(
+        idRoom=2,
+        roomName="Room B",
+        maxPeople=8,
+        idShelter=1,
+        createDate=datetime(2024, 12, 2)
+    )
+    room3 = Room(
+        idRoom=3,
+        roomName="Office A",  # Should be excluded
+        maxPeople=5,
+        idShelter=2,
+        createDate=datetime(2024, 12, 3)
+    )
+    session.add_all([room1, room2, room3])
+    session.commit()
+
+    # Call the method
+    response = controller.list_rooms_Room(session=session)
+
+    # Assert the response
+    assert len(response) == 2
+    assert response[0]["roomName"] == "Room A"
+    assert response[1]["roomName"] == "Room B"
+
+
+def test_list_rooms_room_no_rooms(setup_database):
+    """
+    Test: No rooms whose names start with "Room" are found.
+
+    Expected Outcome:
+        - Returns an empty list.
+    """
+    session = setup_database
+    controller = RoomController()
+
+    # Add a room that doesn't start with "Room"
+    room = Room(
+        idRoom=1,
+        roomName="Office A",
+        maxPeople=5,
+        idShelter=1,
+        createDate=datetime(2024, 12, 1)
+    )
+    session.add(room)
+    session.commit()
+
+    # Call the method
+    response = controller.list_rooms_Room(session=session)
+
+    # Assert the response
+    assert len(response) == 0
+
+def test_list_rooms_room_unexpected_error(setup_database, mocker):
+    """
+    Test: Simulate an unexpected error during the retrieval of rooms.
+
+    Expected Outcome:
+        - Returns an error message.
+    """
+    session = setup_database
+    controller = RoomController()
+
+    # Mock session.query to raise an exception
+    mocker.patch("sqlalchemy.orm.Session.query", side_effect=Exception("Unexpected error"))
+
+    # Call the method
+    response = controller.list_rooms_Room(session=session)
+
+    # Assert the response
+    assert response["status"] == "error"
+    assert "Unexpected error" in response["message"]

@@ -1,3 +1,4 @@
+import datetime
 import pytest
 from app.controllers.resident_controller import ResidentController
 from app.models.resident import Resident as ResidentModel
@@ -613,4 +614,6 @@ def test_update_resident_surname_not_found(setup_database):
 
     # Assert the response
     assert response == {"status": "error", "message": "Residente no encontrado"}
+
+
 

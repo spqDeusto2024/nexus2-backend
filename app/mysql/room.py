@@ -2,6 +2,8 @@ from sqlalchemy import Column, Integer, String, Date, DateTime, Boolean, Foreign
 from sqlalchemy.orm import relationship
 from app.mysql.base import Base  
 
+
+
 class Room(Base):
 
     """
