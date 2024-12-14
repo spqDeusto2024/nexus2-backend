@@ -498,3 +498,75 @@ def test_create_alarm_room_not_found(setup_database):
     assert response["status"] == "error"
     assert response["message"] == "Room with idRoom=3 does not exist."
 
+def test_update_alarm_enddate_success(setup_database):
+    """
+    Test: Successfully update the end date of an existing alarm.
+
+    Expected Outcome:
+        - The alarm's end date is updated successfully in the database.
+    """
+    session = setup_database
+    controller = AlarmController()
+
+    # Add a test alarm
+    alarm = Alarm(
+        idAlarm=1,
+        start=datetime(2024, 12, 10, 10, 0, 0),
+        end=None,
+        idRoom=3,
+        createDate=datetime(2024, 12, 10, 9, 0, 0)
+    )
+    session.add(alarm)
+    session.commit()
+
+    # New end date
+    new_enddate = datetime(2024, 12, 10, 12, 0, 0)
+
+    # Call the method
+    response = controller.updateAlarmEndDate(idAlarm=1, new_enddate=new_enddate, session=session)
+
+    # Assert the response
+    assert response["status"] == "ok"
+    assert response["message"] == "Fecha de fin de alarma actualizada exitosamente"
+
+    # Verify the alarm's end date is updated in the database
+    updated_alarm = session.query(Alarm).filter_by(idAlarm=1).first()
+    assert updated_alarm is not None
+    assert updated_alarm.end == new_enddate
+
+def test_update_alarm_enddate_not_found(setup_database):
+    """
+    Test: Attempt to update an alarm's end date when the alarm does not exist.
+
+    Expected Outcome:
+        - Returns an error message indicating the alarm was not found.
+    """
+    session = setup_database
+    controller = AlarmController()
+
+    # Call the method with a non-existent alarm ID
+    response = controller.updateAlarmEndDate(idAlarm=99, new_enddate=datetime(2024, 12, 10, 12, 0, 0), session=session)
+
+    # Assert the response
+    assert response["status"] == "error"
+    assert response["message"] == "Alarma no encontrada"
+
+def test_update_alarm_enddate_unexpected_error(setup_database, mocker):
+    """
+    Test: Simulate an unexpected error during end date update.
+
+    Expected Outcome:
+        - Returns an error message indicating an unexpected issue.
+    """
+    session = setup_database
+    controller = AlarmController()
+
+    # Mock session.query to raise an unexpected exception
+    mocker.patch("sqlalchemy.orm.Session.query", side_effect=Exception("Unexpected error"))
+
+    # Call the method
+    response = controller.updateAlarmEndDate(idAlarm=1, new_enddate=datetime(2024, 12, 10, 12, 0, 0), session=session)
+
+    # Assert the response
+    assert response["status"] == "error"
+    assert "Unexpected error" in response["message"]
