@@ -344,4 +344,94 @@ def test_update_alarm_enddate_unexpected_error(setup_database, mocker):
     assert updated_alarm.end is None    
 
 
+def test_list_alarms_success(setup_database):
+    """
+    Test: Successfully retrieve a list of alarms from the database.
+
+    Expected Outcome:
+        - Returns the list of alarms with their details.
+    """
+    session = setup_database
+    controller = AlarmController()
+
+    # Add test alarms
+    alarm1 = Alarm(
+        idAlarm=1,
+        start=datetime(2024, 12, 1, 8, 0, 0),
+        end=datetime(2024, 12, 1, 10, 0, 0),
+        idRoom=1,
+        createDate=datetime(2024, 12, 1, 7, 30, 0)
+    )
+    alarm2 = Alarm(
+        idAlarm=2,
+        start=datetime(2024, 12, 2, 9, 0, 0),
+        end=None,  # No end time
+        idRoom=2,
+        createDate=datetime(2024, 12, 2, 8, 45, 0)
+    )
+    session.add_all([alarm1, alarm2])
+    session.commit()
+
+    # Call the method
+    response = controller.list_alarms(session=session)
+
+    # Assert the response
+    assert response["status"] == "ok"
+    assert len(response["alarms"]) == 2
+
+    expected_response = [
+        {
+            "idAlarm": 1,
+            "start": "2024-12-01T08:00:00",
+            "end": "2024-12-01T10:00:00",
+            "idRoom": 1,
+            "createDate": "2024-12-01T07:30:00"
+        },
+        {
+            "idAlarm": 2,
+            "start": "2024-12-02T09:00:00",
+            "end": None,
+            "idRoom": 2,
+            "createDate": "2024-12-02T08:45:00"
+        }
+    ]
+
+    assert response["alarms"] == expected_response
+
+def test_list_alarms_empty(setup_database):
+    """
+    Test: Successfully retrieve an empty list of alarms.
+
+    Expected Outcome:
+        - Returns an empty list of alarms.
+    """
+    session = setup_database
+    controller = AlarmController()
+
+    # Call the method (no alarms in the database)
+    response = controller.list_alarms(session=session)
+
+    # Assert the response
+    assert response["status"] == "ok"
+    assert response["alarms"] == []
+
+def test_list_alarms_error(setup_database, mocker):
+    """
+    Test: Simulate an unexpected error during the retrieval of alarms.
+
+    Expected Outcome:
+        - Returns an error message indicating the failure.
+    """
+    session = setup_database
+    controller = AlarmController()
+
+    # Mock session.query to raise an exception
+    mocker.patch("sqlalchemy.orm.Session.query", side_effect=Exception("Unexpected error"))
+
+    # Call the method
+    response = controller.list_alarms(session=session)
+
+    # Assert the response
+    assert response["status"] == "error"
+    assert response["message"] == "Unexpected error"
 
