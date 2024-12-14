@@ -78,8 +78,8 @@ def initialize_database():
 
         if not session.query(Room).first():
             room_data = [
-                {"idRoom": 1, "roomName": "Room A", "maxPeople": 4, "createdBy": 1, "createDate": date.today(), "idShelter": 1},
-                {"idRoom": 2, "roomName": "Room B", "maxPeople": 3, "createdBy": 1, "createDate": date.today(), "idShelter": 1},
+                {"idRoom": 1, "roomName": "Room 1", "maxPeople": 4, "createdBy": 1, "createDate": date.today(), "idShelter": 1},
+                {"idRoom": 2, "roomName": "Room 2", "maxPeople": 3, "createdBy": 1, "createDate": date.today(), "idShelter": 1},
                 {"idRoom": 3, "roomName": "Kitchen", "maxPeople": 2, "createdBy": 1, "createDate": date.today(), "idShelter": 1},
             ]
             session.bulk_insert_mappings(Room, room_data)
