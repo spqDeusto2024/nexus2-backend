@@ -9,6 +9,7 @@ from sqlalchemy import func
 from app.models.resident import Resident as ResidentModel  # Import Pydantic model
 import app.utils.vars as gb
 import os
+from sqlalchemy.exc import SQLAlchemyError
 from datetime import datetime
 from datetime import date
 import app.models.resident as resident
