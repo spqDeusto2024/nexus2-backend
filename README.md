@@ -7,7 +7,7 @@ El proyecto consiste en un sistema eficiente y seguro para la gestión de refugi
 El proyecto consta un sistema de control de inquilinos, una gestión de estancias, un control de calida de recursos (energía, agua y radiación) y un sistema de alarmas de control de seguridad del refugio.
 
 # Participantes
-Este proyecto está realizado por cuatro colaboradores: **Adrián Martinez, Ander López, María Mutiloa y Pablo Echeverría**
+Este proyecto está realizado por cuatro colaboradores: **Adrián Martínez, Ander López, María Mutiloa y Pablo Echeverría**
 
 # Tecnología aplicada
 - ## Docker <img align="right" width="110" alt="Docker_logo" src=https://github.com/user-attachments/assets/823251b5-a8b9-411d-a3f5-5d0bc68a4cc0>
