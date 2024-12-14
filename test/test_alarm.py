@@ -435,3 +435,66 @@ def test_list_alarms_error(setup_database, mocker):
     assert response["status"] == "error"
     assert response["message"] == "Unexpected error"
 
+def test_create_alarm_success(setup_database):
+    """
+    Test: Successfully create an alarm in room 3.
+
+    Expected Outcome:
+        - Returns the success message and the idAlarm.
+    """
+    session = setup_database
+    controller = AlarmController()
+
+    # Add room with idRoom=3
+    room = Room(idRoom=3, roomName="Room 3", maxPeople=5, idShelter=1)
+    session.add(room)
+    session.commit()
+
+    # Alarm data (including idRoom)
+    alarm_data = AlarmModel(
+        idRoom=3,  # Agregar idRoom explícitamente para pasar la validación
+        start=datetime(2024, 12, 10, 10, 0, 0),
+        end=datetime(2024, 12, 10, 12, 0, 0),
+        createDate=datetime.now()
+    )
+
+    # Call the method
+    response = controller.create_alarmLevel(body=alarm_data, session=session)
+
+    # Assert the response
+    assert response["status"] == "ok"
+    assert "created successfully in room 3" in response["message"]
+    assert response["idAlarm"] is not None
+
+    # Verify the alarm is in the database
+    created_alarm = session.query(Alarm).filter_by(idAlarm=response["idAlarm"]).first()
+    assert created_alarm is not None
+    assert created_alarm.start == alarm_data.start
+    assert created_alarm.end == alarm_data.end
+    assert created_alarm.idRoom == 3
+
+def test_create_alarm_room_not_found(setup_database):
+    """
+    Test: Attempt to create an alarm when room 3 does not exist.
+
+    Expected Outcome:
+        - Returns an error message indicating the room does not exist.
+    """
+    session = setup_database
+    controller = AlarmController()
+
+    # Alarm data (including idRoom)
+    alarm_data = AlarmModel(
+        idRoom=3,  # Agregar idRoom explícitamente para pasar la validación
+        start=datetime(2024, 12, 10, 10, 0, 0),
+        end=datetime(2024, 12, 10, 12, 0, 0),
+        createDate=datetime.now()
+    )
+
+    # Call the method
+    response = controller.create_alarmLevel(body=alarm_data, session=session)
+
+    # Assert the response
+    assert response["status"] == "error"
+    assert response["message"] == "Room with idRoom=3 does not exist."
+
