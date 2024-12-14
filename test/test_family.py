@@ -8,6 +8,8 @@ from app.mysql.shelter import Shelter
 from app.mysql.admin import Admin
 from datetime import datetime
 from sqlalchemy.exc import SQLAlchemyError
+from unittest.mock import MagicMock
+
 
 def test_create_family_success(setup_database):
     """
@@ -253,3 +255,137 @@ def test_delete_family_sqlalchemy_error(mocker, setup_database):
     # Assertions
     assert response == {"status": "error", "message": "Database error"}
     rollback_spy.assert_called_once()
+
+import pytest
+from sqlalchemy.exc import SQLAlchemyError
+from unittest.mock import MagicMock
+from datetime import datetime
+
+# Assuming the necessary imports for Family, FamilyController, and session fixtures
+
+def test_list_families_success(setup_database):
+    """
+    Test: Validate successful retrieval of families from the database.
+
+    Steps:
+        1. Add multiple families to the database.
+        2. Call the `listFamilies` method.
+
+    Expected Outcome:
+        - The method returns a status of "ok" and a list of families with correct details.
+    """
+    session = setup_database
+    controller = FamilyController()
+
+    # Add sample families
+    family1 = Family(
+        idFamily=1,
+        familyName="Smith",
+        idRoom=101,
+        idShelter=201,
+        createdBy=1,
+        createDate=datetime(2024, 12, 14)
+    )
+    family2 = Family(
+        idFamily=2,
+        familyName="Johnson",
+        idRoom=102,
+        idShelter=202,
+        createdBy=2,
+        createDate=datetime(2024, 12, 15)
+    )
+    session.add_all([family1, family2])
+    session.commit()
+
+    # Call the method
+    response = controller.listFamilies(session=session)
+
+    # Normalize dates to ISO format
+    for family in response["families"]:
+        family["createDate"] = datetime.fromisoformat(family["createDate"]).isoformat()
+
+    # Expected result
+    expected_response = {
+        "status": "ok",
+        "families": [
+            {
+                "idFamily": 1,
+                "familyName": "Smith",
+                "idRoom": 101,
+                "idShelter": 201,
+                "createdBy": 1,
+                "createDate": "2024-12-14T00:00:00"
+            },
+            {
+                "idFamily": 2,
+                "familyName": "Johnson",
+                "idRoom": 102,
+                "idShelter": 202,
+                "createdBy": 2,
+                "createDate": "2024-12-15T00:00:00"
+            }
+        ]
+    }
+
+    assert response == expected_response
+
+def test_list_families_empty(setup_database):
+    """
+    Test: Validate behavior when no families are present in the database.
+
+    Steps:
+        1. Ensure the database is empty.
+        2. Call the `listFamilies` method.
+
+    Expected Outcome:
+        - The method returns a status of "ok" with an empty list.
+    """
+    session = setup_database
+    controller = FamilyController()
+
+    # Ensure no families are in the database
+    response = controller.listFamilies(session=session)
+
+    assert response == {"status": "ok", "families": []}
+
+def test_list_families_sqlalchemy_error(mocker, setup_database):
+    """
+    Test: Validate behavior when a SQLAlchemyError occurs during the query.
+
+    Steps:
+        1. Mock the session to raise a SQLAlchemyError during query execution.
+        2. Call the `listFamilies` method.
+
+    Expected Outcome:
+        - The method returns a status of "error" with the error message.
+    """
+    session = setup_database
+    controller = FamilyController()
+
+    # Mock session.query to raise SQLAlchemyError
+    mocker.patch.object(session, "query", side_effect=SQLAlchemyError("Database error"))
+
+    response = controller.listFamilies(session=session)
+
+    assert response == {"status": "error", "message": "Database error"}
+
+def test_list_families_unexpected_exception(mocker, setup_database):
+    """
+    Test: Validate behavior when an unexpected exception occurs.
+
+    Steps:
+        1. Mock the session to raise a generic exception during query execution.
+        2. Call the `listFamilies` method.
+
+    Expected Outcome:
+        - The method returns a status of "error" with the exception message.
+    """
+    session = setup_database
+    controller = FamilyController()
+
+    # Mock session.query to raise a generic Exception
+    mocker.patch.object(session, "query", side_effect=Exception("Unexpected error"))
+
+    response = controller.listFamilies(session=session)
+
+    assert response == {"status": "error", "message": "Unexpected error"}
