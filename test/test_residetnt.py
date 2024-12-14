@@ -1036,3 +1036,438 @@ def test_get_resident_room_room_not_found(setup_database):
     assert response["message"] == "Habitación no encontrada"
 
 
+def test_update_resident_surname_success(setup_database):
+    """
+    Test: Verify that the method successfully updates a resident's surname.
+
+    Steps:
+        1. Add a resident to the database.
+        2. Call the `updateResidentSurname` method with a new surname.
+        3. Verify the resident's surname is updated.
+
+    Expected Outcome:
+        - The resident's surname is updated successfully in the database.
+    """
+    session = setup_database
+    controller = ResidentController()
+
+    # Add a resident
+    resident = Resident(idResident=1, name="John", surname="Doe", birthDate=date(1990, 1, 1), gender="M", createdBy=1)
+    session.add(resident)
+    session.commit()
+
+    # Call the method
+    response = controller.updateResidentSurname(idResident=1, new_surname="Smith", session=session)
+
+    # Verify the response and database update
+    assert response["status"] == "ok"
+    assert response["message"] == "Apellido actualizado exitosamente"
+
+    updated_resident = session.query(Resident).filter_by(idResident=1).first()
+    assert updated_resident.surname == "Smith"
+
+
+
+def test_update_resident_surname_not_found(setup_database):
+    """
+    Test: Verify that the method returns an error when the resident is not found.
+
+    Steps:
+        1. Ensure the database does not contain the specified resident.
+        2. Call the `updateResidentSurname` method with a non-existent ID.
+        3. Verify the response indicates the resident is not found.
+
+    Expected Outcome:
+        - The method returns an error message stating "Residente no encontrado".
+    """
+    session = setup_database
+    controller = ResidentController()
+
+    # Call the method with a non-existent resident ID
+    response = controller.updateResidentSurname(idResident=999, new_surname="Smith", session=session)
+
+    # Verify the response
+    assert response["status"] == "error"
+    assert response["message"] == "Residente no encontrado"
+
+
+
+def test_update_resident_surname_database_error(setup_database, mocker):
+    """
+    Test: Verify that the method handles database errors gracefully.
+
+    Steps:
+        1. Mock the database session to raise an SQLAlchemyError.
+        2. Call the `updateResidentSurname` method.
+        3. Verify the response indicates a database error.
+
+    Expected Outcome:
+        - The method returns an error message indicating a database issue.
+    """
+    session = setup_database
+    controller = ResidentController()
+
+    # Add a resident
+    resident = Resident(idResident=1, name="John", surname="Doe", birthDate=date(1990, 1, 1), gender="M", createdBy=1)
+    session.add(resident)
+    session.commit()
+
+    # Mock the session's commit method to raise an SQLAlchemyError
+    mocker.patch("app.controllers.resident_controller.Session.commit", side_effect=SQLAlchemyError("Database error"))
+
+    # Call the method
+    response = controller.updateResidentSurname(idResident=1, new_surname="Smith", session=session)
+
+    # Verify the response
+    assert response["status"] == "error"
+    assert "Error de base de datos" in response["message"]
+
+
+def test_get_resident_by_id_success(setup_database):
+    """
+    Test: Verify that the method retrieves a resident successfully by their ID.
+
+    Steps:
+        1. Add a resident to the database.
+        2. Call the `getResidentById` method with the resident's ID.
+        3. Verify the resident's details are returned correctly.
+
+    Expected Outcome:
+        - The resident's details are returned as a dictionary.
+    """
+    session = setup_database
+    controller = ResidentController()
+
+    # Add a resident
+    resident = Resident(
+        idResident=1, 
+        name="John", 
+        surname="Doe", 
+        birthDate=date(1990, 1, 1), 
+        gender="M", 
+        idFamily=1
+    )
+    session.add(resident)
+    session.commit()
+
+    # Call the method
+    response = controller.getResidentById(idResident=1, session=session)
+
+    # Verify the response
+    assert response["status"] == "ok"
+    assert response["resident"]["idResident"] == 1
+    assert response["resident"]["name"] == "John"
+    assert response["resident"]["surname"] == "Doe"
+    assert response["resident"]["birthDate"] == date(1990, 1, 1)
+    assert response["resident"]["gender"] == "M"
+    assert response["resident"]["idFamily"] == 1
+
+
+def test_get_resident_by_id_not_found(setup_database):
+    """
+    Test: Verify that the method returns an error when the resident is not found.
+
+    Steps:
+        1. Ensure the database does not contain the specified resident ID.
+        2. Call the `getResidentById` method with a non-existent ID.
+        3. Verify the response indicates the resident is not found.
+
+    Expected Outcome:
+        - The method returns an error message stating "Residente no encontrado".
+    """
+    session = setup_database
+    controller = ResidentController()
+
+    # Call the method with a non-existent resident ID
+    response = controller.getResidentById(idResident=999, session=session)
+
+    # Verify the response
+    assert response["status"] == "error"
+    assert response["message"] == "Residente no encontrado"
+
+
+
+def test_get_resident_by_id_unexpected_error(setup_database, mocker):
+    """
+    Test: Verify that the method handles unexpected errors gracefully.
+
+    Steps:
+        1. Mock the database query to raise a generic exception.
+        2. Call the `getResidentById` method.
+        3. Verify the response indicates an error.
+
+    Expected Outcome:
+        - The method returns an error message indicating an unexpected error occurred.
+    """
+    session = setup_database
+    controller = ResidentController()
+
+    # Mock the query to raise an exception
+    mocker.patch("app.controllers.resident_controller.Session.query", side_effect=Exception("Unexpected error"))
+
+    # Call the method
+    response = controller.getResidentById(idResident=1, session=session)
+
+    # Verify the response
+    assert response["status"] == "error"
+    assert "Unexpected error" in response["message"]
+
+
+
+def test_get_resident_by_id_empty_database(setup_database):
+    """
+    Test: Verify that the method behaves correctly when the database is empty.
+
+    Steps:
+        1. Ensure the database contains no residents.
+        2. Call the `getResidentById` method with any ID.
+        3. Verify the response indicates the resident is not found.
+
+    Expected Outcome:
+        - The method returns an error message stating "Residente no encontrado".
+    """
+    session = setup_database
+    controller = ResidentController()
+
+    # Call the method with any ID
+    response = controller.getResidentById(idResident=1, session=session)
+
+    # Verify the response
+    assert response["status"] == "error"
+    assert response["message"] == "Residente no encontrado"
+
+
+def test_login_success(setup_database):
+    """
+    Test: Verify that the method successfully logs in a resident with valid credentials.
+
+    Steps:
+        1. Add a resident to the database.
+        2. Call the `login` method with the resident's name and surname.
+        3. Verify the response includes the resident's ID, name, and surname.
+
+    Expected Outcome:
+        - The login is successful, and the resident's details are returned.
+    """
+    session = setup_database
+    controller = ResidentController()
+
+    # Add a resident
+    resident = Resident(
+        idResident=1,
+        name="John",
+        surname="Doe",
+        birthDate=date(1990, 1, 1),
+        gender="M",
+        idFamily=1
+    )
+    session.add(resident)
+    session.commit()
+
+    # Call the method
+    response = controller.login(name="John", surname="Doe", session=session)
+
+    # Verify the response
+    assert response["status"] == "ok"
+    assert response["user"]["idResident"] == 1
+    assert response["user"]["name"] == "John"
+    assert response["user"]["surname"] == "Doe"
+
+
+def test_login_invalid_credentials(setup_database):
+    """
+    Test: Verify that the method returns an error when the credentials are invalid.
+
+    Steps:
+        1. Ensure the database does not contain the provided name and surname.
+        2. Call the `login` method with invalid credentials.
+        3. Verify the response indicates invalid credentials.
+
+    Expected Outcome:
+        - The method returns an error message stating "Invalid credentials".
+    """
+    session = setup_database
+    controller = ResidentController()
+
+    # Call the method with invalid credentials
+    response = controller.login(name="Invalid", surname="User", session=session)
+
+    # Verify the response
+    assert response["status"] == "error"
+    assert response["message"] == "Invalid credentials"
+
+
+def test_login_unexpected_error(setup_database, mocker):
+    """
+    Test: Verify that the method handles unexpected errors gracefully.
+
+    Steps:
+        1. Mock the database query to raise a generic exception.
+        2. Call the `login` method.
+        3. Verify the response indicates an error.
+
+    Expected Outcome:
+        - The method returns an error message indicating an unexpected error occurred.
+    """
+    session = setup_database
+    controller = ResidentController()
+
+    # Mock the query to raise an exception
+    mocker.patch("app.controllers.resident_controller.Session.query", side_effect=Exception("Unexpected error"))
+
+    # Call the method
+    response = controller.login(name="John", surname="Doe", session=session)
+
+    # Verify the response
+    assert response["status"] == "error"
+    assert "Unexpected error" in response["message"]
+
+
+def test_login_empty_database(setup_database):
+    """
+    Test: Verify that the method behaves correctly when the database is empty.
+
+    Steps:
+        1. Ensure the database contains no residents.
+        2. Call the `login` method with any name and surname.
+        3. Verify the response indicates invalid credentials.
+
+    Expected Outcome:
+        - The method returns an error message stating "Invalid credentials".
+    """
+    session = setup_database
+    controller = ResidentController()
+
+    # Call the method with any credentials
+    response = controller.login(name="John", surname="Doe", session=session)
+
+    # Verify the response
+    assert response["status"] == "error"
+    assert response["message"] == "Invalid credentials"
+
+
+def test_delete_resident_success(setup_database):
+    """
+    Test: Verify that the method successfully deletes a resident.
+
+    Steps:
+        1. Add a resident to the database.
+        2. Call the `delete_resident` method with the resident's ID.
+        3. Verify the resident is removed from the database.
+
+    Expected Outcome:
+        - The method returns a success status.
+        - The resident no longer exists in the database.
+    """
+    session = setup_database
+    controller = ResidentController()
+
+    # Add a resident
+    resident = Resident(
+        idResident=1,
+        name="John",
+        surname="Doe",
+        birthDate=date(1990, 1, 1),
+        gender="M",
+        idFamily=1
+    )
+    session.add(resident)
+    session.commit()
+
+    # Call the method
+    response = controller.delete_resident(idResident=1, session=session)
+
+    # Verify the response
+    assert response["status"] == "ok"
+
+    # Verify the resident no longer exists
+    deleted_resident = session.query(Resident).filter_by(idResident=1).first()
+    assert deleted_resident is None
+
+
+def test_delete_resident_not_found(setup_database):
+    """
+    Test: Verify that the method returns a "not found" status when the resident does not exist.
+
+    Steps:
+        1. Ensure the database does not contain a resident with the given ID.
+        2. Call the `delete_resident` method with a non-existent ID.
+        3. Verify the response indicates the resident was not found.
+
+    Expected Outcome:
+        - The method returns a "not found" status.
+    """
+    session = setup_database
+    controller = ResidentController()
+
+    # Call the method with a non-existent resident ID
+    response = controller.delete_resident(idResident=999, session=session)
+
+    # Verify the response
+    assert response["status"] == "not found"
+
+
+def test_delete_resident_unexpected_error(setup_database, mocker):
+    """
+    Test: Verify that the method handles unexpected errors gracefully.
+
+    Steps:
+        1. Mock the database delete operation to raise a generic exception.
+        2. Call the `delete_resident` method.
+        3. Verify the response indicates an error occurred.
+
+    Expected Outcome:
+        - The method raises an exception or returns an appropriate error message.
+    """
+    session = setup_database
+    controller = ResidentController()
+
+    # Add a resident
+    resident = Resident(
+        idResident=1,
+        name="John",
+        surname="Doe",
+        birthDate=date(1990, 1, 1),
+        gender="M",
+        idFamily=1
+    )
+    session.add(resident)
+    session.commit()
+
+    # Mock the delete operation to raise an exception
+    mocker.patch("app.controllers.resident_controller.Session.delete", side_effect=Exception("Unexpected error"))
+
+    # Call the method
+    with pytest.raises(Exception) as exc_info:
+        controller.delete_resident(idResident=1, session=session)
+
+    # Verify the exception message
+    assert "Unexpected error" in str(exc_info.value)
+
+
+
+def test_delete_resident_empty_database(setup_database):
+    """
+    Test: Verify that the method behaves correctly when the database is empty.
+
+    Steps:
+        1. Ensure the database contains no residents.
+        2. Call the `delete_resident` method with any ID.
+        3. Verify the response indicates the resident was not found.
+
+    Expected Outcome:
+        - The method returns a "not found" status.
+    """
+    session = setup_database
+    controller = ResidentController()
+
+    # Call the method with any ID
+    response = controller.delete_resident(idResident=1, session=session)
+
+    # Verify the response
+    assert response["status"] == "not found"
+
+
+
+
+
