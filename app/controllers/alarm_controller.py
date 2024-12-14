@@ -33,6 +33,8 @@ import app.utils.vars as gb
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 import os
+from sqlalchemy.exc import SQLAlchemyError
+
 class AlarmController:
 
     def __init__(self, db_url=None):
