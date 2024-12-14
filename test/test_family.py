@@ -2,10 +2,12 @@ import pytest
 from app.controllers.family_controller import FamilyController
 from app.models.family import Family as FamilyModel
 from app.mysql.family import Family
+from app.mysql.resident import Resident
 from app.mysql.room import Room
 from app.mysql.shelter import Shelter
 from app.mysql.admin import Admin
 from datetime import datetime
+from sqlalchemy.exc import SQLAlchemyError
 
 def test_create_family_success(setup_database):
     """
@@ -174,3 +176,80 @@ def test_create_family_duplicate(setup_database):
 
     family_count = session.query(Family).count()
     assert family_count == 1
+
+def test_delete_family_successful(mocker, setup_database):
+    """
+    Test: Validate successful deletion of a family with no members.
+    """
+    session = setup_database
+    controller = FamilyController()
+
+    # Add a family to the database
+    family = Family(idFamily=1, familyName="Smith")
+    session.add(family)
+    session.commit()
+
+    # Test successful deletion of a family with no members
+    response = controller.deleteFamily(family_id=1, session=session)
+    assert response == {"status": "ok", "message": "Family deleted successfully"}
+
+    # Verify the family was removed from the database
+    deleted_family = session.query(Family).filter_by(idFamily=1).first()
+    assert deleted_family is None
+
+
+def test_delete_nonexistent_family(mocker, setup_database):
+    """
+    Test: Validate error when attempting to delete a family that does not exist.
+    """
+    session = setup_database
+    controller = FamilyController()
+
+    # Attempt to delete a nonexistent family
+    response = controller.deleteFamily(family_id=99, session=session)
+    assert response == {"status": "error", "message": "Family not found"}
+
+
+def test_delete_family_with_members(mocker, setup_database):
+    """
+    Test: Validate error when attempting to delete a family with associated members.
+    """
+    session = setup_database
+    controller = FamilyController()
+
+    # Add a new family and a member associated with it
+    family_with_members = Family(idFamily=2, familyName="Johnson")
+    resident = Resident(idResident=1, idFamily=2, name="John Doe", surname="Doe")
+    session.add(family_with_members)
+    session.add(resident)
+    session.commit()
+
+    # Attempt to delete a family with associated members
+    response = controller.deleteFamily(family_id=2, session=session)
+    assert response == {"status": "error", "message": "Cannot delete family, there are members associated with it"}
+
+
+def test_delete_family_sqlalchemy_error(mocker, setup_database):
+    """
+    Test: Validate handling of SQLAlchemyError during deletion.
+    """
+    session = setup_database
+    controller = FamilyController()
+
+    # Add a family to the database
+    family = Family(idFamily=1, familyName="Smith")
+    session.add(family)
+    session.commit()
+
+    # Mock SQLAlchemyError during session commit specifically for `deleteFamily`
+    mocker.patch("sqlalchemy.orm.session.Session.commit", side_effect=SQLAlchemyError("Database error"))
+
+    # Spy on the rollback method
+    rollback_spy = mocker.spy(session, "rollback")
+
+    # Attempt to delete a family, expecting a database error
+    response = controller.deleteFamily(family_id=1, session=session)
+
+    # Assertions
+    assert response == {"status": "error", "message": "Database error"}
+    rollback_spy.assert_called_once()
