@@ -206,6 +206,18 @@ def test_list_rooms_with_resident_count(setup_database):
 
 
 def test_access_room_resident_not_found(setup_database):
+    """
+    Test: Verify that attempting to access a room with a non-existent resident returns the correct error message.
+
+    Steps:
+        1. Use a resident ID that does not exist in the database.
+        2. Call the `access_room` method with the invalid resident ID and a valid room ID.
+        3. Verify that the method returns the appropriate error message.
+
+    Expected Outcome:
+        - The method should return "Resident not found." when the resident ID does not exist.
+    """
+
     session = setup_database
     controller = RoomController()
 
@@ -213,6 +225,19 @@ def test_access_room_resident_not_found(setup_database):
     assert response == "Resident not found."
 
 def test_access_room_room_not_found(setup_database):
+    """
+    Test: Verify that attempting to access a non-existent room returns the correct error message.
+
+    Steps:
+        1. Add a valid resident to the database.
+        2. Use a room ID that does not exist in the database.
+        3. Call the `access_room` method with the valid resident ID and invalid room ID.
+        4. Verify that the method returns the appropriate error message.
+
+    Expected Outcome:
+        - The method should return "Room not found." when the room ID does not exist.
+    """
+
     session = setup_database
     controller = RoomController()
 
@@ -224,6 +249,20 @@ def test_access_room_room_not_found(setup_database):
     assert response == "Room not found."
 
 def test_access_room_maintenance_room(setup_database):
+    """
+    Test: Verify that access to a maintenance room is denied.
+
+    Steps:
+        1. Add a valid resident to the database.
+        2. Add a room named "Mantenimiento" to the database.
+        3. Call the `access_room` method with the resident ID and the maintenance room ID.
+        4. Verify that the method denies access with the appropriate error message.
+
+    Expected Outcome:
+        - The method should return "Access denied. No puedes entrar a la sala de mantenimiento."
+          when a resident tries to access a maintenance room.
+    """
+
     session = setup_database
     controller = RoomController()
 
@@ -236,6 +275,21 @@ def test_access_room_maintenance_room(setup_database):
     assert response == "Access denied. No puedes entrar a la sala de mantenimiento."
 
 def test_access_room_full_room(setup_database):
+    """
+    Test: Verify that access is denied when the room is at full capacity.
+
+    Steps:
+        1. Add a room with a maximum capacity of 2 to the database.
+        2. Add two residents assigned to the room to fill it to capacity.
+        3. Add a new resident who will attempt to access the full room.
+        4. Call the `access_room` method with the new resident's ID and the room ID.
+        5. Verify that the method denies access with the appropriate error message.
+
+    Expected Outcome:
+        - The method should return "Access denied. La sala está llena."
+          when a resident tries to enter a room that has reached its maximum capacity.
+    """
+
     session = setup_database
     controller = RoomController()
 
@@ -253,6 +307,20 @@ def test_access_room_full_room(setup_database):
     assert response == "Access denied. La sala está llena."
 
 def test_access_room_public_room(setup_database):
+    """
+    Test: Verify that access is granted when the resident attempts to enter a public room.
+
+    Steps:
+        1. Add a resident to the database.
+        2. Add a room labeled as a "Common Area" with sufficient capacity.
+        3. Call the `access_room` method with the resident's ID and the room ID.
+        4. Verify that access is granted with the appropriate success message.
+
+    Expected Outcome:
+        - The method should return "Access granted. Welcome to the room."
+          when a resident successfully accesses a public room.
+    """
+
     session = setup_database
     controller = RoomController()
 
@@ -265,6 +333,21 @@ def test_access_room_public_room(setup_database):
     assert response == "Access granted. Welcome to the room."
 
 def test_access_room_family_room(setup_database):
+    """
+    Test: Verify that access is granted when a resident enters their assigned family room.
+
+    Steps:
+        1. Add a family with an assigned room to the database.
+        2. Add a resident belonging to that family.
+        3. Add the corresponding room with sufficient capacity.
+        4. Call the `access_room` method with the resident's ID and the room ID.
+        5. Verify that access is granted with the appropriate success message.
+
+    Expected Outcome:
+        - The method should return "Access granted. Welcome to the room."
+          when the resident accesses their assigned family room.
+    """
+
     session = setup_database
     controller = RoomController()
 
@@ -278,6 +361,21 @@ def test_access_room_family_room(setup_database):
     assert response == "Access granted. Welcome to the room."
 
 def test_access_room_wrong_room(setup_database):
+    """
+    Test: Verify that access is denied when a resident attempts to enter a room not assigned to their family.
+
+    Steps:
+        1. Add two families, each assigned to a different room.
+        2. Add a resident belonging to the first family.
+        3. Add a room associated with the second family.
+        4. Call the `access_room` method with the resident's ID and the second room's ID.
+        5. Verify that access is denied with the appropriate error message.
+
+    Expected Outcome:
+        - The method should return "Access denied. You are in the wrong room."
+          when the resident attempts to access a room they are not assigned to.
+    """
+
     session = setup_database
     controller = RoomController()
 

@@ -7,7 +7,7 @@ admin module
 
 .. automodule:: app.mysql.admin
    :members:
-   :undoc-members:
+   :no-undoc-members:
    :show-inheritance:
 
 alarm module
@@ -15,7 +15,7 @@ alarm module
 
 .. automodule:: app.mysql.alarm
    :members:
-   :undoc-members:
+   :no-undoc-members:
    :show-inheritance:
 
 base module
@@ -23,7 +23,7 @@ base module
 
 .. automodule:: app.mysql.base
    :members:
-   :undoc-members:
+   :no-undoc-members:
    :show-inheritance:
 
 family module
@@ -31,7 +31,7 @@ family module
 
 .. automodule:: app.mysql.family
    :members:
-   :undoc-members:
+   :no-undoc-members:
    :show-inheritance:
 
 initializeData module
@@ -39,7 +39,7 @@ initializeData module
 
 .. automodule:: app.mysql.initializeData
    :members:
-   :undoc-members:
+   :no-undoc-members:
    :show-inheritance:
 
 machine module
@@ -47,7 +47,7 @@ machine module
 
 .. automodule:: app.mysql.machine
    :members:
-   :undoc-members:
+   :no-undoc-members:
    :show-inheritance:
 
 mysql module
@@ -55,7 +55,7 @@ mysql module
 
 .. automodule:: app.mysql.mysql
    :members:
-   :undoc-members:
+   :no-undoc-members:
    :show-inheritance:
 
 resident module
@@ -63,7 +63,7 @@ resident module
 
 .. automodule:: app.mysql.resident
    :members:
-   :undoc-members:
+   :no-undoc-members:
    :show-inheritance:
 
 room module
@@ -71,7 +71,7 @@ room module
 
 .. automodule:: app.mysql.room
    :members:
-   :undoc-members:
+   :no-undoc-members:
    :show-inheritance:
 
 shelter module
@@ -79,7 +79,7 @@ shelter module
 
 .. automodule:: app.mysql.shelter
    :members:
-   :undoc-members:
+   :no-undoc-members:
    :show-inheritance:
 
 

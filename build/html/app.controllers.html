@@ -86,7 +86,6 @@
 <li class="toctree-l4"><a class="reference internal" href="#app.controllers.machine_controller.MachineController.deleteMachine"><code class="docutils literal notranslate"><span class="pre">MachineController.deleteMachine()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#app.controllers.machine_controller.MachineController.list_machines"><code class="docutils literal notranslate"><span class="pre">MachineController.list_machines()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#app.controllers.machine_controller.MachineController.updateMachineDate"><code class="docutils literal notranslate"><span class="pre">MachineController.updateMachineDate()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#app.controllers.machine_controller.MachineController.updateMachineStatus"><code class="docutils literal notranslate"><span class="pre">MachineController.updateMachineStatus()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#app.controllers.machine_controller.MachineController.updateMachineStatusOn"><code class="docutils literal notranslate"><span class="pre">MachineController.updateMachineStatusOn()</span></code></a></li>
 </ul>
 </li>
@@ -953,44 +952,6 @@ If not provided, a new session will be created.</p></li>
 <p>If the machine’s date is updated successfully.
 - {“status”: “error”, “message”: &lt;error_message&gt;}:
 If an error occurs, such as the machine not being found.</p>
-</dd>
-</dl>
-</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>dict</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>SQLAlchemyError</strong> – If a database-related error occurs.</p></li>
-<li><p><strong>Exception</strong> – If an unexpected error occurs during the operation.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="app.controllers.machine_controller.MachineController.updateMachineStatus">
-<span class="sig-name descname"><span class="pre">updateMachineStatus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">machine_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.controllers.machine_controller.MachineController.updateMachineStatus" title="Link to this definition"></a></dt>
-<dd><p>Updates the status of a specific machine to <cite>False</cite>.</p>
-<p>This method searches for a machine by its name and sets its <cite>on</cite> status to <cite>False</cite>
-to indicate that the machine is turned off.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>machine_name</strong> (<em>str</em>) – The name of the machine to update.</p></li>
-<li><p><strong>session</strong> (<em>Session</em><em>, </em><em>optional</em>) – SQLAlchemy session object for database interaction.
-If not provided, a new session will be created.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl>
-<dt>Result of the operation.</dt><dd><ul class="simple">
-<li><p>{“status”: “ok”, “message”: “Machine status updated successfully”}:</p></li>
-</ul>
-<p>If the machine’s status is updated successfully.
-- {“status”: “error”, “message”: &lt;error_message&gt;}:
-If an error occurs, such as the machine not being found or a database issue.</p>
 </dd>
 </dl>
 </p>
