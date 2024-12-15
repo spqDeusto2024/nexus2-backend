@@ -55,8 +55,8 @@ def initialize_database():
     try:
         if not session.query(Admin).first():
             admin_data = [
-                {"idAdmin": 1, "email": "admin1@gmail.com", "name": "Maria", "password": "Maria1"},
-                {"idAdmin": 2, "email": "admin2@gmail.com", "name": "Ana", "password": "Ana2"},
+                {"idAdmin": 1, "email": "maria@gmail.com", "name": "Maria", "password": "Maria1"},
+                {"idAdmin": 2, "email": "ana@gmail.com", "name": "Ana", "password": "Ana2"},
             ]
             session.bulk_insert_mappings(Admin, admin_data)
 
@@ -71,7 +71,7 @@ def initialize_database():
                     "maxPeople": 200,
                     "energyLevel": 85,
                     "waterLevel": 95,
-                    "radiationLevel": 10,
+                    "radiationLevel": 5,
                 },
             ]
             session.bulk_insert_mappings(Shelter, shelter_data)
@@ -81,6 +81,8 @@ def initialize_database():
                 {"idRoom": 1, "roomName": "Room 1", "maxPeople": 4, "createdBy": 1, "createDate": date.today(), "idShelter": 1},
                 {"idRoom": 2, "roomName": "Room 2", "maxPeople": 3, "createdBy": 1, "createDate": date.today(), "idShelter": 1},
                 {"idRoom": 3, "roomName": "Kitchen", "maxPeople": 2, "createdBy": 1, "createDate": date.today(), "idShelter": 1},
+                {"idRoom": 4, "roomName": "mantenimiento", "maxPeople": 2, "createdBy": 1, "createDate": date.today(), "idShelter": 1},
+                {"idRoom": 5, "roomName": "Games", "maxPeople": 20, "createdBy": 1, "createDate": date.today(), "idShelter": 1},
             ]
             session.bulk_insert_mappings(Room, room_data)
 
@@ -100,7 +102,10 @@ def initialize_database():
 
         if not session.query(Machine).first():
             machine_data = [
-                {"idMachine": 2, "machineName": "Heater", "on": False, "idRoom": 2, "createdBy": 1, "createDate": date.today(), "update": None},
+                {"idMachine": 1, "machineName": "Heater", "on": True, "idRoom": 2, "createdBy": 1, "createDate": date.today(), "update": None},
+                {"idMachine": 2, "machineName": "energy", "on": True, "idRoom": 4, "createdBy": 1, "createDate": date.today(), "update": None},
+                {"idMachine": 3, "machineName": "water", "on": True, "idRoom": 4, "createdBy": 1, "createDate": date.today(), "update": None},
+                {"idMachine": 4, "machineName": "radiation", "on": True, "idRoom": 4, "createdBy": 1, "createDate": date.today(), "update": None},
             ]
             session.bulk_insert_mappings(Machine, machine_data)
 
