@@ -13,6 +13,7 @@ def setup_database():
     """
     Fixture to create an SQLite in-memory database for testing.
     """
+    
     engine = create_engine("sqlite:///:memory:")  
     Base.metadata.create_all(engine)  
     Session = sessionmaker(bind=engine)

@@ -20,6 +20,7 @@ def test_create_admin_success(setup_database):
     Arguments:
         setup_database (fixture): The database session used for test setup.
     """
+
     session = setup_database
     controller = AdminController()
 
@@ -56,6 +57,7 @@ def test_create_admin_duplicate_email(setup_database):
     Arguments:
         setup_database (fixture): The database session used for test setup.
     """
+
     session = setup_database
     controller = AdminController()
 
@@ -100,6 +102,7 @@ def test_create_admin_database_error(setup_database, mocker):
         setup_database (fixture): The database session used for test setup.
         mocker (pytest-mock): Mocking library for simulating errors.
     """
+
     session = setup_database
     controller = AdminController()
 
@@ -134,6 +137,7 @@ def test_update_admin_name_success(setup_database):
         - The method returns a success message.
         - The admin's name is updated in the database.
     """
+
     session = setup_database
     controller = AdminController()
 
@@ -165,6 +169,7 @@ def test_update_admin_name_not_found(setup_database):
     Expected Outcome:
         - The method returns an error message indicating the admin was not found.
     """
+
     session = setup_database
     controller = AdminController()
 
@@ -187,6 +192,7 @@ def test_update_admin_name_database_error(setup_database, mocker):
     Expected Outcome:
         - The method returns an error message indicating a database issue.
     """
+
     session = setup_database
     controller = AdminController()
 
@@ -213,6 +219,7 @@ def test_update_admin_name_unexpected_error(setup_database, mocker):
     Expected Outcome:
         - The method returns an error message indicating an unexpected issue.
     """
+
     session = setup_database
     controller = AdminController()
 
@@ -241,6 +248,7 @@ def test_login_admin_success(setup_database):
         - A valid JWT token is included in the response.
         - User information (ID and email) is correct.
     """
+
     session = setup_database
     controller = AdminController()
 
@@ -272,6 +280,7 @@ def test_login_admin_invalid_email(setup_database):
         - The method returns a status of "error".
         - The response contains the message "Invalid credentials".
     """
+
     session = setup_database
     controller = AdminController()
 
@@ -302,6 +311,7 @@ def test_login_admin_invalid_password(setup_database):
         - The method returns a status of "error".
         - The response contains the message "Invalid credentials".
     """
+
     session = setup_database
     controller = AdminController()
 
@@ -332,6 +342,7 @@ def test_login_admin_nonexistent_user(setup_database):
         - The method returns a status of "error".
         - The response contains the message "Invalid credentials".
     """
+
     session = setup_database
     controller = AdminController()
 
@@ -357,6 +368,7 @@ def test_login_admin_unexpected_error(setup_database, mocker):
         - The method returns a status of "error".
         - The response contains the exception message.
     """
+
     session = setup_database
     controller = AdminController()
 
@@ -384,6 +396,7 @@ def test_get_admin_by_id_success(setup_database):
         - The method returns a status of "ok".
         - The admin details in the response match the database record.
     """
+
     session = setup_database
     controller = AdminController()
 
@@ -416,6 +429,7 @@ def test_get_admin_by_id_not_found(setup_database):
         - The method returns a status of "error".
         - The response contains the message "Administrador no encontrado".
     """
+
     session = setup_database
     controller = AdminController()
 
@@ -440,6 +454,7 @@ def test_get_admin_by_id_unexpected_error(setup_database, mocker):
         - The method returns a status of "error".
         - The response contains the exception message.
     """
+
     session = setup_database
     controller = AdminController()
 
@@ -468,6 +483,7 @@ def test_delete_admin_success(setup_database):
         - The method returns a status of "ok".
         - The admin record is no longer present in the database.
     """
+
     session = setup_database
     controller = AdminController()
 
@@ -502,6 +518,7 @@ def test_delete_admin_not_found(setup_database):
         - The method returns a status of "error".
         - The response contains the message "Admin not found".
     """
+
     session = setup_database
     controller = AdminController()
 
@@ -527,6 +544,7 @@ def test_delete_admin_unexpected_error(setup_database, mocker):
         - The method returns a status of "error".
         - The response contains the exception message.
     """
+
     session = setup_database
     controller = AdminController()
 
@@ -563,6 +581,7 @@ def test_list_admins_success(setup_database):
         - The method returns a status of "ok".
         - The response contains a list of all admins with their IDs and emails.
     """
+
     session = setup_database
     controller = AdminController()
 
@@ -595,6 +614,7 @@ def test_list_admins_empty(setup_database):
         - The method returns a status of "ok".
         - The response contains an empty list of admins.
     """
+
     session = setup_database
     controller = AdminController()
 
@@ -620,6 +640,7 @@ def test_list_admins_unexpected_error(setup_database, mocker):
         - The method returns a status of "error".
         - The response contains the exception message.
     """
+
     session = setup_database
     controller = AdminController()
 
@@ -648,6 +669,7 @@ def test_update_admin_password_success(setup_database):
         - The method returns a status of "ok".
         - The admin's password is updated in the database.
     """
+
     session = setup_database
     controller = AdminController()
 
@@ -681,6 +703,7 @@ def test_update_admin_password_not_found(setup_database):
         - The method returns a status of "error".
         - The response contains a "Administrador no encontrado" message.
     """
+
     session = setup_database
     controller = AdminController()
 
@@ -705,6 +728,7 @@ def test_update_admin_password_database_error(setup_database, mocker):
         - The method returns a status of "error".
         - The response contains an error message indicating a database issue.
     """
+
     session = setup_database
     controller = AdminController()
 
@@ -737,6 +761,7 @@ def test_update_admin_password_unexpected_error(setup_database, mocker):
         - The method returns a status of "error".
         - The response contains the exception message.
     """
+
     session = setup_database
     controller = AdminController()
 
@@ -765,6 +790,7 @@ def test_update_admin_email_success(setup_database):
         - The method returns a status of "ok".
         - The admin's email is updated in the database.
     """
+
     session = setup_database
     controller = AdminController()
 
@@ -798,6 +824,7 @@ def test_update_admin_email_not_found(setup_database):
         - The method returns a status of "error".
         - The response contains a "Administrador no encontrado" message.
     """
+
     session = setup_database
     controller = AdminController()
 
@@ -822,6 +849,7 @@ def test_update_admin_email_database_error(setup_database, mocker):
         - The method returns a status of "error".
         - The response contains an error message indicating a database issue.
     """
+
     session = setup_database
     controller = AdminController()
 
@@ -854,6 +882,7 @@ def test_update_admin_email_unexpected_error(setup_database, mocker):
         - The method returns a status of "error".
         - The response contains the exception message.
     """
+    
     session = setup_database
     controller = AdminController()
 

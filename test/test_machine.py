@@ -27,6 +27,7 @@ def test_create_machine_success(setup_database):
     Arguments:
         setup_database (fixture): The database session used for test setup.
     """
+
     session = setup_database
     controller = MachineController()
 
@@ -73,6 +74,7 @@ def test_create_machine_room_not_exist(setup_database):
     Arguments:
         setup_database (fixture): The database session used for test setup.
     """
+
     session = setup_database
     controller = MachineController()
 
@@ -111,6 +113,7 @@ def test_create_machine_admin_not_exist(setup_database):
     Arguments:
         setup_database (fixture): The database session used for test setup.
     """
+
     session = setup_database
     controller = MachineController()
 
@@ -154,6 +157,7 @@ def test_create_machine_duplicate(setup_database):
     Arguments:
         setup_database (fixture): The database session used for test setup.
     """
+
     session = setup_database
     controller = MachineController()
 
@@ -198,6 +202,7 @@ def test_update_machine_status_success(setup_database):
     Arguments:
         setup_database (fixture): The database session used for test setup.
     """
+
     session = setup_database
     controller = MachineController()
 
@@ -230,6 +235,7 @@ def test_update_machine_status_not_found(setup_database):
     Arguments:
         setup_database (fixture): The database session used for test setup.
     """
+
     session = setup_database
     controller = MachineController()
 
@@ -255,6 +261,7 @@ def test_update_machine_status_db_error(mocker, setup_database):
         mocker (pytest fixture): Used for mocking objects and methods.
         setup_database (fixture): The database session used for test setup.
     """
+
     session = setup_database
     controller = MachineController()
 
@@ -287,6 +294,7 @@ def test_update_machine_status_general_exception(mocker, setup_database):
         mocker (pytest fixture): Used for mocking objects and methods.
         setup_database (fixture): The database session used for test setup.
     """
+
     session = setup_database
     controller = MachineController()
 
@@ -319,6 +327,7 @@ def test_update_machine_status_success_on(setup_database):
     Arguments:
         setup_database (fixture): The database session used for test setup.
     """
+
     session = setup_database
     controller = MachineController()
 
@@ -351,6 +360,7 @@ def test_update_machine_status_not_found_on(setup_database):
     Arguments:
         setup_database (fixture): The database session used for test setup.
     """
+
     session = setup_database
     controller = MachineController()
 
@@ -376,6 +386,7 @@ def test_update_machine_status_db_error_on(mocker, setup_database):
         mocker (pytest fixture): Used for mocking objects and methods.
         setup_database (fixture): The database session used for test setup.
     """
+
     from sqlalchemy.exc import SQLAlchemyError
 
     session = setup_database
@@ -410,6 +421,7 @@ def test_update_machine_status_general_exception_on(mocker, setup_database):
         mocker (pytest fixture): Used for mocking objects and methods.
         setup_database (fixture): The database session used for test setup.
     """
+
     session = setup_database
     controller = MachineController()
 
@@ -441,6 +453,7 @@ def test_update_machine_date_success(setup_database):
     Arguments:
         setup_database (fixture): The database session used for test setup.
     """
+
     from datetime import date
 
     session = setup_database
@@ -475,6 +488,7 @@ def test_update_machine_date_not_found(setup_database):
     Arguments:
         setup_database (fixture): The database session used for test setup.
     """
+
     session = setup_database
     controller = MachineController()
 
@@ -500,6 +514,7 @@ def test_update_machine_date_db_error(mocker, setup_database):
         mocker (pytest fixture): Used for mocking objects and methods.
         setup_database (fixture): The database session used for test setup.
     """
+
     from sqlalchemy.exc import SQLAlchemyError
 
     session = setup_database
@@ -534,6 +549,7 @@ def test_update_machine_date_general_exception(mocker, setup_database):
         mocker (pytest fixture): Used for mocking objects and methods.
         setup_database (fixture): The database session used for test setup.
     """
+
     session = setup_database
     controller = MachineController()
 
@@ -564,6 +580,7 @@ def test_list_all_machines_success(setup_database):
     Arguments:
         setup_database (fixture): The database session used for test setup.
     """
+
     session = setup_database
     controller = MachineController()
 
@@ -606,6 +623,7 @@ def test_list_no_machines(setup_database):
     Arguments:
         setup_database (fixture): The database session used for test setup.
     """
+
     session = setup_database
     controller = MachineController()
 
@@ -630,6 +648,7 @@ def test_list_machines_db_error(mocker, setup_database):
         mocker (pytest fixture): Used for mocking objects and methods.
         setup_database (fixture): The database session used for test setup.
     """
+
     from sqlalchemy.exc import SQLAlchemyError
 
     session = setup_database
@@ -658,6 +677,7 @@ def test_list_machines_general_exception(mocker, setup_database):
         mocker (pytest fixture): Used for mocking objects and methods.
         setup_database (fixture): The database session used for test setup.
     """
+
     session = setup_database
     controller = MachineController()
 
@@ -683,6 +703,7 @@ def test_delete_machine_success(setup_database):
     Arguments:
         setup_database (fixture): The database session used for test setup.
     """
+
     session = setup_database
     controller = MachineController()
 
@@ -715,6 +736,7 @@ def test_delete_machine_not_found(setup_database):
     Arguments:
         setup_database (fixture): The database session used for test setup.
     """
+
     session = setup_database
     controller = MachineController()
 
@@ -740,6 +762,7 @@ def test_delete_machine_db_error(mocker, setup_database):
         mocker (pytest fixture): Used for mocking objects and methods.
         setup_database (fixture): The database session used for test setup.
     """
+
     from sqlalchemy.exc import SQLAlchemyError
 
     session = setup_database
@@ -774,6 +797,7 @@ def test_delete_machine_general_exception(mocker, setup_database):
         mocker (pytest fixture): Used for mocking objects and methods.
         setup_database (fixture): The database session used for test setup.
     """
+    
     session = setup_database
     controller = MachineController()
 
