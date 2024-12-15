@@ -119,7 +119,7 @@ class MachineController:
         finally:
             if session is None:
                 session.close()
-                
+
     def updateMachineStatus(self, machine_name: str, session=None):
         """
         Updates the status of a specific machine to `False`.
@@ -177,7 +177,37 @@ class MachineController:
     
     def updateMachineStatusOn(self, machine_name: str, session=None):
         """
-        REVISARRRR!!!! Es igual que el de arriba, mirar a ver cual de los dos utilizamos
+        Updates the status of a machine to "on" (True).
+
+        This method searches for a machine by its name in the database, updates its `on` 
+        status to `True`, and commits the change. If the machine is not found or if an error 
+        occurs during the operation, an appropriate error message is returned.
+
+        Args:
+            machine_name (str): The name of the machine to update.
+            session (Session, optional): SQLAlchemy session object for database interaction.
+                If not provided, a new session will be created.
+
+        Returns:
+            dict: Result of the operation.
+                - {"status": "ok", "message": <success_message>}:
+                    If the machine's status is successfully updated. For example:
+                    {"status": "ok", "message": "Machine 'MachineName' status updated to True"}.
+                - {"status": "error", "message": "Machine '<machine_name>' not found"}:
+                    If the specified machine does not exist in the database.
+                - {"status": "error", "message": "Database error: <error_message>"}:
+                    If an SQLAlchemy error occurs during the operation.
+                - {"status": "error", "message": <error_message>}:
+                    If any other unexpected error occurs during the operation.
+
+        Raises:
+            SQLAlchemyError: If a database-specific error occurs.
+            Exception: For any other unexpected errors during execution.
+
+        Notes:
+            - The `machine_name` must match exactly with the `machineName` field in the database.
+            - If the machine is not found, no changes will be made, and an error message will be returned.
+            - The session is closed automatically after the operation, regardless of success or failure.
         """
         if session is None:
             session = Session(self.db_client.engine)
