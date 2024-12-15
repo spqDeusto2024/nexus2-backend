@@ -96,7 +96,7 @@ def initialize_database():
         if not session.query(Resident).first():
             resident_data = [
                 {"idResident": 1, "name": "John", "surname": "Doe", "birthDate": date(1990, 1, 1), "gender": "M", "createdBy": 1, "createDate": date.today(), "idRoom": 1, "idFamily": 1},
-                {"idResident": 2, "name": "Jane", "surname": "Smith", "birthDate": date(1985, 6, 15), "gender": "F", "createdBy": 1, "createDate": date.today(), "idRoom": 2, "idFamily": None},
+                {"idResident": 2, "name": "Jane", "surname": "Smith", "birthDate": date(1985, 6, 15), "gender": "F", "createdBy": 1, "createDate": date.today(), "idRoom": 2, "idFamily": 2},
             ]
             session.bulk_insert_mappings(Resident, resident_data)
 
