@@ -119,6 +119,61 @@ class MachineController:
         finally:
             if session is None:
                 session.close()
+                
+    def updateMachineStatus(self, machine_name: str, session=None):
+        """
+        Updates the status of a specific machine to `False`.
+
+        This method searches for a machine by its name and sets its `on` status to `False` 
+        to indicate that the machine is turned off.
+
+        Args:
+            machine_name (str): The name of the machine to update.
+            session (Session, optional): SQLAlchemy session object for database interaction.
+                If not provided, a new session will be created.
+
+        Returns:
+            dict: Result of the operation.
+                - {"status": "ok", "message": "Machine status updated successfully"}:
+                If the machine's status is updated successfully.
+                - {"status": "error", "message": <error_message>}:
+                If an error occurs, such as the machine not being found or a database issue.
+
+        Raises:
+            SQLAlchemyError: If a database-related error occurs.
+            Exception: If an unexpected error occurs during the operation.
+        """
+        if session is None:
+            session = Session(self.db_client.engine)
+
+        try:
+            # Buscar la máquina por su nombre
+            machine = session.query(Machine).filter(Machine.machineName == machine_name).first()
+
+            if machine is None:
+                return {"status": "error", "message": f"Máquina '{machine_name}' no encontrada"}
+
+            # Actualizar el estado de 'on' a False
+            machine.on = False
+
+            # Guardar los cambios
+            session.commit()
+
+            return {"status": "ok", "message": f"Estado de la máquina '{machine_name}' actualizado a False"}
+
+        except SQLAlchemyError as e:
+            # Captura errores de la base de datos
+            session.rollback()  # Revertir cualquier cambio en caso de error
+            return {"status": "error", "message": f"Error de base de datos: {str(e)}"}
+
+        except Exception as e:
+            # Captura cualquier otro tipo de error
+            return {"status": "error", "message": str(e)}
+
+        finally:
+            # Cerramos la sesión
+            if session:
+                session.close()
     
     def updateMachineStatusOn(self, machine_name: str, session=None):
         """
