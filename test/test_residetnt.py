@@ -30,6 +30,7 @@ def test_create_resident_success(setup_database):
         The test asserts various conditions to ensure correctness and does not 
         return any value.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -83,6 +84,7 @@ def test_create_resident_family_not_exist(setup_database):
         The test asserts various conditions to ensure correctness and does not 
         return any value.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -128,6 +130,7 @@ def test_create_resident_family_no_room(setup_database):
         The test asserts various conditions to ensure correctness and does not 
         return any value.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -179,6 +182,7 @@ def test_create_resident_duplicate(setup_database):
         The test asserts various conditions to ensure correctness and does not 
         return any value.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -231,6 +235,7 @@ def test_create_resident_shelter_full(setup_database):
         The test asserts various conditions to ensure correctness and does not 
         return any value.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -441,6 +446,7 @@ def test_update_resident_birthdate_success(setup_database):
         - The method returns a success message.
         - The resident's birth date is updated in the database.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -476,6 +482,7 @@ def test_update_resident_birthdate_not_found(setup_database):
     Expected Outcome:
         - The method returns an error message indicating the resident is not found.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -501,6 +508,7 @@ def test_update_resident_birthdate_invalid_format(setup_database):
     Expected Outcome:
         - The method returns an error message indicating the date format is invalid.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -533,6 +541,7 @@ def test_update_resident_birthdate_database_error(setup_database, mocker):
     Expected Outcome:
         - The method returns an error message indicating a database issue.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -560,6 +569,7 @@ def test_update_resident_gender_success(setup_database):
         - The method returns a success message.
         - The resident's gender is updated in the database.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -595,6 +605,7 @@ def test_update_resident_gender_not_found(setup_database):
     Expected Outcome:
         - The method returns an error message indicating the resident is not found.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -620,6 +631,7 @@ def test_update_resident_gender_invalid_gender(setup_database):
     Expected Outcome:
         - The method returns an error message indicating the gender is invalid.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -652,6 +664,7 @@ def test_update_resident_gender_database_error(setup_database, mocker):
     Expected Outcome:
         - The method returns an error message indicating a database issue.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -678,6 +691,7 @@ def test_list_residents_in_room_success(setup_database):
         - The method returns a success status.
         - The response contains a list of residents assigned to the specified room.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -715,6 +729,7 @@ def test_list_residents_in_room_no_residents(setup_database):
         - The method returns a success status.
         - The response contains an empty list.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -744,6 +759,7 @@ def test_list_residents_in_room_room_not_found(setup_database):
         - The method returns a success status.
         - The response contains an empty list.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -768,6 +784,7 @@ def test_list_residents_in_room_database_error(setup_database, mocker):
         - The method returns an error status.
         - The response contains an error message.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -798,6 +815,7 @@ def test_update_resident_room_success(setup_database):
         - The method returns a success status.
         - The resident's `idRoom` field is updated to the new room ID.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -835,6 +853,7 @@ def test_update_resident_room_resident_not_found(setup_database):
         - The method returns an error status.
         - The response contains an error message indicating the resident was not found.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -859,6 +878,7 @@ def test_update_resident_room_database_error(setup_database, mocker):
         - The method returns an error status.
         - The response contains an error message indicating a database issue.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -893,6 +913,7 @@ def test_update_resident_room_room_not_found(setup_database):
         - The method returns a success status.
         - The resident's `idRoom` field is updated to the specified new room ID, even if the room does not exist.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -929,6 +950,7 @@ def test_get_resident_room_success(setup_database):
         - The method returns a success status.
         - The response contains the correct room details.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -963,6 +985,7 @@ def test_get_resident_room_resident_not_found(setup_database):
         - The method returns an error status.
         - The response contains an error message indicating the resident was not found.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -987,6 +1010,7 @@ def test_get_resident_room_no_room_assigned(setup_database):
         - The method returns an error status.
         - The response contains an error message indicating the resident has no assigned room.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -1018,6 +1042,7 @@ def test_get_resident_room_room_not_found(setup_database):
         - The method returns an error status.
         - The response contains an error message indicating the room was not found.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -1048,6 +1073,7 @@ def test_update_resident_surname_success(setup_database):
     Expected Outcome:
         - The resident's surname is updated successfully in the database.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -1080,6 +1106,7 @@ def test_update_resident_surname_not_found(setup_database):
     Expected Outcome:
         - The method returns an error message stating "Residente no encontrado".
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -1104,6 +1131,7 @@ def test_update_resident_surname_database_error(setup_database, mocker):
     Expected Outcome:
         - The method returns an error message indicating a database issue.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -1135,6 +1163,7 @@ def test_get_resident_by_id_success(setup_database):
     Expected Outcome:
         - The resident's details are returned as a dictionary.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -1175,6 +1204,7 @@ def test_get_resident_by_id_not_found(setup_database):
     Expected Outcome:
         - The method returns an error message stating "Residente no encontrado".
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -1199,6 +1229,7 @@ def test_get_resident_by_id_unexpected_error(setup_database, mocker):
     Expected Outcome:
         - The method returns an error message indicating an unexpected error occurred.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -1226,6 +1257,7 @@ def test_get_resident_by_id_empty_database(setup_database):
     Expected Outcome:
         - The method returns an error message stating "Residente no encontrado".
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -1249,6 +1281,7 @@ def test_login_success(setup_database):
     Expected Outcome:
         - The login is successful, and the resident's details are returned.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -1286,6 +1319,7 @@ def test_login_invalid_credentials(setup_database):
     Expected Outcome:
         - The method returns an error message stating "Invalid credentials".
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -1309,6 +1343,7 @@ def test_login_unexpected_error(setup_database, mocker):
     Expected Outcome:
         - The method returns an error message indicating an unexpected error occurred.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -1335,6 +1370,7 @@ def test_login_empty_database(setup_database):
     Expected Outcome:
         - The method returns an error message stating "Invalid credentials".
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -1359,6 +1395,7 @@ def test_delete_resident_success(setup_database):
         - The method returns a success status.
         - The resident no longer exists in the database.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -1397,6 +1434,7 @@ def test_delete_resident_not_found(setup_database):
     Expected Outcome:
         - The method returns a "not found" status.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -1419,6 +1457,7 @@ def test_delete_resident_unexpected_error(setup_database, mocker):
     Expected Outcome:
         - The method raises an exception or returns an appropriate error message.
     """
+
     session = setup_database
     controller = ResidentController()
 
@@ -1458,6 +1497,7 @@ def test_delete_resident_empty_database(setup_database):
     Expected Outcome:
         - The method returns a "not found" status.
     """
+    
     session = setup_database
     controller = ResidentController()
 

@@ -27,6 +27,7 @@ def test_create_room_success(setup_database):
     Expected Outcome:
         - The room should be successfully created and associated with the shelter.
     """
+
     session = setup_database
     controller = RoomController()
 
@@ -67,6 +68,7 @@ def test_create_room_admin_not_exist(setup_database):
     Expected Outcome:
         - The operation should fail with an error message about the admin.
     """
+
     session = setup_database
     controller = RoomController()
 
@@ -104,6 +106,7 @@ def test_create_room_shelter_not_exist(setup_database):
     Expected Outcome:
         - The operation should fail with an error message about the shelter.
     """
+
     session = setup_database
     controller = RoomController()
 
@@ -142,6 +145,7 @@ def test_create_room_duplicate(setup_database):
     Expected Outcome:
         - The operation should fail with an error message about the duplicate room.
     """
+
     session = setup_database
     controller = RoomController()
 
@@ -182,6 +186,7 @@ def test_list_rooms_with_resident_count(setup_database):
     Expected Outcome:
         - The room list should include the correct count of residents for each room.
     """
+
     session = setup_database
     controller = RoomController()
 
@@ -400,6 +405,7 @@ def test_list_rooms_success(setup_database):
     Expected Outcome:
         - The method returns a list of rooms with correct details.
     """
+
     session = setup_database
     controller = RoomController()
 
@@ -459,6 +465,7 @@ def test_list_rooms_empty(setup_database):
     Expected Outcome:
         - The method returns an empty list.
     """
+
     session = setup_database
     controller = RoomController()
 
@@ -499,6 +506,7 @@ def test_list_rooms_unexpected_exception(mocker, setup_database):
     Expected Outcome:
         - The method returns a status of "error" with the exception message.
     """
+
     session = setup_database
     controller = RoomController()
 
@@ -522,6 +530,7 @@ def test_update_room_name_success(setup_database):
         - Response indicates success.
         - The room's name is updated in the database.
     """
+
     session = setup_database
     controller = RoomController()
 
@@ -551,6 +560,7 @@ def test_update_room_name_room_not_found(setup_database):
     Expected Outcome:
         - Response indicates the room was not found.
     """
+
     session = setup_database
     controller = RoomController()
 
@@ -572,6 +582,7 @@ def test_update_room_name_sqlalchemy_error(mocker, setup_database):
     Expected Outcome:
         - Response indicates a database error occurred.
     """
+
     session = setup_database
     controller = RoomController()
 
@@ -594,6 +605,7 @@ def test_update_room_name_unexpected_exception(mocker, setup_database):
     Expected Outcome:
         - Response indicates an unexpected error occurred.
     """
+
     session = setup_database
     controller = RoomController()
 
@@ -616,6 +628,7 @@ def test_list_rooms_room_success(setup_database):
     Expected Outcome:
         - Response contains only rooms with names starting with "Room".
     """
+
     session = setup_database
     controller = RoomController()
 
@@ -650,6 +663,7 @@ def test_list_rooms_room_no_matches(setup_database):
     Expected Outcome:
         - Response is an empty list.
     """
+
     session = setup_database
     controller = RoomController()
 
@@ -677,6 +691,7 @@ def test_list_rooms_room_unexpected_exception(mocker, setup_database):
     Expected Outcome:
         - Response indicates an error occurred.
     """
+    
     session = setup_database
     controller = RoomController()
 

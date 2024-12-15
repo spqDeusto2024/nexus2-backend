@@ -16,6 +16,7 @@ def test_get_shelter_energy_level_success(setup_database):
     Expected Outcome:
         - The energy level should be correctly retrieved.
     """
+
     session = setup_database
     controller = ShelterController()
 
@@ -41,6 +42,7 @@ def test_get_shelter_water_level_success(setup_database):
     Expected Outcome:
         - The water level should be correctly retrieved.
     """
+
     session = setup_database
     controller = ShelterController()
 
@@ -66,6 +68,7 @@ def test_get_shelter_radiation_level_success(setup_database):
     Expected Outcome:
         - The radiation level should be correctly retrieved.
     """
+
     session = setup_database
     controller = ShelterController()
 
@@ -91,6 +94,7 @@ def test_get_shelter_no_shelter_found(setup_database):
     Expected Outcome:
         - A `ValueError` should be raised with the appropriate message.
     """
+
     session = setup_database
     controller = ShelterController()
 
@@ -121,6 +125,7 @@ def test_updateShelterEnergyLevel_success(setup_database, mocker):
         - The method returns a success message.
         - The shelter's energy level is updated in the database.
     """
+
     session = setup_database
     controller = ShelterController()
 
@@ -155,6 +160,7 @@ def test_updateShelterWaterLevel_success(setup_database, mocker):
         - The method returns a success message.
         - The shelter's water level is updated in the database.
     """
+
     session = setup_database
     controller = ShelterController()
 
@@ -189,6 +195,7 @@ def test_updateShelterRadiationLevel_success(setup_database):
         - The method returns a success message.
         - The shelter's radiation level is updated in the database.
     """
+    
     session = setup_database
     controller = ShelterController()
 

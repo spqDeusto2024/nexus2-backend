@@ -72,6 +72,7 @@ class FamilyController:
             SQLAlchemyError: If a database-related error occurs.
             Exception: If an unexpected error occurs during the operation.
         """
+
         if session is None:
             session = Session(self.db_client.engine)
 
@@ -141,6 +142,7 @@ class FamilyController:
         Raises:
             Exception: If an unexpected error occurs during the operation.
         """
+
         if session is None:
             session = Session(self.db_client.engine)
 
@@ -202,6 +204,7 @@ class FamilyController:
         Raises:
             Exception: If an unexpected error occurs while querying the database.
         """
+        
         if session is None:
             session = Session(self.db_client.engine)
 

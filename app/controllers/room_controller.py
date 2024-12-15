@@ -85,6 +85,7 @@ class RoomController:
             - The `createdBy` field must correspond to an existing admin, and `idShelter` must correspond to an existing shelter.
 
         """
+
         if session is None:
             session = Session(self.db_client.engine)
         try:
@@ -232,6 +233,7 @@ class RoomController:
             - The room's current occupancy is checked against its maximum capacity.
 
         """
+
         if session is None:
             db = DatabaseClient(gb.MYSQL_URL)
             session = Session(db.engine)
@@ -369,6 +371,7 @@ class RoomController:
             Exception: If an unexpected error occurs during the operation.
 
         """
+
         if session is None:
             session = Session(self.db_client.engine)
 
@@ -450,6 +453,7 @@ class RoomController:
             - The creation date (`createDate`) will be formatted in ISO 8601. If not available, it will be `None`.
 
         """
+        
         if session is None:
             session = Session(self.db_client.engine)
         try:

@@ -28,6 +28,7 @@ def test_create_family_success(setup_database):
     Arguments:
         setup_database (fixture): The database session used for test setup.
     """
+
     session = setup_database
     controller = FamilyController()
 
@@ -73,6 +74,7 @@ def test_create_family_room_not_exist(setup_database):
     Arguments:
         setup_database (fixture): The database session used for test setup.
     """
+
     session = setup_database
     controller = FamilyController()
 
@@ -109,6 +111,7 @@ def test_create_family_shelter_not_exist(setup_database):
     Arguments:
         setup_database (fixture): The database session used for test setup.
     """
+
     session = setup_database
     controller = FamilyController()
 
@@ -151,6 +154,7 @@ def test_create_family_duplicate(setup_database):
     Arguments:
         setup_database (fixture): The database session used for test setup.
     """
+
     session = setup_database
     controller = FamilyController()
 
@@ -180,9 +184,29 @@ def test_create_family_duplicate(setup_database):
     assert family_count == 1
 
 def test_delete_family_successful(mocker, setup_database):
+    """  
+    Tests the successful deletion of a family record from the database.
+
+    This test verifies that the `deleteFamily` method in the `FamilyController` 
+    correctly deletes a family with no associated members from the database. 
+    It also ensures that the family is removed from the database after deletion.
+
+    Args:
+        mocker: A mocking framework fixture used to mock dependencies, if needed.
+        setup_database: A fixture that sets up and provides a database session for testing.
+
+    Steps:
+        1. Add a family with `idFamily=1` and `familyName="Smith"` to the database.
+        2. Call the `deleteFamily` method to delete the family using its ID.
+        3. Assert that the method returns a success response.
+        4. Query the database to confirm the family was removed.
+
+    Assertions:
+        - The `deleteFamily` method returns the expected success response.
+        - The family with the specified `idFamily` is no longer in the database.
+
     """
-    Test: Validate successful deletion of a family with no members.
-    """
+
     session = setup_database
     controller = FamilyController()
 
@@ -234,7 +258,29 @@ def test_delete_family_with_members(mocker, setup_database):
 def test_delete_family_sqlalchemy_error(mocker, setup_database):
     """
     Test: Validate handling of SQLAlchemyError during deletion.
+    
+    Tests the behavior of the `deleteFamily` method when a SQLAlchemyError occurs during database operations.
+
+    This test ensures that the `deleteFamily` method:
+    1. Handles database errors gracefully by returning an appropriate error response.
+    2. Rolls back the session in case of a database commit failure.
+
+    Args:
+        mocker: A mocking framework fixture used to mock methods and spy on calls.
+        setup_database: A fixture that sets up and provides a database session for testing.
+
+    Steps:
+        1. Add a family with `idFamily=1` and `familyName="Smith"` to the database.
+        2. Mock the `Session.commit` method to raise a `SQLAlchemyError` when called.
+        3. Spy on the `rollback` method of the session to verify it is invoked.
+        4. Call the `deleteFamily` method to attempt deletion of the family.
+
+    Assertions:
+        - The `deleteFamily` method returns an error response: `{"status": "error", "message": "Database error"}`.
+        - The session's `rollback` method is called exactly once to undo the failed transaction.
+
     """
+    
     session = setup_database
     controller = FamilyController()
 
@@ -274,6 +320,7 @@ def test_list_families_success(setup_database):
     Expected Outcome:
         - The method returns a status of "ok" and a list of families with correct details.
     """
+
     session = setup_database
     controller = FamilyController()
 
@@ -340,6 +387,7 @@ def test_list_families_empty(setup_database):
     Expected Outcome:
         - The method returns a status of "ok" with an empty list.
     """
+
     session = setup_database
     controller = FamilyController()
 
@@ -359,6 +407,7 @@ def test_list_families_sqlalchemy_error(mocker, setup_database):
     Expected Outcome:
         - The method returns a status of "error" with the error message.
     """
+
     session = setup_database
     controller = FamilyController()
 
@@ -380,6 +429,7 @@ def test_list_families_unexpected_exception(mocker, setup_database):
     Expected Outcome:
         - The method returns a status of "error" with the exception message.
     """
+
     session = setup_database
     controller = FamilyController()
 

@@ -29,6 +29,7 @@ def test_create_alarm(mocker, setup_database):
         mocker (pytest fixture): Used for mocking objects and methods.
         setup_database (fixture): The database session used for test setup.
     """
+
     session = setup_database
     controller = AlarmController()  # Assuming this is the controller containing `create_alarm`
 
@@ -112,6 +113,7 @@ def test_list_alarms_success(setup_database):
         - The method returns a success status.
         - The response contains all the alarms with their correct details.
     """
+
     session = setup_database
     controller = AlarmController()
 
@@ -146,6 +148,7 @@ def test_list_alarms_empty_database(setup_database):
         - The method returns a success status.
         - The response contains an empty list of alarms.
     """
+
     session = setup_database
     controller = AlarmController()
 
@@ -170,6 +173,7 @@ def test_list_alarms_database_error(setup_database, mocker):
         - The method returns an error status.
         - The response contains an error message indicating a database issue.
     """
+
     session = setup_database
     controller = AlarmController()
 
@@ -198,6 +202,7 @@ def test_create_alarm_level_success(setup_database):
         - The response includes the generated `idAlarm` and a success message.
         - The database contains the new alarm.
     """
+
     session = setup_database
     controller = AlarmController()
 
@@ -244,6 +249,7 @@ def test_create_alarm_level_room_not_exist(setup_database):
         - The response contains a message indicating that room 3 does not exist.
         - No alarm is created in the database.
     """
+
     session = setup_database
     controller = AlarmController()
 
@@ -282,6 +288,7 @@ def test_create_alarm_level_database_error(setup_database, mocker):
         - The method returns an error status.
         - The response contains a message indicating a database error.
     """
+
     session = setup_database
     controller = AlarmController()
 
@@ -324,6 +331,7 @@ def test_update_alarm_end_date_success(setup_database):
         - The method returns a success status.
         - The alarm's end date is updated in the database.
     """
+
     session = setup_database
     controller = AlarmController()
 
@@ -365,6 +373,7 @@ def test_update_alarm_end_date_not_found(setup_database):
         - The method returns an error status.
         - The response contains a message indicating the alarm was not found.
     """
+
     session = setup_database
     controller = AlarmController()
 
@@ -390,6 +399,7 @@ def test_update_alarm_end_date_database_error(setup_database, mocker):
         - The method returns an error status.
         - The response contains a message indicating a database error.
     """
+    
     session = setup_database
     controller = AlarmController()
 
