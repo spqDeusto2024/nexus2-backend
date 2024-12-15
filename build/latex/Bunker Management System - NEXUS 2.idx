@@ -1,0 +1,380 @@
+\indexentry{module@\spxentry{module}!app.controllers.admin\_controller@\spxentry{app.controllers.admin\_controller}}{1}
+\indexentry{app.controllers.admin\_controller@\spxentry{app.controllers.admin\_controller}!module@\spxentry{module}}{1}
+\indexentry{AdminController (class in app.controllers.admin\_controller)@\spxentry{AdminController}\spxextra{class in app.controllers.admin\_controller}}{1}
+\indexentry{create\_admin() (app.controllers.admin\_controller.AdminController method)@\spxentry{create\_admin()}\spxextra{app.controllers.admin\_controller.AdminController method}}{1}
+\indexentry{deleteAdmin() (app.controllers.admin\_controller.AdminController method)@\spxentry{deleteAdmin()}\spxextra{app.controllers.admin\_controller.AdminController method}}{1}
+\indexentry{getAdminById() (app.controllers.admin\_controller.AdminController method)@\spxentry{getAdminById()}\spxextra{app.controllers.admin\_controller.AdminController method}}{2}
+\indexentry{listAdmins() (app.controllers.admin\_controller.AdminController method)@\spxentry{listAdmins()}\spxextra{app.controllers.admin\_controller.AdminController method}}{2}
+\indexentry{loginAdmin() (app.controllers.admin\_controller.AdminController method)@\spxentry{loginAdmin()}\spxextra{app.controllers.admin\_controller.AdminController method}}{3}
+\indexentry{refreshAccessToken() (app.controllers.admin\_controller.AdminController method)@\spxentry{refreshAccessToken()}\spxextra{app.controllers.admin\_controller.AdminController method}}{3}
+\indexentry{updateAdminEmail() (app.controllers.admin\_controller.AdminController method)@\spxentry{updateAdminEmail()}\spxextra{app.controllers.admin\_controller.AdminController method}}{3}
+\indexentry{updateAdminName() (app.controllers.admin\_controller.AdminController method)@\spxentry{updateAdminName()}\spxextra{app.controllers.admin\_controller.AdminController method}}{4}
+\indexentry{updateAdminPassword() (app.controllers.admin\_controller.AdminController method)@\spxentry{updateAdminPassword()}\spxextra{app.controllers.admin\_controller.AdminController method}}{4}
+\indexentry{module@\spxentry{module}!app.controllers.alarm\_controller@\spxentry{app.controllers.alarm\_controller}}{5}
+\indexentry{app.controllers.alarm\_controller@\spxentry{app.controllers.alarm\_controller}!module@\spxentry{module}}{5}
+\indexentry{AlarmController (class in app.controllers.alarm\_controller)@\spxentry{AlarmController}\spxextra{class in app.controllers.alarm\_controller}}{5}
+\indexentry{create\_alarm() (app.controllers.alarm\_controller.AlarmController method)@\spxentry{create\_alarm()}\spxextra{app.controllers.alarm\_controller.AlarmController method}}{5}
+\indexentry{create\_alarmLevel() (app.controllers.alarm\_controller.AlarmController method)@\spxentry{create\_alarmLevel()}\spxextra{app.controllers.alarm\_controller.AlarmController method}}{5}
+\indexentry{list\_alarms() (app.controllers.alarm\_controller.AlarmController method)@\spxentry{list\_alarms()}\spxextra{app.controllers.alarm\_controller.AlarmController method}}{6}
+\indexentry{updateAlarmEndDate() (app.controllers.alarm\_controller.AlarmController method)@\spxentry{updateAlarmEndDate()}\spxextra{app.controllers.alarm\_controller.AlarmController method}}{6}
+\indexentry{module@\spxentry{module}!app.controllers.family\_controller@\spxentry{app.controllers.family\_controller}}{7}
+\indexentry{app.controllers.family\_controller@\spxentry{app.controllers.family\_controller}!module@\spxentry{module}}{7}
+\indexentry{FamilyController (class in app.controllers.family\_controller)@\spxentry{FamilyController}\spxextra{class in app.controllers.family\_controller}}{7}
+\indexentry{create\_family() (app.controllers.family\_controller.FamilyController method)@\spxentry{create\_family()}\spxextra{app.controllers.family\_controller.FamilyController method}}{7}
+\indexentry{deleteFamily() (app.controllers.family\_controller.FamilyController method)@\spxentry{deleteFamily()}\spxextra{app.controllers.family\_controller.FamilyController method}}{8}
+\indexentry{listFamilies() (app.controllers.family\_controller.FamilyController method)@\spxentry{listFamilies()}\spxextra{app.controllers.family\_controller.FamilyController method}}{8}
+\indexentry{module@\spxentry{module}!app.controllers.machine\_controller@\spxentry{app.controllers.machine\_controller}}{9}
+\indexentry{app.controllers.machine\_controller@\spxentry{app.controllers.machine\_controller}!module@\spxentry{module}}{9}
+\indexentry{MachineController (class in app.controllers.machine\_controller)@\spxentry{MachineController}\spxextra{class in app.controllers.machine\_controller}}{9}
+\indexentry{create\_machine() (app.controllers.machine\_controller.MachineController method)@\spxentry{create\_machine()}\spxextra{app.controllers.machine\_controller.MachineController method}}{9}
+\indexentry{deleteMachine() (app.controllers.machine\_controller.MachineController method)@\spxentry{deleteMachine()}\spxextra{app.controllers.machine\_controller.MachineController method}}{9}
+\indexentry{list\_machines() (app.controllers.machine\_controller.MachineController method)@\spxentry{list\_machines()}\spxextra{app.controllers.machine\_controller.MachineController method}}{10}
+\indexentry{updateMachineDate() (app.controllers.machine\_controller.MachineController method)@\spxentry{updateMachineDate()}\spxextra{app.controllers.machine\_controller.MachineController method}}{10}
+\indexentry{updateMachineStatus() (app.controllers.machine\_controller.MachineController method)@\spxentry{updateMachineStatus()}\spxextra{app.controllers.machine\_controller.MachineController method}}{11}
+\indexentry{updateMachineStatusOn() (app.controllers.machine\_controller.MachineController method)@\spxentry{updateMachineStatusOn()}\spxextra{app.controllers.machine\_controller.MachineController method}}{11}
+\indexentry{module@\spxentry{module}!app.controllers.resident\_controller@\spxentry{app.controllers.resident\_controller}}{12}
+\indexentry{app.controllers.resident\_controller@\spxentry{app.controllers.resident\_controller}!module@\spxentry{module}}{12}
+\indexentry{ResidentController (class in app.controllers.resident\_controller)@\spxentry{ResidentController}\spxextra{class in app.controllers.resident\_controller}}{12}
+\indexentry{create\_resident() (app.controllers.resident\_controller.ResidentController method)@\spxentry{create\_resident()}\spxextra{app.controllers.resident\_controller.ResidentController method}}{12}
+\indexentry{delete\_resident() (app.controllers.resident\_controller.ResidentController method)@\spxentry{delete\_resident()}\spxextra{app.controllers.resident\_controller.ResidentController method}}{13}
+\indexentry{getResidentById() (app.controllers.resident\_controller.ResidentController method)@\spxentry{getResidentById()}\spxextra{app.controllers.resident\_controller.ResidentController method}}{13}
+\indexentry{getResidentRoomByNameAndSurname() (app.controllers.resident\_controller.ResidentController method)@\spxentry{getResidentRoomByNameAndSurname()}\spxextra{app.controllers.resident\_controller.ResidentController method}}{14}
+\indexentry{list\_residents() (app.controllers.resident\_controller.ResidentController method)@\spxentry{list\_residents()}\spxextra{app.controllers.resident\_controller.ResidentController method}}{15}
+\indexentry{list\_residents\_in\_room() (app.controllers.resident\_controller.ResidentController method)@\spxentry{list\_residents\_in\_room()}\spxextra{app.controllers.resident\_controller.ResidentController method}}{15}
+\indexentry{login() (app.controllers.resident\_controller.ResidentController method)@\spxentry{login()}\spxextra{app.controllers.resident\_controller.ResidentController method}}{16}
+\indexentry{updateResidentBirthDate() (app.controllers.resident\_controller.ResidentController method)@\spxentry{updateResidentBirthDate()}\spxextra{app.controllers.resident\_controller.ResidentController method}}{17}
+\indexentry{updateResidentGender() (app.controllers.resident\_controller.ResidentController method)@\spxentry{updateResidentGender()}\spxextra{app.controllers.resident\_controller.ResidentController method}}{17}
+\indexentry{updateResidentName() (app.controllers.resident\_controller.ResidentController method)@\spxentry{updateResidentName()}\spxextra{app.controllers.resident\_controller.ResidentController method}}{18}
+\indexentry{updateResidentRoom() (app.controllers.resident\_controller.ResidentController method)@\spxentry{updateResidentRoom()}\spxextra{app.controllers.resident\_controller.ResidentController method}}{18}
+\indexentry{updateResidentSurname() (app.controllers.resident\_controller.ResidentController method)@\spxentry{updateResidentSurname()}\spxextra{app.controllers.resident\_controller.ResidentController method}}{19}
+\indexentry{update\_resident() (app.controllers.resident\_controller.ResidentController method)@\spxentry{update\_resident()}\spxextra{app.controllers.resident\_controller.ResidentController method}}{19}
+\indexentry{module@\spxentry{module}!app.controllers.room\_controller@\spxentry{app.controllers.room\_controller}}{20}
+\indexentry{app.controllers.room\_controller@\spxentry{app.controllers.room\_controller}!module@\spxentry{module}}{20}
+\indexentry{RoomController (class in app.controllers.room\_controller)@\spxentry{RoomController}\spxextra{class in app.controllers.room\_controller}}{20}
+\indexentry{access\_room() (app.controllers.room\_controller.RoomController method)@\spxentry{access\_room()}\spxextra{app.controllers.room\_controller.RoomController method}}{20}
+\indexentry{create\_room() (app.controllers.room\_controller.RoomController method)@\spxentry{create\_room()}\spxextra{app.controllers.room\_controller.RoomController method}}{21}
+\indexentry{list\_rooms() (app.controllers.room\_controller.RoomController method)@\spxentry{list\_rooms()}\spxextra{app.controllers.room\_controller.RoomController method}}{22}
+\indexentry{list\_rooms\_Room() (app.controllers.room\_controller.RoomController method)@\spxentry{list\_rooms\_Room()}\spxextra{app.controllers.room\_controller.RoomController method}}{23}
+\indexentry{list\_rooms\_with\_resident\_count() (app.controllers.room\_controller.RoomController method)@\spxentry{list\_rooms\_with\_resident\_count()}\spxextra{app.controllers.room\_controller.RoomController method}}{23}
+\indexentry{updateRoomName() (app.controllers.room\_controller.RoomController method)@\spxentry{updateRoomName()}\spxextra{app.controllers.room\_controller.RoomController method}}{24}
+\indexentry{module@\spxentry{module}!app.controllers.shelter\_controller@\spxentry{app.controllers.shelter\_controller}}{25}
+\indexentry{app.controllers.shelter\_controller@\spxentry{app.controllers.shelter\_controller}!module@\spxentry{module}}{25}
+\indexentry{ShelterController (class in app.controllers.shelter\_controller)@\spxentry{ShelterController}\spxextra{class in app.controllers.shelter\_controller}}{25}
+\indexentry{get\_shelter\_energy\_level() (app.controllers.shelter\_controller.ShelterController method)@\spxentry{get\_shelter\_energy\_level()}\spxextra{app.controllers.shelter\_controller.ShelterController method}}{25}
+\indexentry{get\_shelter\_radiation\_level() (app.controllers.shelter\_controller.ShelterController method)@\spxentry{get\_shelter\_radiation\_level()}\spxextra{app.controllers.shelter\_controller.ShelterController method}}{26}
+\indexentry{get\_shelter\_water\_level() (app.controllers.shelter\_controller.ShelterController method)@\spxentry{get\_shelter\_water\_level()}\spxextra{app.controllers.shelter\_controller.ShelterController method}}{26}
+\indexentry{updateShelterEnergyLevel() (app.controllers.shelter\_controller.ShelterController method)@\spxentry{updateShelterEnergyLevel()}\spxextra{app.controllers.shelter\_controller.ShelterController method}}{27}
+\indexentry{updateShelterRadiationLevel() (app.controllers.shelter\_controller.ShelterController method)@\spxentry{updateShelterRadiationLevel()}\spxextra{app.controllers.shelter\_controller.ShelterController method}}{27}
+\indexentry{updateShelterWaterLevel() (app.controllers.shelter\_controller.ShelterController method)@\spxentry{updateShelterWaterLevel()}\spxextra{app.controllers.shelter\_controller.ShelterController method}}{28}
+\indexentry{module@\spxentry{module}!app.models.admin@\spxentry{app.models.admin}}{31}
+\indexentry{app.models.admin@\spxentry{app.models.admin}!module@\spxentry{module}}{31}
+\indexentry{Admin (class in app.models.admin)@\spxentry{Admin}\spxextra{class in app.models.admin}}{31}
+\indexentry{idAdmin (app.models.admin.Admin attribute)@\spxentry{idAdmin}\spxextra{app.models.admin.Admin attribute}}{31}
+\indexentry{email (app.models.admin.Admin attribute)@\spxentry{email}\spxextra{app.models.admin.Admin attribute}}{31}
+\indexentry{name (app.models.admin.Admin attribute)@\spxentry{name}\spxextra{app.models.admin.Admin attribute}}{31}
+\indexentry{password (app.models.admin.Admin attribute)@\spxentry{password}\spxextra{app.models.admin.Admin attribute}}{31}
+\indexentry{module@\spxentry{module}!app.models.alarm@\spxentry{app.models.alarm}}{31}
+\indexentry{app.models.alarm@\spxentry{app.models.alarm}!module@\spxentry{module}}{31}
+\indexentry{Alarm (class in app.models.alarm)@\spxentry{Alarm}\spxextra{class in app.models.alarm}}{31}
+\indexentry{idAlarm (app.models.alarm.Alarm attribute)@\spxentry{idAlarm}\spxextra{app.models.alarm.Alarm attribute}}{31}
+\indexentry{start (app.models.alarm.Alarm attribute)@\spxentry{start}\spxextra{app.models.alarm.Alarm attribute}}{32}
+\indexentry{end (app.models.alarm.Alarm attribute)@\spxentry{end}\spxextra{app.models.alarm.Alarm attribute}}{32}
+\indexentry{idRoom (app.models.alarm.Alarm attribute)@\spxentry{idRoom}\spxextra{app.models.alarm.Alarm attribute}}{32}
+\indexentry{idResident (app.models.alarm.Alarm attribute)@\spxentry{idResident}\spxextra{app.models.alarm.Alarm attribute}}{32}
+\indexentry{idAdmin (app.models.alarm.Alarm attribute)@\spxentry{idAdmin}\spxextra{app.models.alarm.Alarm attribute}}{32}
+\indexentry{createDate (app.models.alarm.Alarm attribute)@\spxentry{createDate}\spxextra{app.models.alarm.Alarm attribute}}{32}
+\indexentry{module@\spxentry{module}!app.models.family@\spxentry{app.models.family}}{32}
+\indexentry{app.models.family@\spxentry{app.models.family}!module@\spxentry{module}}{32}
+\indexentry{Family (class in app.models.family)@\spxentry{Family}\spxextra{class in app.models.family}}{32}
+\indexentry{idFamily (app.models.family.Family attribute)@\spxentry{idFamily}\spxextra{app.models.family.Family attribute}}{32}
+\indexentry{familyName (app.models.family.Family attribute)@\spxentry{familyName}\spxextra{app.models.family.Family attribute}}{32}
+\indexentry{idRoom (app.models.family.Family attribute)@\spxentry{idRoom}\spxextra{app.models.family.Family attribute}}{32}
+\indexentry{idShelter (app.models.family.Family attribute)@\spxentry{idShelter}\spxextra{app.models.family.Family attribute}}{33}
+\indexentry{createdBy (app.models.family.Family attribute)@\spxentry{createdBy}\spxextra{app.models.family.Family attribute}}{33}
+\indexentry{createDate (app.models.family.Family attribute)@\spxentry{createDate}\spxextra{app.models.family.Family attribute}}{33}
+\indexentry{module@\spxentry{module}!app.models.machine@\spxentry{app.models.machine}}{33}
+\indexentry{app.models.machine@\spxentry{app.models.machine}!module@\spxentry{module}}{33}
+\indexentry{Machine (class in app.models.machine)@\spxentry{Machine}\spxextra{class in app.models.machine}}{33}
+\indexentry{idMachine (app.models.machine.Machine attribute)@\spxentry{idMachine}\spxextra{app.models.machine.Machine attribute}}{33}
+\indexentry{machineName (app.models.machine.Machine attribute)@\spxentry{machineName}\spxextra{app.models.machine.Machine attribute}}{33}
+\indexentry{on (app.models.machine.Machine attribute)@\spxentry{on}\spxextra{app.models.machine.Machine attribute}}{33}
+\indexentry{idRoom (app.models.machine.Machine attribute)@\spxentry{idRoom}\spxextra{app.models.machine.Machine attribute}}{33}
+\indexentry{createdBy (app.models.machine.Machine attribute)@\spxentry{createdBy}\spxextra{app.models.machine.Machine attribute}}{33}
+\indexentry{createDate (app.models.machine.Machine attribute)@\spxentry{createDate}\spxextra{app.models.machine.Machine attribute}}{34}
+\indexentry{update (app.models.machine.Machine attribute)@\spxentry{update}\spxextra{app.models.machine.Machine attribute}}{34}
+\indexentry{module@\spxentry{module}!app.models.resident@\spxentry{app.models.resident}}{34}
+\indexentry{app.models.resident@\spxentry{app.models.resident}!module@\spxentry{module}}{34}
+\indexentry{Resident (class in app.models.resident)@\spxentry{Resident}\spxextra{class in app.models.resident}}{34}
+\indexentry{idResident (app.models.resident.Resident attribute)@\spxentry{idResident}\spxextra{app.models.resident.Resident attribute}}{34}
+\indexentry{name (app.models.resident.Resident attribute)@\spxentry{name}\spxextra{app.models.resident.Resident attribute}}{34}
+\indexentry{surname (app.models.resident.Resident attribute)@\spxentry{surname}\spxextra{app.models.resident.Resident attribute}}{34}
+\indexentry{birthDate (app.models.resident.Resident attribute)@\spxentry{birthDate}\spxextra{app.models.resident.Resident attribute}}{34}
+\indexentry{gender (app.models.resident.Resident attribute)@\spxentry{gender}\spxextra{app.models.resident.Resident attribute}}{34}
+\indexentry{createdBy (app.models.resident.Resident attribute)@\spxentry{createdBy}\spxextra{app.models.resident.Resident attribute}}{34}
+\indexentry{createDate (app.models.resident.Resident attribute)@\spxentry{createDate}\spxextra{app.models.resident.Resident attribute}}{34}
+\indexentry{update (app.models.resident.Resident attribute)@\spxentry{update}\spxextra{app.models.resident.Resident attribute}}{35}
+\indexentry{idFamily (app.models.resident.Resident attribute)@\spxentry{idFamily}\spxextra{app.models.resident.Resident attribute}}{35}
+\indexentry{idRoom (app.models.resident.Resident attribute)@\spxentry{idRoom}\spxextra{app.models.resident.Resident attribute}}{35}
+\indexentry{module@\spxentry{module}!app.models.room@\spxentry{app.models.room}}{35}
+\indexentry{app.models.room@\spxentry{app.models.room}!module@\spxentry{module}}{35}
+\indexentry{Room (class in app.models.room)@\spxentry{Room}\spxextra{class in app.models.room}}{35}
+\indexentry{idRoom (app.models.room.Room attribute)@\spxentry{idRoom}\spxextra{app.models.room.Room attribute}}{35}
+\indexentry{roomName (app.models.room.Room attribute)@\spxentry{roomName}\spxextra{app.models.room.Room attribute}}{35}
+\indexentry{createdBy (app.models.room.Room attribute)@\spxentry{createdBy}\spxextra{app.models.room.Room attribute}}{35}
+\indexentry{createDate (app.models.room.Room attribute)@\spxentry{createDate}\spxextra{app.models.room.Room attribute}}{35}
+\indexentry{idShelter (app.models.room.Room attribute)@\spxentry{idShelter}\spxextra{app.models.room.Room attribute}}{35}
+\indexentry{maxPeople (app.models.room.Room attribute)@\spxentry{maxPeople}\spxextra{app.models.room.Room attribute}}{36}
+\indexentry{module@\spxentry{module}!app.models.shelter@\spxentry{app.models.shelter}}{36}
+\indexentry{app.models.shelter@\spxentry{app.models.shelter}!module@\spxentry{module}}{36}
+\indexentry{Shelter (class in app.models.shelter)@\spxentry{Shelter}\spxextra{class in app.models.shelter}}{36}
+\indexentry{idShelter (app.models.shelter.Shelter attribute)@\spxentry{idShelter}\spxextra{app.models.shelter.Shelter attribute}}{36}
+\indexentry{shelterName (app.models.shelter.Shelter attribute)@\spxentry{shelterName}\spxextra{app.models.shelter.Shelter attribute}}{36}
+\indexentry{address (app.models.shelter.Shelter attribute)@\spxentry{address}\spxextra{app.models.shelter.Shelter attribute}}{36}
+\indexentry{phone (app.models.shelter.Shelter attribute)@\spxentry{phone}\spxextra{app.models.shelter.Shelter attribute}}{36}
+\indexentry{email (app.models.shelter.Shelter attribute)@\spxentry{email}\spxextra{app.models.shelter.Shelter attribute}}{36}
+\indexentry{maxPeople (app.models.shelter.Shelter attribute)@\spxentry{maxPeople}\spxextra{app.models.shelter.Shelter attribute}}{36}
+\indexentry{energyLevel (app.models.shelter.Shelter attribute)@\spxentry{energyLevel}\spxextra{app.models.shelter.Shelter attribute}}{36}
+\indexentry{waterLevel (app.models.shelter.Shelter attribute)@\spxentry{waterLevel}\spxextra{app.models.shelter.Shelter attribute}}{36}
+\indexentry{radiationLevel (app.models.shelter.Shelter attribute)@\spxentry{radiationLevel}\spxextra{app.models.shelter.Shelter attribute}}{37}
+\indexentry{module@\spxentry{module}!app.mysql.admin@\spxentry{app.mysql.admin}}{39}
+\indexentry{app.mysql.admin@\spxentry{app.mysql.admin}!module@\spxentry{module}}{39}
+\indexentry{Admin (class in app.mysql.admin)@\spxentry{Admin}\spxextra{class in app.mysql.admin}}{39}
+\indexentry{idAdmin (app.mysql.admin.Admin attribute)@\spxentry{idAdmin}\spxextra{app.mysql.admin.Admin attribute}}{39}
+\indexentry{email (app.mysql.admin.Admin attribute)@\spxentry{email}\spxextra{app.mysql.admin.Admin attribute}}{39}
+\indexentry{name (app.mysql.admin.Admin attribute)@\spxentry{name}\spxextra{app.mysql.admin.Admin attribute}}{39}
+\indexentry{password (app.mysql.admin.Admin attribute)@\spxentry{password}\spxextra{app.mysql.admin.Admin attribute}}{39}
+\indexentry{module@\spxentry{module}!app.mysql.alarm@\spxentry{app.mysql.alarm}}{39}
+\indexentry{app.mysql.alarm@\spxentry{app.mysql.alarm}!module@\spxentry{module}}{39}
+\indexentry{Alarm (class in app.mysql.alarm)@\spxentry{Alarm}\spxextra{class in app.mysql.alarm}}{39}
+\indexentry{idAlarm (app.mysql.alarm.Alarm attribute)@\spxentry{idAlarm}\spxextra{app.mysql.alarm.Alarm attribute}}{39}
+\indexentry{start (app.mysql.alarm.Alarm attribute)@\spxentry{start}\spxextra{app.mysql.alarm.Alarm attribute}}{40}
+\indexentry{end (app.mysql.alarm.Alarm attribute)@\spxentry{end}\spxextra{app.mysql.alarm.Alarm attribute}}{40}
+\indexentry{idRoom (app.mysql.alarm.Alarm attribute)@\spxentry{idRoom}\spxextra{app.mysql.alarm.Alarm attribute}}{40}
+\indexentry{idResident (app.mysql.alarm.Alarm attribute)@\spxentry{idResident}\spxextra{app.mysql.alarm.Alarm attribute}}{40}
+\indexentry{idAdmin (app.mysql.alarm.Alarm attribute)@\spxentry{idAdmin}\spxextra{app.mysql.alarm.Alarm attribute}}{40}
+\indexentry{createDate (app.mysql.alarm.Alarm attribute)@\spxentry{createDate}\spxextra{app.mysql.alarm.Alarm attribute}}{40}
+\indexentry{module@\spxentry{module}!app.mysql.base@\spxentry{app.mysql.base}}{40}
+\indexentry{app.mysql.base@\spxentry{app.mysql.base}!module@\spxentry{module}}{40}
+\indexentry{module@\spxentry{module}!app.mysql.family@\spxentry{app.mysql.family}}{40}
+\indexentry{app.mysql.family@\spxentry{app.mysql.family}!module@\spxentry{module}}{40}
+\indexentry{Family (class in app.mysql.family)@\spxentry{Family}\spxextra{class in app.mysql.family}}{40}
+\indexentry{idFamily (app.mysql.family.Family attribute)@\spxentry{idFamily}\spxextra{app.mysql.family.Family attribute}}{40}
+\indexentry{familyName (app.mysql.family.Family attribute)@\spxentry{familyName}\spxextra{app.mysql.family.Family attribute}}{40}
+\indexentry{idRoom (app.mysql.family.Family attribute)@\spxentry{idRoom}\spxextra{app.mysql.family.Family attribute}}{41}
+\indexentry{idShelter (app.mysql.family.Family attribute)@\spxentry{idShelter}\spxextra{app.mysql.family.Family attribute}}{41}
+\indexentry{createdBy (app.mysql.family.Family attribute)@\spxentry{createdBy}\spxextra{app.mysql.family.Family attribute}}{41}
+\indexentry{createDate (app.mysql.family.Family attribute)@\spxentry{createDate}\spxextra{app.mysql.family.Family attribute}}{41}
+\indexentry{module@\spxentry{module}!app.mysql.initializeData@\spxentry{app.mysql.initializeData}}{41}
+\indexentry{app.mysql.initializeData@\spxentry{app.mysql.initializeData}!module@\spxentry{module}}{41}
+\indexentry{initialize\_database() (in module app.mysql.initializeData)@\spxentry{initialize\_database()}\spxextra{in module app.mysql.initializeData}}{41}
+\indexentry{module@\spxentry{module}!app.mysql.machine@\spxentry{app.mysql.machine}}{42}
+\indexentry{app.mysql.machine@\spxentry{app.mysql.machine}!module@\spxentry{module}}{42}
+\indexentry{Machine (class in app.mysql.machine)@\spxentry{Machine}\spxextra{class in app.mysql.machine}}{42}
+\indexentry{idMachine (app.mysql.machine.Machine attribute)@\spxentry{idMachine}\spxextra{app.mysql.machine.Machine attribute}}{42}
+\indexentry{machineName (app.mysql.machine.Machine attribute)@\spxentry{machineName}\spxextra{app.mysql.machine.Machine attribute}}{42}
+\indexentry{on (app.mysql.machine.Machine attribute)@\spxentry{on}\spxextra{app.mysql.machine.Machine attribute}}{42}
+\indexentry{idRoom (app.mysql.machine.Machine attribute)@\spxentry{idRoom}\spxextra{app.mysql.machine.Machine attribute}}{42}
+\indexentry{createdBy (app.mysql.machine.Machine attribute)@\spxentry{createdBy}\spxextra{app.mysql.machine.Machine attribute}}{42}
+\indexentry{createDate (app.mysql.machine.Machine attribute)@\spxentry{createDate}\spxextra{app.mysql.machine.Machine attribute}}{42}
+\indexentry{update (app.mysql.machine.Machine attribute)@\spxentry{update}\spxextra{app.mysql.machine.Machine attribute}}{42}
+\indexentry{module@\spxentry{module}!app.mysql.mysql@\spxentry{app.mysql.mysql}}{43}
+\indexentry{app.mysql.mysql@\spxentry{app.mysql.mysql}!module@\spxentry{module}}{43}
+\indexentry{module@\spxentry{module}!app.mysql.resident@\spxentry{app.mysql.resident}}{43}
+\indexentry{app.mysql.resident@\spxentry{app.mysql.resident}!module@\spxentry{module}}{43}
+\indexentry{Resident (class in app.mysql.resident)@\spxentry{Resident}\spxextra{class in app.mysql.resident}}{43}
+\indexentry{idResident (app.mysql.resident.Resident attribute)@\spxentry{idResident}\spxextra{app.mysql.resident.Resident attribute}}{43}
+\indexentry{name (app.mysql.resident.Resident attribute)@\spxentry{name}\spxextra{app.mysql.resident.Resident attribute}}{43}
+\indexentry{surname (app.mysql.resident.Resident attribute)@\spxentry{surname}\spxextra{app.mysql.resident.Resident attribute}}{43}
+\indexentry{birthDate (app.mysql.resident.Resident attribute)@\spxentry{birthDate}\spxextra{app.mysql.resident.Resident attribute}}{43}
+\indexentry{gender (app.mysql.resident.Resident attribute)@\spxentry{gender}\spxextra{app.mysql.resident.Resident attribute}}{43}
+\indexentry{createdBy (app.mysql.resident.Resident attribute)@\spxentry{createdBy}\spxextra{app.mysql.resident.Resident attribute}}{43}
+\indexentry{createDate (app.mysql.resident.Resident attribute)@\spxentry{createDate}\spxextra{app.mysql.resident.Resident attribute}}{43}
+\indexentry{update (app.mysql.resident.Resident attribute)@\spxentry{update}\spxextra{app.mysql.resident.Resident attribute}}{43}
+\indexentry{idFamily (app.mysql.resident.Resident attribute)@\spxentry{idFamily}\spxextra{app.mysql.resident.Resident attribute}}{43}
+\indexentry{idRoom (app.mysql.resident.Resident attribute)@\spxentry{idRoom}\spxextra{app.mysql.resident.Resident attribute}}{44}
+\indexentry{module@\spxentry{module}!app.mysql.room@\spxentry{app.mysql.room}}{44}
+\indexentry{app.mysql.room@\spxentry{app.mysql.room}!module@\spxentry{module}}{44}
+\indexentry{Room (class in app.mysql.room)@\spxentry{Room}\spxextra{class in app.mysql.room}}{44}
+\indexentry{idRoom (app.mysql.room.Room attribute)@\spxentry{idRoom}\spxextra{app.mysql.room.Room attribute}}{44}
+\indexentry{roomName (app.mysql.room.Room attribute)@\spxentry{roomName}\spxextra{app.mysql.room.Room attribute}}{44}
+\indexentry{createdBy (app.mysql.room.Room attribute)@\spxentry{createdBy}\spxextra{app.mysql.room.Room attribute}}{44}
+\indexentry{createDate (app.mysql.room.Room attribute)@\spxentry{createDate}\spxextra{app.mysql.room.Room attribute}}{44}
+\indexentry{idShelter (app.mysql.room.Room attribute)@\spxentry{idShelter}\spxextra{app.mysql.room.Room attribute}}{44}
+\indexentry{maxPeople (app.mysql.room.Room attribute)@\spxentry{maxPeople}\spxextra{app.mysql.room.Room attribute}}{44}
+\indexentry{module@\spxentry{module}!app.mysql.shelter@\spxentry{app.mysql.shelter}}{45}
+\indexentry{app.mysql.shelter@\spxentry{app.mysql.shelter}!module@\spxentry{module}}{45}
+\indexentry{Shelter (class in app.mysql.shelter)@\spxentry{Shelter}\spxextra{class in app.mysql.shelter}}{45}
+\indexentry{idShelter (app.mysql.shelter.Shelter attribute)@\spxentry{idShelter}\spxextra{app.mysql.shelter.Shelter attribute}}{45}
+\indexentry{shelterName (app.mysql.shelter.Shelter attribute)@\spxentry{shelterName}\spxextra{app.mysql.shelter.Shelter attribute}}{45}
+\indexentry{address (app.mysql.shelter.Shelter attribute)@\spxentry{address}\spxextra{app.mysql.shelter.Shelter attribute}}{45}
+\indexentry{phone (app.mysql.shelter.Shelter attribute)@\spxentry{phone}\spxextra{app.mysql.shelter.Shelter attribute}}{45}
+\indexentry{email (app.mysql.shelter.Shelter attribute)@\spxentry{email}\spxextra{app.mysql.shelter.Shelter attribute}}{45}
+\indexentry{maxPeople (app.mysql.shelter.Shelter attribute)@\spxentry{maxPeople}\spxextra{app.mysql.shelter.Shelter attribute}}{45}
+\indexentry{energyLevel (app.mysql.shelter.Shelter attribute)@\spxentry{energyLevel}\spxextra{app.mysql.shelter.Shelter attribute}}{45}
+\indexentry{waterLevel (app.mysql.shelter.Shelter attribute)@\spxentry{waterLevel}\spxextra{app.mysql.shelter.Shelter attribute}}{45}
+\indexentry{radiationLevel (app.mysql.shelter.Shelter attribute)@\spxentry{radiationLevel}\spxextra{app.mysql.shelter.Shelter attribute}}{45}
+\indexentry{module@\spxentry{module}!test.conftest@\spxentry{test.conftest}}{47}
+\indexentry{test.conftest@\spxentry{test.conftest}!module@\spxentry{module}}{47}
+\indexentry{setup\_database() (in module test.conftest)@\spxentry{setup\_database()}\spxextra{in module test.conftest}}{47}
+\indexentry{module@\spxentry{module}!test.test\_admin@\spxentry{test.test\_admin}}{47}
+\indexentry{test.test\_admin@\spxentry{test.test\_admin}!module@\spxentry{module}}{47}
+\indexentry{test\_create\_admin\_database\_error() (in module test.test\_admin)@\spxentry{test\_create\_admin\_database\_error()}\spxextra{in module test.test\_admin}}{47}
+\indexentry{test\_create\_admin\_duplicate\_email() (in module test.test\_admin)@\spxentry{test\_create\_admin\_duplicate\_email()}\spxextra{in module test.test\_admin}}{47}
+\indexentry{test\_create\_admin\_success() (in module test.test\_admin)@\spxentry{test\_create\_admin\_success()}\spxextra{in module test.test\_admin}}{48}
+\indexentry{test\_delete\_admin\_not\_found() (in module test.test\_admin)@\spxentry{test\_delete\_admin\_not\_found()}\spxextra{in module test.test\_admin}}{48}
+\indexentry{test\_delete\_admin\_success() (in module test.test\_admin)@\spxentry{test\_delete\_admin\_success()}\spxextra{in module test.test\_admin}}{48}
+\indexentry{test\_delete\_admin\_unexpected\_error() (in module test.test\_admin)@\spxentry{test\_delete\_admin\_unexpected\_error()}\spxextra{in module test.test\_admin}}{48}
+\indexentry{test\_get\_admin\_by\_id\_not\_found() (in module test.test\_admin)@\spxentry{test\_get\_admin\_by\_id\_not\_found()}\spxextra{in module test.test\_admin}}{49}
+\indexentry{test\_get\_admin\_by\_id\_success() (in module test.test\_admin)@\spxentry{test\_get\_admin\_by\_id\_success()}\spxextra{in module test.test\_admin}}{49}
+\indexentry{test\_get\_admin\_by\_id\_unexpected\_error() (in module test.test\_admin)@\spxentry{test\_get\_admin\_by\_id\_unexpected\_error()}\spxextra{in module test.test\_admin}}{49}
+\indexentry{test\_list\_admins\_empty() (in module test.test\_admin)@\spxentry{test\_list\_admins\_empty()}\spxextra{in module test.test\_admin}}{49}
+\indexentry{test\_list\_admins\_success() (in module test.test\_admin)@\spxentry{test\_list\_admins\_success()}\spxextra{in module test.test\_admin}}{50}
+\indexentry{test\_list\_admins\_unexpected\_error() (in module test.test\_admin)@\spxentry{test\_list\_admins\_unexpected\_error()}\spxextra{in module test.test\_admin}}{50}
+\indexentry{test\_login\_admin\_invalid\_email() (in module test.test\_admin)@\spxentry{test\_login\_admin\_invalid\_email()}\spxextra{in module test.test\_admin}}{50}
+\indexentry{test\_login\_admin\_invalid\_password() (in module test.test\_admin)@\spxentry{test\_login\_admin\_invalid\_password()}\spxextra{in module test.test\_admin}}{50}
+\indexentry{test\_login\_admin\_nonexistent\_user() (in module test.test\_admin)@\spxentry{test\_login\_admin\_nonexistent\_user()}\spxextra{in module test.test\_admin}}{51}
+\indexentry{test\_login\_admin\_success() (in module test.test\_admin)@\spxentry{test\_login\_admin\_success()}\spxextra{in module test.test\_admin}}{51}
+\indexentry{test\_login\_admin\_unexpected\_error() (in module test.test\_admin)@\spxentry{test\_login\_admin\_unexpected\_error()}\spxextra{in module test.test\_admin}}{51}
+\indexentry{test\_update\_admin\_email\_database\_error() (in module test.test\_admin)@\spxentry{test\_update\_admin\_email\_database\_error()}\spxextra{in module test.test\_admin}}{51}
+\indexentry{test\_update\_admin\_email\_not\_found() (in module test.test\_admin)@\spxentry{test\_update\_admin\_email\_not\_found()}\spxextra{in module test.test\_admin}}{52}
+\indexentry{test\_update\_admin\_email\_success() (in module test.test\_admin)@\spxentry{test\_update\_admin\_email\_success()}\spxextra{in module test.test\_admin}}{52}
+\indexentry{test\_update\_admin\_email\_unexpected\_error() (in module test.test\_admin)@\spxentry{test\_update\_admin\_email\_unexpected\_error()}\spxextra{in module test.test\_admin}}{52}
+\indexentry{test\_update\_admin\_name\_database\_error() (in module test.test\_admin)@\spxentry{test\_update\_admin\_name\_database\_error()}\spxextra{in module test.test\_admin}}{52}
+\indexentry{test\_update\_admin\_name\_not\_found() (in module test.test\_admin)@\spxentry{test\_update\_admin\_name\_not\_found()}\spxextra{in module test.test\_admin}}{53}
+\indexentry{test\_update\_admin\_name\_success() (in module test.test\_admin)@\spxentry{test\_update\_admin\_name\_success()}\spxextra{in module test.test\_admin}}{53}
+\indexentry{test\_update\_admin\_name\_unexpected\_error() (in module test.test\_admin)@\spxentry{test\_update\_admin\_name\_unexpected\_error()}\spxextra{in module test.test\_admin}}{53}
+\indexentry{test\_update\_admin\_password\_database\_error() (in module test.test\_admin)@\spxentry{test\_update\_admin\_password\_database\_error()}\spxextra{in module test.test\_admin}}{53}
+\indexentry{test\_update\_admin\_password\_not\_found() (in module test.test\_admin)@\spxentry{test\_update\_admin\_password\_not\_found()}\spxextra{in module test.test\_admin}}{53}
+\indexentry{test\_update\_admin\_password\_success() (in module test.test\_admin)@\spxentry{test\_update\_admin\_password\_success()}\spxextra{in module test.test\_admin}}{54}
+\indexentry{test\_update\_admin\_password\_unexpected\_error() (in module test.test\_admin)@\spxentry{test\_update\_admin\_password\_unexpected\_error()}\spxextra{in module test.test\_admin}}{54}
+\indexentry{module@\spxentry{module}!test.test\_alarm@\spxentry{test.test\_alarm}}{54}
+\indexentry{test.test\_alarm@\spxentry{test.test\_alarm}!module@\spxentry{module}}{54}
+\indexentry{test\_create\_alarm() (in module test.test\_alarm)@\spxentry{test\_create\_alarm()}\spxextra{in module test.test\_alarm}}{54}
+\indexentry{test\_create\_alarm\_level\_database\_error() (in module test.test\_alarm)@\spxentry{test\_create\_alarm\_level\_database\_error()}\spxextra{in module test.test\_alarm}}{55}
+\indexentry{test\_create\_alarm\_level\_room\_not\_exist() (in module test.test\_alarm)@\spxentry{test\_create\_alarm\_level\_room\_not\_exist()}\spxextra{in module test.test\_alarm}}{55}
+\indexentry{test\_create\_alarm\_level\_success() (in module test.test\_alarm)@\spxentry{test\_create\_alarm\_level\_success()}\spxextra{in module test.test\_alarm}}{55}
+\indexentry{test\_list\_alarms\_database\_error() (in module test.test\_alarm)@\spxentry{test\_list\_alarms\_database\_error()}\spxextra{in module test.test\_alarm}}{56}
+\indexentry{test\_list\_alarms\_empty\_database() (in module test.test\_alarm)@\spxentry{test\_list\_alarms\_empty\_database()}\spxextra{in module test.test\_alarm}}{56}
+\indexentry{test\_list\_alarms\_success() (in module test.test\_alarm)@\spxentry{test\_list\_alarms\_success()}\spxextra{in module test.test\_alarm}}{56}
+\indexentry{test\_update\_alarm\_end\_date\_database\_error() (in module test.test\_alarm)@\spxentry{test\_update\_alarm\_end\_date\_database\_error()}\spxextra{in module test.test\_alarm}}{56}
+\indexentry{test\_update\_alarm\_end\_date\_not\_found() (in module test.test\_alarm)@\spxentry{test\_update\_alarm\_end\_date\_not\_found()}\spxextra{in module test.test\_alarm}}{57}
+\indexentry{test\_update\_alarm\_end\_date\_success() (in module test.test\_alarm)@\spxentry{test\_update\_alarm\_end\_date\_success()}\spxextra{in module test.test\_alarm}}{57}
+\indexentry{module@\spxentry{module}!test.test\_family@\spxentry{test.test\_family}}{57}
+\indexentry{test.test\_family@\spxentry{test.test\_family}!module@\spxentry{module}}{57}
+\indexentry{test\_create\_family\_duplicate() (in module test.test\_family)@\spxentry{test\_create\_family\_duplicate()}\spxextra{in module test.test\_family}}{57}
+\indexentry{test\_create\_family\_room\_not\_exist() (in module test.test\_family)@\spxentry{test\_create\_family\_room\_not\_exist()}\spxextra{in module test.test\_family}}{57}
+\indexentry{test\_create\_family\_shelter\_not\_exist() (in module test.test\_family)@\spxentry{test\_create\_family\_shelter\_not\_exist()}\spxextra{in module test.test\_family}}{58}
+\indexentry{test\_create\_family\_success() (in module test.test\_family)@\spxentry{test\_create\_family\_success()}\spxextra{in module test.test\_family}}{58}
+\indexentry{test\_delete\_family\_sqlalchemy\_error() (in module test.test\_family)@\spxentry{test\_delete\_family\_sqlalchemy\_error()}\spxextra{in module test.test\_family}}{58}
+\indexentry{test\_delete\_family\_successful() (in module test.test\_family)@\spxentry{test\_delete\_family\_successful()}\spxextra{in module test.test\_family}}{58}
+\indexentry{test\_delete\_family\_with\_members() (in module test.test\_family)@\spxentry{test\_delete\_family\_with\_members()}\spxextra{in module test.test\_family}}{58}
+\indexentry{test\_delete\_nonexistent\_family() (in module test.test\_family)@\spxentry{test\_delete\_nonexistent\_family()}\spxextra{in module test.test\_family}}{58}
+\indexentry{test\_list\_families\_empty() (in module test.test\_family)@\spxentry{test\_list\_families\_empty()}\spxextra{in module test.test\_family}}{59}
+\indexentry{test\_list\_families\_sqlalchemy\_error() (in module test.test\_family)@\spxentry{test\_list\_families\_sqlalchemy\_error()}\spxextra{in module test.test\_family}}{59}
+\indexentry{test\_list\_families\_success() (in module test.test\_family)@\spxentry{test\_list\_families\_success()}\spxextra{in module test.test\_family}}{59}
+\indexentry{test\_list\_families\_unexpected\_exception() (in module test.test\_family)@\spxentry{test\_list\_families\_unexpected\_exception()}\spxextra{in module test.test\_family}}{59}
+\indexentry{module@\spxentry{module}!test.test\_machine@\spxentry{test.test\_machine}}{59}
+\indexentry{test.test\_machine@\spxentry{test.test\_machine}!module@\spxentry{module}}{59}
+\indexentry{test\_create\_machine\_admin\_not\_exist() (in module test.test\_machine)@\spxentry{test\_create\_machine\_admin\_not\_exist()}\spxextra{in module test.test\_machine}}{59}
+\indexentry{test\_create\_machine\_duplicate() (in module test.test\_machine)@\spxentry{test\_create\_machine\_duplicate()}\spxextra{in module test.test\_machine}}{60}
+\indexentry{test\_create\_machine\_room\_not\_exist() (in module test.test\_machine)@\spxentry{test\_create\_machine\_room\_not\_exist()}\spxextra{in module test.test\_machine}}{60}
+\indexentry{test\_create\_machine\_success() (in module test.test\_machine)@\spxentry{test\_create\_machine\_success()}\spxextra{in module test.test\_machine}}{60}
+\indexentry{test\_delete\_machine\_db\_error() (in module test.test\_machine)@\spxentry{test\_delete\_machine\_db\_error()}\spxextra{in module test.test\_machine}}{61}
+\indexentry{test\_delete\_machine\_general\_exception() (in module test.test\_machine)@\spxentry{test\_delete\_machine\_general\_exception()}\spxextra{in module test.test\_machine}}{61}
+\indexentry{test\_delete\_machine\_not\_found() (in module test.test\_machine)@\spxentry{test\_delete\_machine\_not\_found()}\spxextra{in module test.test\_machine}}{61}
+\indexentry{test\_delete\_machine\_success() (in module test.test\_machine)@\spxentry{test\_delete\_machine\_success()}\spxextra{in module test.test\_machine}}{62}
+\indexentry{test\_list\_all\_machines\_success() (in module test.test\_machine)@\spxentry{test\_list\_all\_machines\_success()}\spxextra{in module test.test\_machine}}{62}
+\indexentry{test\_list\_machines\_db\_error() (in module test.test\_machine)@\spxentry{test\_list\_machines\_db\_error()}\spxextra{in module test.test\_machine}}{62}
+\indexentry{test\_list\_machines\_general\_exception() (in module test.test\_machine)@\spxentry{test\_list\_machines\_general\_exception()}\spxextra{in module test.test\_machine}}{62}
+\indexentry{test\_list\_no\_machines() (in module test.test\_machine)@\spxentry{test\_list\_no\_machines()}\spxextra{in module test.test\_machine}}{63}
+\indexentry{test\_update\_machine\_date\_db\_error() (in module test.test\_machine)@\spxentry{test\_update\_machine\_date\_db\_error()}\spxextra{in module test.test\_machine}}{63}
+\indexentry{test\_update\_machine\_date\_general\_exception() (in module test.test\_machine)@\spxentry{test\_update\_machine\_date\_general\_exception()}\spxextra{in module test.test\_machine}}{63}
+\indexentry{test\_update\_machine\_date\_not\_found() (in module test.test\_machine)@\spxentry{test\_update\_machine\_date\_not\_found()}\spxextra{in module test.test\_machine}}{64}
+\indexentry{test\_update\_machine\_date\_success() (in module test.test\_machine)@\spxentry{test\_update\_machine\_date\_success()}\spxextra{in module test.test\_machine}}{64}
+\indexentry{test\_update\_machine\_status\_db\_error() (in module test.test\_machine)@\spxentry{test\_update\_machine\_status\_db\_error()}\spxextra{in module test.test\_machine}}{64}
+\indexentry{test\_update\_machine\_status\_db\_error\_on() (in module test.test\_machine)@\spxentry{test\_update\_machine\_status\_db\_error\_on()}\spxextra{in module test.test\_machine}}{65}
+\indexentry{test\_update\_machine\_status\_general\_exception() (in module test.test\_machine)@\spxentry{test\_update\_machine\_status\_general\_exception()}\spxextra{in module test.test\_machine}}{65}
+\indexentry{test\_update\_machine\_status\_general\_exception\_on() (in module test.test\_machine)@\spxentry{test\_update\_machine\_status\_general\_exception\_on()}\spxextra{in module test.test\_machine}}{66}
+\indexentry{test\_update\_machine\_status\_not\_found() (in module test.test\_machine)@\spxentry{test\_update\_machine\_status\_not\_found()}\spxextra{in module test.test\_machine}}{66}
+\indexentry{test\_update\_machine\_status\_not\_found\_on() (in module test.test\_machine)@\spxentry{test\_update\_machine\_status\_not\_found\_on()}\spxextra{in module test.test\_machine}}{66}
+\indexentry{test\_update\_machine\_status\_success() (in module test.test\_machine)@\spxentry{test\_update\_machine\_status\_success()}\spxextra{in module test.test\_machine}}{66}
+\indexentry{test\_update\_machine\_status\_success\_on() (in module test.test\_machine)@\spxentry{test\_update\_machine\_status\_success\_on()}\spxextra{in module test.test\_machine}}{67}
+\indexentry{module@\spxentry{module}!test.test\_residetnt@\spxentry{test.test\_residetnt}}{67}
+\indexentry{test.test\_residetnt@\spxentry{test.test\_residetnt}!module@\spxentry{module}}{67}
+\indexentry{test\_create\_resident\_duplicate() (in module test.test\_residetnt)@\spxentry{test\_create\_resident\_duplicate()}\spxextra{in module test.test\_residetnt}}{67}
+\indexentry{test\_create\_resident\_family\_no\_room() (in module test.test\_residetnt)@\spxentry{test\_create\_resident\_family\_no\_room()}\spxextra{in module test.test\_residetnt}}{67}
+\indexentry{test\_create\_resident\_family\_not\_exist() (in module test.test\_residetnt)@\spxentry{test\_create\_resident\_family\_not\_exist()}\spxextra{in module test.test\_residetnt}}{68}
+\indexentry{test\_create\_resident\_shelter\_full() (in module test.test\_residetnt)@\spxentry{test\_create\_resident\_shelter\_full()}\spxextra{in module test.test\_residetnt}}{68}
+\indexentry{test\_create\_resident\_success() (in module test.test\_residetnt)@\spxentry{test\_create\_resident\_success()}\spxextra{in module test.test\_residetnt}}{68}
+\indexentry{test\_delete\_resident\_empty\_database() (in module test.test\_residetnt)@\spxentry{test\_delete\_resident\_empty\_database()}\spxextra{in module test.test\_residetnt}}{69}
+\indexentry{test\_delete\_resident\_not\_found() (in module test.test\_residetnt)@\spxentry{test\_delete\_resident\_not\_found()}\spxextra{in module test.test\_residetnt}}{69}
+\indexentry{test\_delete\_resident\_success() (in module test.test\_residetnt)@\spxentry{test\_delete\_resident\_success()}\spxextra{in module test.test\_residetnt}}{69}
+\indexentry{test\_delete\_resident\_unexpected\_error() (in module test.test\_residetnt)@\spxentry{test\_delete\_resident\_unexpected\_error()}\spxextra{in module test.test\_residetnt}}{69}
+\indexentry{test\_get\_resident\_by\_id\_empty\_database() (in module test.test\_residetnt)@\spxentry{test\_get\_resident\_by\_id\_empty\_database()}\spxextra{in module test.test\_residetnt}}{70}
+\indexentry{test\_get\_resident\_by\_id\_not\_found() (in module test.test\_residetnt)@\spxentry{test\_get\_resident\_by\_id\_not\_found()}\spxextra{in module test.test\_residetnt}}{70}
+\indexentry{test\_get\_resident\_by\_id\_success() (in module test.test\_residetnt)@\spxentry{test\_get\_resident\_by\_id\_success()}\spxextra{in module test.test\_residetnt}}{70}
+\indexentry{test\_get\_resident\_by\_id\_unexpected\_error() (in module test.test\_residetnt)@\spxentry{test\_get\_resident\_by\_id\_unexpected\_error()}\spxextra{in module test.test\_residetnt}}{70}
+\indexentry{test\_get\_resident\_room\_no\_room\_assigned() (in module test.test\_residetnt)@\spxentry{test\_get\_resident\_room\_no\_room\_assigned()}\spxextra{in module test.test\_residetnt}}{71}
+\indexentry{test\_get\_resident\_room\_resident\_not\_found() (in module test.test\_residetnt)@\spxentry{test\_get\_resident\_room\_resident\_not\_found()}\spxextra{in module test.test\_residetnt}}{71}
+\indexentry{test\_get\_resident\_room\_room\_not\_found() (in module test.test\_residetnt)@\spxentry{test\_get\_resident\_room\_room\_not\_found()}\spxextra{in module test.test\_residetnt}}{71}
+\indexentry{test\_get\_resident\_room\_success() (in module test.test\_residetnt)@\spxentry{test\_get\_resident\_room\_success()}\spxextra{in module test.test\_residetnt}}{71}
+\indexentry{test\_list\_residents() (in module test.test\_residetnt)@\spxentry{test\_list\_residents()}\spxextra{in module test.test\_residetnt}}{72}
+\indexentry{test\_list\_residents\_in\_room() (in module test.test\_residetnt)@\spxentry{test\_list\_residents\_in\_room()}\spxextra{in module test.test\_residetnt}}{72}
+\indexentry{test\_list\_residents\_in\_room\_database\_error() (in module test.test\_residetnt)@\spxentry{test\_list\_residents\_in\_room\_database\_error()}\spxextra{in module test.test\_residetnt}}{72}
+\indexentry{test\_list\_residents\_in\_room\_no\_residents() (in module test.test\_residetnt)@\spxentry{test\_list\_residents\_in\_room\_no\_residents()}\spxextra{in module test.test\_residetnt}}{73}
+\indexentry{test\_list\_residents\_in\_room\_room\_not\_found() (in module test.test\_residetnt)@\spxentry{test\_list\_residents\_in\_room\_room\_not\_found()}\spxextra{in module test.test\_residetnt}}{73}
+\indexentry{test\_list\_residents\_in\_room\_success() (in module test.test\_residetnt)@\spxentry{test\_list\_residents\_in\_room\_success()}\spxextra{in module test.test\_residetnt}}{73}
+\indexentry{test\_list\_residents\_no\_residents() (in module test.test\_residetnt)@\spxentry{test\_list\_residents\_no\_residents()}\spxextra{in module test.test\_residetnt}}{73}
+\indexentry{test\_login\_empty\_database() (in module test.test\_residetnt)@\spxentry{test\_login\_empty\_database()}\spxextra{in module test.test\_residetnt}}{74}
+\indexentry{test\_login\_invalid\_credentials() (in module test.test\_residetnt)@\spxentry{test\_login\_invalid\_credentials()}\spxextra{in module test.test\_residetnt}}{74}
+\indexentry{test\_login\_success() (in module test.test\_residetnt)@\spxentry{test\_login\_success()}\spxextra{in module test.test\_residetnt}}{74}
+\indexentry{test\_login\_unexpected\_error() (in module test.test\_residetnt)@\spxentry{test\_login\_unexpected\_error()}\spxextra{in module test.test\_residetnt}}{74}
+\indexentry{test\_update\_resident\_birthdate\_database\_error() (in module test.test\_residetnt)@\spxentry{test\_update\_resident\_birthdate\_database\_error()}\spxextra{in module test.test\_residetnt}}{75}
+\indexentry{test\_update\_resident\_birthdate\_invalid\_format() (in module test.test\_residetnt)@\spxentry{test\_update\_resident\_birthdate\_invalid\_format()}\spxextra{in module test.test\_residetnt}}{75}
+\indexentry{test\_update\_resident\_birthdate\_not\_found() (in module test.test\_residetnt)@\spxentry{test\_update\_resident\_birthdate\_not\_found()}\spxextra{in module test.test\_residetnt}}{75}
+\indexentry{test\_update\_resident\_birthdate\_success() (in module test.test\_residetnt)@\spxentry{test\_update\_resident\_birthdate\_success()}\spxextra{in module test.test\_residetnt}}{75}
+\indexentry{test\_update\_resident\_gender\_database\_error() (in module test.test\_residetnt)@\spxentry{test\_update\_resident\_gender\_database\_error()}\spxextra{in module test.test\_residetnt}}{76}
+\indexentry{test\_update\_resident\_gender\_invalid\_gender() (in module test.test\_residetnt)@\spxentry{test\_update\_resident\_gender\_invalid\_gender()}\spxextra{in module test.test\_residetnt}}{76}
+\indexentry{test\_update\_resident\_gender\_not\_found() (in module test.test\_residetnt)@\spxentry{test\_update\_resident\_gender\_not\_found()}\spxextra{in module test.test\_residetnt}}{76}
+\indexentry{test\_update\_resident\_gender\_success() (in module test.test\_residetnt)@\spxentry{test\_update\_resident\_gender\_success()}\spxextra{in module test.test\_residetnt}}{76}
+\indexentry{test\_update\_resident\_room\_database\_error() (in module test.test\_residetnt)@\spxentry{test\_update\_resident\_room\_database\_error()}\spxextra{in module test.test\_residetnt}}{76}
+\indexentry{test\_update\_resident\_room\_resident\_not\_found() (in module test.test\_residetnt)@\spxentry{test\_update\_resident\_room\_resident\_not\_found()}\spxextra{in module test.test\_residetnt}}{77}
+\indexentry{test\_update\_resident\_room\_room\_not\_found() (in module test.test\_residetnt)@\spxentry{test\_update\_resident\_room\_room\_not\_found()}\spxextra{in module test.test\_residetnt}}{77}
+\indexentry{test\_update\_resident\_room\_success() (in module test.test\_residetnt)@\spxentry{test\_update\_resident\_room\_success()}\spxextra{in module test.test\_residetnt}}{77}
+\indexentry{test\_update\_resident\_surname\_database\_error() (in module test.test\_residetnt)@\spxentry{test\_update\_resident\_surname\_database\_error()}\spxextra{in module test.test\_residetnt}}{77}
+\indexentry{test\_update\_resident\_surname\_not\_found() (in module test.test\_residetnt)@\spxentry{test\_update\_resident\_surname\_not\_found()}\spxextra{in module test.test\_residetnt}}{78}
+\indexentry{test\_update\_resident\_surname\_success() (in module test.test\_residetnt)@\spxentry{test\_update\_resident\_surname\_success()}\spxextra{in module test.test\_residetnt}}{78}
+\indexentry{module@\spxentry{module}!test.test\_room@\spxentry{test.test\_room}}{78}
+\indexentry{test.test\_room@\spxentry{test.test\_room}!module@\spxentry{module}}{78}
+\indexentry{test\_access\_room\_family\_room() (in module test.test\_room)@\spxentry{test\_access\_room\_family\_room()}\spxextra{in module test.test\_room}}{78}
+\indexentry{test\_access\_room\_full\_room() (in module test.test\_room)@\spxentry{test\_access\_room\_full\_room()}\spxextra{in module test.test\_room}}{78}
+\indexentry{test\_access\_room\_maintenance\_room() (in module test.test\_room)@\spxentry{test\_access\_room\_maintenance\_room()}\spxextra{in module test.test\_room}}{79}
+\indexentry{test\_access\_room\_public\_room() (in module test.test\_room)@\spxentry{test\_access\_room\_public\_room()}\spxextra{in module test.test\_room}}{79}
+\indexentry{test\_access\_room\_resident\_not\_found() (in module test.test\_room)@\spxentry{test\_access\_room\_resident\_not\_found()}\spxextra{in module test.test\_room}}{79}
+\indexentry{test\_access\_room\_room\_not\_found() (in module test.test\_room)@\spxentry{test\_access\_room\_room\_not\_found()}\spxextra{in module test.test\_room}}{80}
+\indexentry{test\_access\_room\_wrong\_room() (in module test.test\_room)@\spxentry{test\_access\_room\_wrong\_room()}\spxextra{in module test.test\_room}}{80}
+\indexentry{test\_create\_room\_admin\_not\_exist() (in module test.test\_room)@\spxentry{test\_create\_room\_admin\_not\_exist()}\spxextra{in module test.test\_room}}{80}
+\indexentry{test\_create\_room\_duplicate() (in module test.test\_room)@\spxentry{test\_create\_room\_duplicate()}\spxextra{in module test.test\_room}}{80}
+\indexentry{test\_create\_room\_shelter\_not\_exist() (in module test.test\_room)@\spxentry{test\_create\_room\_shelter\_not\_exist()}\spxextra{in module test.test\_room}}{80}
+\indexentry{test\_create\_room\_success() (in module test.test\_room)@\spxentry{test\_create\_room\_success()}\spxextra{in module test.test\_room}}{81}
+\indexentry{test\_list\_rooms\_empty() (in module test.test\_room)@\spxentry{test\_list\_rooms\_empty()}\spxextra{in module test.test\_room}}{81}
+\indexentry{test\_list\_rooms\_room\_no\_matches() (in module test.test\_room)@\spxentry{test\_list\_rooms\_room\_no\_matches()}\spxextra{in module test.test\_room}}{81}
+\indexentry{test\_list\_rooms\_room\_success() (in module test.test\_room)@\spxentry{test\_list\_rooms\_room\_success()}\spxextra{in module test.test\_room}}{81}
+\indexentry{test\_list\_rooms\_room\_unexpected\_exception() (in module test.test\_room)@\spxentry{test\_list\_rooms\_room\_unexpected\_exception()}\spxextra{in module test.test\_room}}{82}
+\indexentry{test\_list\_rooms\_sqlalchemy\_error() (in module test.test\_room)@\spxentry{test\_list\_rooms\_sqlalchemy\_error()}\spxextra{in module test.test\_room}}{82}
+\indexentry{test\_list\_rooms\_success() (in module test.test\_room)@\spxentry{test\_list\_rooms\_success()}\spxextra{in module test.test\_room}}{82}
+\indexentry{test\_list\_rooms\_unexpected\_exception() (in module test.test\_room)@\spxentry{test\_list\_rooms\_unexpected\_exception()}\spxextra{in module test.test\_room}}{82}
+\indexentry{test\_list\_rooms\_with\_resident\_count() (in module test.test\_room)@\spxentry{test\_list\_rooms\_with\_resident\_count()}\spxextra{in module test.test\_room}}{82}
+\indexentry{test\_update\_room\_name\_room\_not\_found() (in module test.test\_room)@\spxentry{test\_update\_room\_name\_room\_not\_found()}\spxextra{in module test.test\_room}}{83}
+\indexentry{test\_update\_room\_name\_sqlalchemy\_error() (in module test.test\_room)@\spxentry{test\_update\_room\_name\_sqlalchemy\_error()}\spxextra{in module test.test\_room}}{83}
+\indexentry{test\_update\_room\_name\_success() (in module test.test\_room)@\spxentry{test\_update\_room\_name\_success()}\spxextra{in module test.test\_room}}{83}
+\indexentry{test\_update\_room\_name\_unexpected\_exception() (in module test.test\_room)@\spxentry{test\_update\_room\_name\_unexpected\_exception()}\spxextra{in module test.test\_room}}{83}
+\indexentry{module@\spxentry{module}!test.test\_shelter@\spxentry{test.test\_shelter}}{84}
+\indexentry{test.test\_shelter@\spxentry{test.test\_shelter}!module@\spxentry{module}}{84}
+\indexentry{test\_get\_shelter\_energy\_level\_success() (in module test.test\_shelter)@\spxentry{test\_get\_shelter\_energy\_level\_success()}\spxextra{in module test.test\_shelter}}{84}
+\indexentry{test\_get\_shelter\_no\_shelter\_found() (in module test.test\_shelter)@\spxentry{test\_get\_shelter\_no\_shelter\_found()}\spxextra{in module test.test\_shelter}}{84}
+\indexentry{test\_get\_shelter\_radiation\_level\_success() (in module test.test\_shelter)@\spxentry{test\_get\_shelter\_radiation\_level\_success()}\spxextra{in module test.test\_shelter}}{84}
+\indexentry{test\_get\_shelter\_water\_level\_success() (in module test.test\_shelter)@\spxentry{test\_get\_shelter\_water\_level\_success()}\spxextra{in module test.test\_shelter}}{84}
+\indexentry{test\_updateShelterEnergyLevel\_success() (in module test.test\_shelter)@\spxentry{test\_updateShelterEnergyLevel\_success()}\spxextra{in module test.test\_shelter}}{84}
+\indexentry{test\_updateShelterRadiationLevel\_success() (in module test.test\_shelter)@\spxentry{test\_updateShelterRadiationLevel\_success()}\spxextra{in module test.test\_shelter}}{85}
+\indexentry{test\_updateShelterWaterLevel\_success() (in module test.test\_shelter)@\spxentry{test\_updateShelterWaterLevel\_success()}\spxextra{in module test.test\_shelter}}{85}
