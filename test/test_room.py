@@ -39,7 +39,7 @@ def test_create_room_success(setup_database):
     # Room data
     room_data = RoomModel(
         idRoom=1,
-        roomName="Room A",
+        roomName="Room 1",
         createdBy=1,
         createDate=date.today(),
         idShelter=1,
@@ -50,7 +50,7 @@ def test_create_room_success(setup_database):
 
     assert response == {"status": "ok"}
 
-    added_room = session.query(Room).filter_by(roomName="Room A").first()
+    added_room = session.query(Room).filter_by(roomName="Room 1").first()
     assert added_room is not None
     assert added_room.idShelter == 1
     assert added_room.maxPeople == 4
@@ -78,7 +78,7 @@ def test_create_room_admin_not_exist(setup_database):
     # Room data with nonexistent admin
     room_data = RoomModel(
         idRoom=1,
-        roomName="Room A",
+        roomName="Room 1",
         createdBy=999,  # Nonexistent admin
         createDate=date.today(),
         idShelter=1,
@@ -115,7 +115,7 @@ def test_create_room_shelter_not_exist(setup_database):
     # Room data with nonexistent shelter
     room_data = RoomModel(
         idRoom=1,
-        roomName="Room A",
+        roomName="Room 1",
         createdBy=1,
         createDate=date.today(),
         idShelter=999,  # Nonexistent shelter
@@ -148,14 +148,14 @@ def test_create_room_duplicate(setup_database):
     # Add required admin, shelter, and room
     admin = Admin(idAdmin=1, email="admin@example.com", name="Admin Name", password="password")
     shelter = Shelter(idShelter=1, shelterName="Main Shelter")
-    room = Room(idRoom=1, roomName="Room A", createdBy=1, createDate=date.today(), idShelter=1, maxPeople=4)
+    room = Room(idRoom=1, roomName="Room 1", createdBy=1, createDate=date.today(), idShelter=1, maxPeople=4)
     session.add_all([admin, shelter, room])
     session.commit()
 
     # Duplicate room data
     room_data = RoomModel(
         idRoom=2,
-        roomName="Room A",  # Duplicate name
+        roomName="Room 1",  # Duplicate name
         createdBy=1,
         createDate=date.today(),
         idShelter=1,
@@ -187,8 +187,8 @@ def test_list_rooms_with_resident_count(setup_database):
 
     # Add required shelter, rooms, and residents
     shelter = Shelter(idShelter=1, shelterName="Main Shelter")
-    room1 = Room(idRoom=1, roomName="Room A", maxPeople=4, idShelter=1)
-    room2 = Room(idRoom=2, roomName="Room B", maxPeople=3, idShelter=1)
+    room1 = Room(idRoom=1, roomName="Room 1", maxPeople=4, idShelter=1)
+    room2 = Room(idRoom=2, roomName="Room 2", maxPeople=3, idShelter=1)
     resident1 = Resident(idResident=1, name="Alice", surname="Doe", idRoom=1)
     resident2 = Resident(idResident=2, name="Bob", surname="Doe", idRoom=1)
     resident3 = Resident(idResident=3, name="Charlie", surname="Doe", idRoom=2)
@@ -199,9 +199,9 @@ def test_list_rooms_with_resident_count(setup_database):
     response = controller.list_rooms_with_resident_count(session=session)
 
     assert len(response) == 2
-    assert response[0]["roomName"] == "Room A"
+    assert response[0]["roomName"] == "Room 1"
     assert response[0]["resident_count"] == 2
-    assert response[1]["roomName"] == "Room B"
+    assert response[1]["roomName"] == "Room 2"
     assert response[1]["resident_count"] == 1
 
 
@@ -239,7 +239,7 @@ def test_access_room_full_room(setup_database):
     session = setup_database
     controller = RoomController()
 
-    room = Room(idRoom=1, roomName="Room A", maxPeople=2)
+    room = Room(idRoom=1, roomName="Room 1", maxPeople=2)
     resident1 = Resident(idResident=1, idFamily=1, idRoom=1, name="John", surname="Doe")
     resident2 = Resident(idResident=2, idFamily=1, idRoom=1, name="Jane", surname="Doe")
     session.add_all([room, resident1, resident2])
@@ -308,14 +308,14 @@ def test_list_rooms_success(setup_database):
     # Add sample rooms
     room1 = Room(
         idRoom=1,
-        roomName="Room A",
+        roomName="Room 1",
         maxPeople=10,
         idShelter=1,
         createDate=datetime(2024, 12, 1)
     )
     room2 = Room(
         idRoom=2,
-        roomName="Room B",
+        roomName="Room 2",
         maxPeople=8,
         idShelter=2,
         createDate=datetime(2024, 12, 2)
@@ -334,14 +334,14 @@ def test_list_rooms_success(setup_database):
     expected_response = [
         {
             "idRoom": 1,
-            "roomName": "Room A",
+            "roomName": "Room 1",
             "maxPeople": 10,
             "idShelter": 1,
             "createDate": "2024-12-01T00:00:00"
         },
         {
             "idRoom": 2,
-            "roomName": "Room B",
+            "roomName": "Room 2",
             "maxPeople": 8,
             "idShelter": 2,
             "createDate": "2024-12-02T00:00:00"

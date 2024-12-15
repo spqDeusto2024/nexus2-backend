@@ -9,6 +9,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import func
 from sqlalchemy.exc import SQLAlchemyError
 import app.utils.vars as gb
+import re
 
 import app.models.resident as resident
 import app.models.family as family
@@ -84,10 +85,14 @@ class RoomController:
             - The `createdBy` field must correspond to an existing admin, and `idShelter` must correspond to an existing shelter.
 
         """
-
         if session is None:
             session = Session(self.db_client.engine)
         try:
+            # Validar el nombre de la habitación
+            if body.roomName.startswith("Room"):
+                if not re.match(r"^Room \d+$", body.roomName):
+                    return {"status": "error", "message": "If the room name starts with 'Room', it must end with a number."}
+
             admin = session.query(Admin).filter(Admin.idAdmin == body.createdBy).first()
             if not admin:
                 return {"status": "error", "message": "The admin does not exist."}
