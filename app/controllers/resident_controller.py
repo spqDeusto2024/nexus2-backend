@@ -256,6 +256,7 @@ class ResidentController:
                 - Return a success status.
             4. If the resident is not found, return a "not found" status.
         """
+
         if session is None:
             db = DatabaseClient(gb.MYSQL_URL)
             session = Session(db.engine)
@@ -313,6 +314,7 @@ class ResidentController:
             Exception: If an unexpected error occurs while querying the database.
 
         """
+
         if session is None:
             session = Session(self.db_client.engine)
 
@@ -375,6 +377,7 @@ class ResidentController:
             Exception: If an unexpected error occurs while querying the database.
 
         """
+
         if session is None:
             session = Session(self.db_client.engine)
 
@@ -430,6 +433,7 @@ class ResidentController:
             Exception: If an unexpected error occurs during the operation.
 
         """
+
         if session is None:
             session = Session(self.db_client.engine)
 
@@ -483,6 +487,7 @@ class ResidentController:
             Exception: If an unexpected error occurs during the operation.
 
         """
+
         if session is None:
             session = Session(self.db_client.engine)
 
@@ -544,6 +549,7 @@ class ResidentController:
             Exception: If an unexpected error occurs during the operation.
 
         """
+
         if session is None:
             session = Session(self.db_client.engine)
 
@@ -600,6 +606,7 @@ class ResidentController:
             Exception: If an unexpected error occurs during the operation.
 
         """
+
         if session is None:
             session = Session(self.db_client.engine)
 
@@ -660,6 +667,7 @@ class ResidentController:
             Exception: If an unexpected error occurs during the operation.
 
         """
+
         if session is None:
             session = Session(self.db_client.engine)
 
@@ -722,6 +730,7 @@ class ResidentController:
             - Ensure the `new_birthDate` is in the format 'YYYY-MM-DD' to avoid conversion errors.
 
         """
+
         if session is None:
             session = Session(self.db_client.engine)
 
@@ -791,6 +800,7 @@ class ResidentController:
             - Ensure that the new gender conforms to these accepted values to avoid validation errors.
 
         """
+
         if session is None:
             session = Session(self.db_client.engine)
 
@@ -865,6 +875,7 @@ class ResidentController:
             Exception: If an unexpected error occurs during the operation.
 
         """
+        
         if session is None:
             session = Session(self.db_client.engine)
 

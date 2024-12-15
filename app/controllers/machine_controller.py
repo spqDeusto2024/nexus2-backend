@@ -75,6 +75,7 @@ class MachineController:
             SQLAlchemyError: If a database-related error occurs.
             Exception: If an unexpected error occurs during the operation.
         """
+
         if session is None:
             db = DatabaseClient(gb.MYSQL_URL)
             session = Session(db.engine)
@@ -143,6 +144,7 @@ class MachineController:
             SQLAlchemyError: If a database-related error occurs.
             Exception: If an unexpected error occurs during the operation.
         """
+
         if session is None:
             session = Session(self.db_client.engine)
 
@@ -209,6 +211,7 @@ class MachineController:
             - If the machine is not found, no changes will be made, and an error message will be returned.
             - The session is closed automatically after the operation, regardless of success or failure.
         """
+
         if session is None:
             session = Session(self.db_client.engine)
 
@@ -271,6 +274,7 @@ class MachineController:
         Raises:
             Exception: If an unexpected error occurs while querying the database.
         """
+
         if session is None:
             session = Session(self.db_client.engine)
 
@@ -326,6 +330,7 @@ class MachineController:
         Raises:
             Exception: If an unexpected error occurs during the operation.
         """
+
         if session is None:
             session = Session(self.db_client.engine)
 
@@ -377,6 +382,7 @@ class MachineController:
             SQLAlchemyError: If a database-related error occurs.
             Exception: If an unexpected error occurs during the operation.
         """
+        
         if session is None:
             session = Session(self.db_client.engine)
 

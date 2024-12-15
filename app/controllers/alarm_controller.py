@@ -72,6 +72,7 @@ class AlarmController:
             SQLAlchemyError: If a database-related error occurs.
             Exception: If an unexpected error occurs during the operation.
         """
+
         if session is None:
             session = Session(self.db_client.engine)
 
@@ -133,6 +134,7 @@ class AlarmController:
             SQLAlchemyError: If a database-related error occurs.
             Exception: If an unexpected error occurs during the operation.
         """
+
         if session is None:
             session = Session(self.db_client.engine)
 
@@ -251,6 +253,7 @@ class AlarmController:
         Raises:
             Exception: If an unexpected error occurs while querying the database.
         """
+        
         if session is None:
             session = Session(self.db_client.engine)
 

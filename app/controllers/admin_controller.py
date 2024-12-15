@@ -68,6 +68,7 @@ class AdminController:
             Exception: If any unexpected error occurs during the creation process.
 
         """
+
         if session is None:
             session = Session(self.db_client.engine)
         try:
@@ -107,6 +108,7 @@ class AdminController:
                 - {"status": "error", "message": <error_message>}: 
                 If an error occurs or the credentials are invalid.
         """
+
         SECRET_KEY = "nexus2" 
         if session is None:
             session = Session(self.db_client.engine)
@@ -170,6 +172,7 @@ class AdminController:
             Exception: If an unexpected error occurs during the deletion process.
 
         """
+
         if session is None:
             session = Session(self.db_client.engine)
 
@@ -201,7 +204,7 @@ class AdminController:
 
 
     def listAdmins(self, session=None):
-        
+
         """
         Lists all admins registered in the database.
 
@@ -224,6 +227,7 @@ class AdminController:
         Raises:
             Exception: If an unexpected error occurs while querying the database.
         """
+
         if session is None:
             session = Session(self.db_client.engine)
 
@@ -276,6 +280,7 @@ class AdminController:
         Raises:
             Exception: If an unexpected error occurs while querying the database.
         """
+
         if session is None:
             session = Session(self.db_client.engine)
 
@@ -307,6 +312,28 @@ class AdminController:
 
     
     def refreshAccessToken(self, refresh_token: str):
+        """
+        Refreshes the access token using the provided refresh token.
+
+        This method decodes the given refresh token to validate its authenticity 
+        and extracts the payload. If valid, it generates a new access token with 
+        a one-hour expiration time. If the refresh token is expired or invalid, 
+        an appropriate error message is returned.
+
+        Args:
+            refresh_token (str): The refresh token used to generate a new access token.
+
+        Returns:
+            dict: A dictionary containing the following keys:
+                - "status" (str): Indicates the result of the operation ("ok" or "error").
+                - "accessToken" (str, optional): The new access token (present if the operation is successful).
+                - "message" (str, optional): An error message (present if the operation fails).
+
+        Raises:
+            jwt.ExpiredSignatureError: If the refresh token has expired.
+            jwt.InvalidTokenError: If the refresh token is invalid or malformed.
+        """
+        
         SECRET_KEY = "nexus2"
         REFRESH_SECRET_KEY = "nexus2"
 
@@ -353,6 +380,7 @@ class AdminController:
             SQLAlchemyError: If a database-related error occurs.
             Exception: If an unexpected error occurs during the operation.
         """
+
         if session is None:
             session = Session(self.db_client.engine)
 
@@ -411,6 +439,7 @@ class AdminController:
             SQLAlchemyError: If a database-related error occurs.
             Exception: If an unexpected error occurs during the operation.
         """
+
         if session is None:
             session = Session(self.db_client.engine)
 
@@ -467,6 +496,7 @@ class AdminController:
             SQLAlchemyError: If a database-related error occurs.
             Exception: If an unexpected error occurs during the operation.
         """
+        
         if session is None:
             session = Session(self.db_client.engine)
 

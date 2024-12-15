@@ -167,6 +167,7 @@ class ShelterController:
         Example Response:
             {"status": "ok", "message": "Energy level updated successfully"}
         """
+        
         if session is None:
             session = Session(self.db_client.engine)
 
